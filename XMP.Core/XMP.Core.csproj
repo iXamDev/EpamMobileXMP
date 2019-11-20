@@ -8,7 +8,11 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="FlexiMvvm.Lifecycle.PreRelease" Version="0.10.8-prerelease" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\Launcher\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
 </Project>

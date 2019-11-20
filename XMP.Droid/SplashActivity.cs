@@ -6,11 +6,13 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using FlexiMvvm.Views;
+using XMP.Core.ViewModels.Launcher;
 
 namespace XMP.Droid
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    public class MainActivity : BindableAppCompatActivity<LauncherViewModel>
     {
 
         protected override void OnCreate(Bundle savedInstanceState)
