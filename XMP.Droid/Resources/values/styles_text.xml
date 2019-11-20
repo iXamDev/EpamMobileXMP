@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ErrorText">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/text_error</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+</resources>

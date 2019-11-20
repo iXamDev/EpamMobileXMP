@@ -15,5 +15,6 @@
     <Folder Include="ViewModels\Launcher\" />
     <Folder Include="Navigation\" />
     <Folder Include="Bootstrapper\" />
+    <Folder Include="ViewModels\Login\" />
   </ItemGroup>
 </Project>

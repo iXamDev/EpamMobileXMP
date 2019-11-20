@@ -13,9 +13,18 @@ namespace XMP.Core.ViewModels.Launcher
             NavigationService = navigationService;
         }
 
-        public override Task InitializeAsync(bool recreated)
+        public override async Task InitializeAsync(bool recreated)
         {
-            return base.InitializeAsync(recreated);
+            await base.InitializeAsync(recreated);
+
+            Task.Run(NavigateToMainScreen);
+        }
+
+        private async Task NavigateToMainScreen()
+        {
+            await Task.Delay(3000);
+
+            NavigationService.NavigateToLogin(this);
         }
     }
 }

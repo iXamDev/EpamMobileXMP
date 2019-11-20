@@ -2,6 +2,8 @@
 using FlexiMvvm.Navigation;
 using XMP.Core.Navigation;
 using XMP.Core.ViewModels.Launcher;
+using XMP.Droid.Views.Splash;
+using XMP.Droid.Views.Login;
 
 namespace XMP.Droid.Navigation
 {
@@ -18,7 +20,9 @@ namespace XMP.Droid.Navigation
 
         public void NavigateToLogin(LauncherViewModel fromViewModel)
         {
-            throw new NotImplementedException();
+            var fromView = NavigationViewProvider.GetActivity<SplashActivity, LauncherViewModel>(fromViewModel);
+
+            Navigate<LoginActivity>(fromView);
         }
     }
 }
