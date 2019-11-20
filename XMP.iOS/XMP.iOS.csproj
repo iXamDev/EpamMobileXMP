@@ -114,13 +114,19 @@
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
             <Visible>false</Visible>
         </ImageAsset>
+        <ImageAsset Include="Resources\Images.xcassets\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Splash_bg.jpg" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
+        <Folder Include="Bootstrapper\" />
+        <Folder Include="Navigation\" />
+        <Folder Include="Views\" />
+        <Folder Include="Views\Splash\" />
     </ItemGroup>
     <ItemGroup>
-        <InterfaceDefinition Include="LaunchScreen.storyboard" />
-        <InterfaceDefinition Include="Main.storyboard" />
+        <InterfaceDefinition Include="SplashScreen.xib" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Info.plist" />
@@ -129,11 +135,9 @@
     <ItemGroup>
         <Compile Include="Main.cs" />
         <Compile Include="AppDelegate.cs" />
-        <Compile Include="SceneDelegate.cs" />
-        <Compile Include="ViewController.cs" />
-        <Compile Include="ViewController.designer.cs">
-            <DependentUpon>ViewController.cs</DependentUpon>
-        </Compile>
+        <Compile Include="Bootstrapper\IosBootstrapper.cs" />
+        <Compile Include="Navigation\AppNavigationService.cs" />
+        <Compile Include="Views\Splash\SplashViewController.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">

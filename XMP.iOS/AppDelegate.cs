@@ -1,5 +1,10 @@
-﻿using Foundation;
+﻿using FlexiMvvm.Bootstrappers;
+using FlexiMvvm.Ioc;
+using Foundation;
 using UIKit;
+using XMP.Core.Bootstrapper;
+using XMP.iOS.Bootstrapper;
+using XMP.iOS.Views.Splash;
 
 namespace XMP.iOS
 {
@@ -8,34 +13,26 @@ namespace XMP.iOS
     [Register("AppDelegate")]
     public class AppDelegate : UIResponder, IUIApplicationDelegate
     {
-
         [Export("window")]
         public UIWindow Window { get; set; }
 
         [Export("application:didFinishLaunchingWithOptions:")]
         public bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            // Override point for customization after application launch.
-            // If not required for your application you can safely delete this method
+            var config = new BootstrapperConfig();
+            config.SetSimpleIoc(new SimpleIoc());
+
+            var compositeBootstrapper = new CompositeBootstrapper(new IosBootstrapper(), new CoreBootstrapper());
+            compositeBootstrapper.Execute(config);
+
+            Window = new UIWindow(UIScreen.MainScreen.Bounds)
+            {
+                RootViewController = new SplashViewController()
+            };
+
+            Window.MakeKeyAndVisible();
+
             return true;
-        }
-
-        // UISceneSession Lifecycle
-
-        [Export("application:configurationForConnectingSceneSession:options:")]
-        public UISceneConfiguration GetConfiguration(UIApplication application, UISceneSession connectingSceneSession, UISceneConnectionOptions options)
-        {
-            // Called when a new scene session is being created.
-            // Use this method to select a configuration to create the new scene with.
-            return UISceneConfiguration.Create("Default Configuration", connectingSceneSession.Role);
-        }
-
-        [Export("application:didDiscardSceneSessions:")]
-        public void DidDiscardSceneSessions(UIApplication application, NSSet<UISceneSession> sceneSessions)
-        {
-            // Called when the user discards a scene session.
-            // If any sessions were discarded while the application was not running, this will be called shortly after `FinishedLaunching`.
-            // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
         }
     }
 }
