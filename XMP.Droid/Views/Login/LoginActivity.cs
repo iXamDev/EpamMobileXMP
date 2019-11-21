@@ -12,11 +12,7 @@ namespace XMP.Droid.Views.Login
     [Activity]
     public class LoginActivity : BindableAppCompatActivity<LoginViewModel>
     {
-        private Button loginButton;
-
-        private LinearLayout errorOverlay;
-
-        private ImageView errorTriangle;
+        private LoginActivityViewHolder ViewHolder { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -24,11 +20,7 @@ namespace XMP.Droid.Views.Login
 
             SetContentView(Resource.Layout.activity_login);
 
-            loginButton = FindViewById<Button>(Resource.Id.sign_in_button);
-
-            errorOverlay = FindViewById<LinearLayout>(Resource.Id.error_overlay_view);
-
-            errorTriangle = FindViewById<ImageView>(Resource.Id.error_overlay_triangle_image);
+            ViewHolder = new LoginActivityViewHolder(this);
         }
 
         public override void Bind(BindingSet<LoginViewModel> bindingSet)
@@ -36,18 +28,18 @@ namespace XMP.Droid.Views.Login
             base.Bind(bindingSet);
 
             bindingSet
-                .Bind(loginButton)
+                .Bind(ViewHolder.SignInButton)
                 .For(v => v.ClickBinding())
                 .To(vm => vm.LoginCmd);
 
             bindingSet
-                .Bind(errorOverlay)
+                .Bind(ViewHolder.ErrorOverlayView)
                 .For(v => v.VisibilityBinding())
                 .To(v => v.ShowError)
                 .WithConversion<VisibleGoneValueConverter>();
 
             bindingSet
-                .Bind(errorTriangle)
+                .Bind(ViewHolder.ErrorOverlayTriangleImage)
                 .For(v => v.VisibilityBinding())
                 .To(v => v.ShowError)
                 .WithConversion<VisibleGoneValueConverter>();
