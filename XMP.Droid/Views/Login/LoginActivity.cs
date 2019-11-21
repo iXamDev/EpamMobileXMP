@@ -6,10 +6,11 @@ using FlexiMvvm.Views;
 using XMP.Core.ViewModels.Login;
 using Android.Widget;
 using FlexiMvvm.ValueConverters;
+using Android.Views;
 
 namespace XMP.Droid.Views.Login
 {
-    [Activity]
+    [Activity(NoHistory = true)]
     public class LoginActivity : BindableAppCompatActivity<LoginViewModel>
     {
         private LoginActivityViewHolder ViewHolder { get; set; }
@@ -28,6 +29,16 @@ namespace XMP.Droid.Views.Login
             base.Bind(bindingSet);
 
             bindingSet
+                .Bind(ViewHolder.LoginEdit)
+                .For(v => v.TextAndTextChangedBinding())
+                .To(vm => vm.Login);
+
+            bindingSet
+                .Bind(ViewHolder.PasswordEdit)
+                .For(v => v.TextAndTextChangedBinding())
+                .To(vm => vm.Password);
+
+            bindingSet
                 .Bind(ViewHolder.SignInButton)
                 .For(v => v.ClickBinding())
                 .To(vm => vm.LoginCmd);
@@ -35,14 +46,19 @@ namespace XMP.Droid.Views.Login
             bindingSet
                 .Bind(ViewHolder.ErrorOverlayView)
                 .For(v => v.VisibilityBinding())
-                .To(v => v.ShowError)
+                .To(vm => vm.ShowError)
                 .WithConversion<VisibleGoneValueConverter>();
 
             bindingSet
                 .Bind(ViewHolder.ErrorOverlayTriangleImage)
                 .For(v => v.VisibilityBinding())
-                .To(v => v.ShowError)
+                .To(vm => vm.ShowError)
                 .WithConversion<VisibleGoneValueConverter>();
+
+            bindingSet
+                .Bind(ViewHolder.ErrorText)
+                .For(v => v.TextBinding())
+                .To(vm => vm.ErrorMessage);
         }
     }
 }

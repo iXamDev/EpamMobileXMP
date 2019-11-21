@@ -4,6 +4,8 @@ using FlexiMvvm.ViewModels;
 using XMP.Core.Navigation;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
+using XMP.Core.ViewModels.Main;
+using XMP.Core.ViewModels.Details;
 
 namespace XMP.Core.Bootstrapper
 {
@@ -16,6 +18,10 @@ namespace XMP.Core.Bootstrapper
             simpleIoc.Register(() => new LauncherViewModel(simpleIoc.Get<INavigationService>()));
 
             simpleIoc.Register(() => new LoginViewModel(simpleIoc.Get<INavigationService>()));
+
+            simpleIoc.Register(() => new MainViewModel(simpleIoc.Get<INavigationService>()));
+
+            simpleIoc.Register(() => new DetailsViewModel(simpleIoc.Get<INavigationService>()));
 
             LifecycleViewModelProvider.SetFactory(new DefaultLifecycleViewModelFactory(simpleIoc));
         }

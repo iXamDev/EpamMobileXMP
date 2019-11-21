@@ -69,6 +69,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewHolderGenerator.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\Main\MainActivity.cs" />
+    <Compile Include="Views\Details\DetailsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -79,11 +81,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_add_white_24dp.xml" />
     <AndroidResource Include="Resources\drawable\ic_login_bg.png" />
     <AndroidResource Include="Resources\drawable\ic_splash_bg.png" />
     <AndroidResource Include="Resources\drawable\ic_triangle.xml" />
+    <AndroidResource Include="Resources\layout\activity_details.xml" />
     <AndroidResource Include="Resources\layout\activity_login.xml" />
-    <AndroidResource Include="Resources\menu\menu_main.xml" />
+    <AndroidResource Include="Resources\layout\activity_main.xml" />
+    <AndroidResource Include="Resources\layout\main_drawer_header.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\ic_launcher.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\ic_launcher_round.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
@@ -109,6 +114,7 @@
     <AndroidResource Include="Resources\values\styles_button.xml" />
     <AndroidResource Include="Resources\values\styles_input.xml" />
     <AndroidResource Include="Resources\values\styles_text.xml" />
+    <AndroidResource Include="Resources\values\styles_toolbar.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -119,6 +125,8 @@
     <Folder Include="Views\" />
     <Folder Include="Views\Splash\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\Main\" />
+    <Folder Include="Views\Details\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />

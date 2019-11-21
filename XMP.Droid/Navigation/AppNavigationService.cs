@@ -4,6 +4,11 @@ using XMP.Core.Navigation;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Droid.Views.Splash;
 using XMP.Droid.Views.Login;
+using XMP.Core.ViewModels.Main;
+using XMP.Core.ViewModels.Login;
+using XMP.Droid.Views.Main;
+using XMP.Droid.Views.Details;
+using XMP.Core.ViewModels.Details;
 
 namespace XMP.Droid.Navigation
 {
@@ -11,6 +16,20 @@ namespace XMP.Droid.Navigation
     {
         public AppNavigationService()
         {
+        }
+
+        public new void NavigateBack(DetailsViewModel fromViewModel)
+        {
+            var fromView = NavigationViewProvider.GetActivity<DetailsActivity, DetailsViewModel>(fromViewModel);
+
+            fromView.Finish();
+        }
+
+        public void NavigateToDetails(MainViewModel fromViewModel)
+        {
+            var fromView = NavigationViewProvider.GetActivity<MainActivity, MainViewModel>(fromViewModel);
+
+            Navigate<DetailsActivity>(fromView);
         }
 
         public void NavigateToHome(LauncherViewModel fromViewModel)
@@ -23,6 +42,13 @@ namespace XMP.Droid.Navigation
             var fromView = NavigationViewProvider.GetActivity<SplashActivity, LauncherViewModel>(fromViewModel);
 
             Navigate<LoginActivity>(fromView);
+        }
+
+        public void NavigateToMain(LoginViewModel fromViewModel)
+        {
+            var fromView = NavigationViewProvider.GetActivity<LoginActivity, LoginViewModel>(fromViewModel);
+
+            Navigate<MainActivity>(fromView);
         }
     }
 }

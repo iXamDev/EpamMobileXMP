@@ -37,6 +37,13 @@ namespace XMP.Core.ViewModels.Login
             private set => SetValue(ref showError, value, nameof(ShowError));
         }
 
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            private set => SetValue(ref errorMessage, value, nameof(ErrorMessage));
+        }
+
         #endregion
 
         #region Services
@@ -49,6 +56,7 @@ namespace XMP.Core.ViewModels.Login
 
         public LoginViewModel(INavigationService navigationService)
         {
+            NavigationService = navigationService;
         }
 
         #endregion
@@ -57,7 +65,9 @@ namespace XMP.Core.ViewModels.Login
 
         private Task OnLogin()
         {
-            Console.WriteLine("Login");
+            ShowError = !ShowError;
+
+            NavigationService.NavigateToMain(this);
 
             return Task.FromResult(0);
         }

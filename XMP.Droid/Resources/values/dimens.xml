@@ -2,5 +2,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="side_margin">48dp</dimen>
+    <dimen name="side_margin_min">4dp</dimen>
     <dimen name="edit_text_height">40dp</dimen>
+    <dimen name="navigation_drawer_width">270dp</dimen>
+    <dimen name="devider_height">1dp</dimen>
 </resources>
