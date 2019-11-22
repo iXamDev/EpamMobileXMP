@@ -14,16 +14,14 @@ namespace XMP.iOS
     public class AppDelegate : UIResponder, IUIApplicationDelegate
     {
         [Export("window")]
-        public UIWindow Window { get; set; }
+        public static UIWindow Window { get; set; }
 
         [Export("application:didFinishLaunchingWithOptions:")]
         public bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            var config = new BootstrapperConfig();
-            config.SetSimpleIoc(new SimpleIoc());
+            InitFramework();
 
-            var compositeBootstrapper = new CompositeBootstrapper(new IosBootstrapper(), new CoreBootstrapper());
-            compositeBootstrapper.Execute(config);
+            Theme.SetupGrobalStyle();
 
             Window = new UIWindow(UIScreen.MainScreen.Bounds)
             {
@@ -33,6 +31,15 @@ namespace XMP.iOS
             Window.MakeKeyAndVisible();
 
             return true;
+        }
+
+        private void InitFramework()
+        {
+            var config = new BootstrapperConfig();
+            config.SetSimpleIoc(new SimpleIoc());
+
+            var compositeBootstrapper = new CompositeBootstrapper(new IosBootstrapper(), new CoreBootstrapper());
+            compositeBootstrapper.Execute(config);
         }
     }
 }

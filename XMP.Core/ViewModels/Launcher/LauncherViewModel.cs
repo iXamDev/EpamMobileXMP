@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FlexiMvvm.ViewModels;
 using XMP.Core.Navigation;
+using Xamarin.Essentials;
 namespace XMP.Core.ViewModels.Launcher
 {
     public class LauncherViewModel : LifecycleViewModel
@@ -24,7 +25,7 @@ namespace XMP.Core.ViewModels.Launcher
         {
             await Task.Delay(3000);
 
-            NavigationService.NavigateToLogin(this);
+            await MainThread.InvokeOnMainThreadAsync(() => NavigationService.NavigateToLogin(this));
         }
     }
 }

@@ -11,6 +11,13 @@ namespace XMP.iOS.Views.Splash
         {
             View = new UIImageView(UIImage.FromBundle("SplashBackground"));
         }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            NavigationController?.SetNavigationBarHidden(true, animated);
+        }
     }
 }
 

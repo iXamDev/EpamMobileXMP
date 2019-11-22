@@ -9,6 +9,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Support.V7.Widget;
 using Android.Support.V4.View;
+using Android.Widget;
 
 namespace XMP.Droid.Views.Main
 {
@@ -19,7 +20,9 @@ namespace XMP.Droid.Views.Main
 
         private MainActivityViewHolder ViewHolder { get; set; }
 
-        private void SetupDrawer(DrawerLayout drawer, Toolbar toolbar)
+        private TextView DrawerUserNameText { get; set; }
+
+        private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
         {
             toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
 
@@ -43,6 +46,8 @@ namespace XMP.Droid.Views.Main
             SupportActionBar.SetHomeButtonEnabled(true);
 
             SetupDrawer(ViewHolder.Drawer, ViewHolder.Toolbar);
+
+            DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -59,6 +64,11 @@ namespace XMP.Droid.Views.Main
 
             bindingSet
                 .Bind(ViewHolder.Fab)
+                .For(v => v.ClickBinding())
+                .To(vm => vm.TestCmd);
+
+            bindingSet
+                .Bind(DrawerUserNameText)
                 .For(v => v.ClickBinding())
                 .To(vm => vm.TestCmd);
         }

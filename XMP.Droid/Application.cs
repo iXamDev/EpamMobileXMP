@@ -24,14 +24,14 @@ namespace XMP.Droid
         {
             base.OnCreate();
 
-            InitFlexi();
+            InitFramework();
 
             RegisterActivityLifecycleCallbacks(this);
 
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
         }
 
-        private void InitFlexi()
+        private void InitFramework()
         {
             var config = new BootstrapperConfig();
 
@@ -44,6 +44,8 @@ namespace XMP.Droid
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
             CurrentActivity = activity;
+
+            Xamarin.Essentials.Platform.Init(activity, savedInstanceState);
         }
 
         public void OnActivityDestroyed(Activity activity)

@@ -22,6 +22,11 @@ namespace XMP.Core.ViewModels.Main
             NavigationService = navigationService;
         }
 
+        public override Task InitializeAsync(bool recreated)
+        {
+            return base.InitializeAsync(recreated);
+        }
+
         private void ShowDetails()
         {
             NavigationService.NavigateToDetails(this);
