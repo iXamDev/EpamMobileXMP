@@ -9,6 +9,8 @@ namespace XMP.Core.ViewModels.Details
     {
         public ICommand SaveCmd => CommandProvider.Get(OnSave);
 
+        public string ScreenTitle => "Request";
+
         private void OnSave()
         {
             NavigationService.NavigateBack(this);

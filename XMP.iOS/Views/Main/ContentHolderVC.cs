@@ -1,6 +1,4 @@
-﻿using System;
-using FlexiMvvm.Bindings;
-using FlexiMvvm.Views.Core;
+﻿using FlexiMvvm.Bindings;
 using UIKit;
 using XMP.Core.ViewModels.Main;
 
@@ -8,11 +6,20 @@ namespace XMP.iOS.Views.Main
 {
     public class ContentHolderVC : UIViewController
     {
+        public new ContentView View
+        {
+            get => (ContentView)base.View;
+            set => base.View = value;
+        }
+
         public override void LoadView()
         {
-            View = new UIView();
+            View = new ContentView();
+        }
 
-            View.BackgroundColor = UIColor.Yellow;
+        public void Bind(BindingSet<MainViewModel> bindingSet)
+        {
+
         }
     }
 }

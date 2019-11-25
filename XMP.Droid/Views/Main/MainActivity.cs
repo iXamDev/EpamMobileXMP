@@ -65,12 +65,12 @@ namespace XMP.Droid.Views.Main
             bindingSet
                 .Bind(ViewHolder.Fab)
                 .For(v => v.ClickBinding())
-                .To(vm => vm.TestCmd);
+                .To(vm => vm.AddCmd);
 
             bindingSet
                 .Bind(DrawerUserNameText)
                 .For(v => v.ClickBinding())
-                .To(vm => vm.TestCmd);
+                .To(vm => vm.AddCmd);
         }
 
         public override void OnBackPressed()

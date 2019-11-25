@@ -123,6 +123,16 @@
         <ImageAsset Include="Resources\Images.xcassets\Contents.json" />
         <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Contents.json" />
         <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Splash_bg.jpg" />
+        <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Login_bg.jpg" />
+        <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Triangle.pdf" />
+        <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Plus.pdf" />
+        <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Menu.pdf" />
+        <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Avatar_Ark.png" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
@@ -134,6 +144,13 @@
         <Folder Include="Views\Main\" />
         <Folder Include="Views\Details\" />
         <Folder Include="Theme\" />
+        <Folder Include="Resources\Images.xcassets\LoginBackground.imageset\" />
+        <Folder Include="Extensions\" />
+        <Folder Include="Controls\" />
+        <Folder Include="Resources\Images.xcassets\Triangle.imageset\" />
+        <Folder Include="Resources\Images.xcassets\Menu.imageset\" />
+        <Folder Include="Resources\Images.xcassets\Plus.imageset\" />
+        <Folder Include="Resources\Images.xcassets\UserAvatar.imageset\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="SplashScreen.xib" />
@@ -158,6 +175,13 @@
         <Compile Include="Theme\Theme_Colors.cs" />
         <Compile Include="Theme\Theme.cs" />
         <Compile Include="Theme\Theme_Dimensions.cs" />
+        <Compile Include="Theme\Theme_Buttons.cs" />
+        <Compile Include="Extensions\UIExtensions.cs" />
+        <Compile Include="Theme\Theme_Fields.cs" />
+        <Compile Include="Controls\PaddingTextField.cs" />
+        <Compile Include="Theme\Theme_Text.cs" />
+        <Compile Include="Extensions\XMPExtensions.cs" />
+        <Compile Include="Views\Main\ContentView.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">

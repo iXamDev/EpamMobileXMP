@@ -11,11 +11,26 @@ namespace XMP.Core.ViewModels.Main
     {
         protected INavigationService NavigationService { get; }
 
-        public ICommand TestCmd => CommandProvider.Get(ShowDetails);
+        public ICommand ShowDetailsCmd => CommandProvider.Get(OnShowDetails);
+
+        public ICommand AddCmd => CommandProvider.Get(OnAdd);
 
         public MainMenuFilter[] FilterItems;
 
         public ICommand FilterCmd => CommandProvider.Get<MainMenuFilter>(OnFilter);
+
+        public Interaction CloseMenuInteraction { get; } = new Interaction();
+
+        private string userName = "Arkadiy Dobkin";
+        public string UserName
+        {
+            get => userName;
+            private set => SetValue(ref userName, value, nameof(UserName));
+        }
+
+        public string AddButtonTitle => "New";
+
+        public string ScreenTitle => "All Requests";
 
         public MainViewModel(INavigationService navigationService)
         {
@@ -27,8 +42,17 @@ namespace XMP.Core.ViewModels.Main
             return base.InitializeAsync(recreated);
         }
 
-        private void ShowDetails()
+        private void OnShowDetails()
         {
+            CloseMenuInteraction.RaiseRequested();
+
+            NavigationService.NavigateToDetails(this);
+        }
+
+        private void OnAdd()
+        {
+            CloseMenuInteraction.RaiseRequested();
+
             NavigationService.NavigateToDetails(this);
         }
 

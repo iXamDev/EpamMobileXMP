@@ -44,6 +44,12 @@ namespace XMP.Core.ViewModels.Login
             private set => SetValue(ref errorMessage, value, nameof(ErrorMessage));
         }
 
+        public string LoginButtonTitle => "Sign in".ToUpper();
+
+        public string LoginHint => "Login";
+
+        public string PasswordHint => "Password";
+
         #endregion
 
         #region Services
@@ -65,8 +71,6 @@ namespace XMP.Core.ViewModels.Login
 
         private Task OnLogin()
         {
-            ShowError = !ShowError;
-
             NavigationService.NavigateToMain(this);
 
             return Task.FromResult(0);
