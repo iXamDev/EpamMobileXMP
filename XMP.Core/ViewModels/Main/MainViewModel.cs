@@ -106,7 +106,18 @@ namespace XMP.Core.ViewModels.Main
 
         private void OnAdd()
         {
-            NavigationService.NavigateToDetails(this);
+            //NavigationService.NavigateToDetails(this);
+
+            CloseMenuInteraction.RaiseRequested();
+
+            RequestItems.Add(SetupRequestItemVM(new VacantionRequest
+            {
+                Id = Guid.NewGuid().ToString(),
+                StartDate = new DateTime(2019, 1, 1),
+                EndDate = new DateTime(2019, 1, 10),
+                VacationType = VacationType.Regular,
+                State = VacationState.Closed
+            }));
         }
 
         private void OnFilter(FilterItemVM filterVM)

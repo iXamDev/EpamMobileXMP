@@ -3,6 +3,7 @@ using FlexiMvvm.Collections;
 using UIKit;
 using XMP.Core.ViewModels.Main;
 using XMP.iOS.Views.Main.Cells;
+using XMP.iOS.Views.Main.Source;
 
 namespace XMP.iOS.Views.Main
 {
@@ -25,7 +26,7 @@ namespace XMP.iOS.Views.Main
         {
             base.ViewDidLoad();
 
-            ContentItemsSource = new TableViewObservablePlainSource(View.ContentTableView, (arg) => ContentVacationRequestItemTableViewCell.CellId);
+            ContentItemsSource = new ContentVacationRequestItemsSource(View.ContentTableView);
 
             View.ContentTableView.Source = ContentItemsSource;
         }

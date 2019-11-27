@@ -96,7 +96,7 @@ namespace XMP.iOS.Views.Login
                 BackgroundImage.FullSizeOf(this));
 
             this.AddConstraints(
-                LoginField.AtTopOf(this, 240),
+                LoginField.AtTopOf(this, 220),
                 LoginField.AtLeadingOf(this, 50),
                 LoginField.AtTrailingOf(this, 50),
                 LoginField.Height().EqualTo(Theme.Dimensions.TextFieldHeight),

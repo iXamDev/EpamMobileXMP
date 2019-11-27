@@ -1,12 +1,13 @@
 ﻿using System;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Views;
-using SidebarNavigation;
 using XMP.Core.ViewModels.Main;
 using UIKit;
 using System.Threading.Tasks;
 using XMP.iOS.Extensions;
 using FlexiMvvm.ViewModels;
+using XMP.iOS.Controls.SidebarMenu;
+using SidebarNavigation;
 
 namespace XMP.iOS.Views.Main
 {
@@ -15,7 +16,7 @@ namespace XMP.iOS.Views.Main
         private UIButton navbarAddButton;
         private UILabel navbarTitleLabel;
 
-        public SidebarController SidebarController { get; private set; }
+        public SidebarMenuViewController SidebarControllerVC { get; private set; }
 
         protected ContentHolderVC ContentHolder { get; private set; }
 
@@ -27,16 +28,16 @@ namespace XMP.iOS.Views.Main
 
         private void OnCloseMenuInteraction(object sender, EventArgs e)
         {
-            if (SidebarController?.IsOpen ?? false)
-                SidebarController.ToggleMenu();
+            if (SidebarControllerVC?.IsOpen ?? false)
+                SidebarControllerVC.ToggleMenu();
         }
 
         private void OnMenuClick(object sender, EventArgs e)
-        => SidebarController.ToggleMenu();
+        => SidebarControllerVC.ToggleMenu();
 
-        private SidebarController CreateSidebarMenu()
+        private SidebarMenuViewController CreateSidebarMenu()
         {
-            var sidebarController = new SidebarController(this, ContentHolder, MenuHolder);
+            var sidebarController = new SidebarMenuViewController(this, ContentHolder, MenuHolder);
 
             sidebarController.HasShadowing = false;
             sidebarController.MenuWidth = Theme.Dimensions.SideMenuWidth;
@@ -101,7 +102,7 @@ namespace XMP.iOS.Views.Main
 
             MenuHolder = new MenuHolderVC();
 
-            SidebarController = CreateSidebarMenu();
+            SidebarControllerVC = CreateSidebarMenu();
         }
 
         public override void ViewWillAppear(bool animated)

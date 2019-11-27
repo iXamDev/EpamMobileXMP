@@ -171,6 +171,8 @@
         <Folder Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\" />
         <Folder Include="Resources\Images.xcassets\VacationOvertime.imageset\" />
         <Folder Include="Resources\Images.xcassets\VacationNotPayable.imageset\" />
+        <Folder Include="Views\Main\Source\" />
+        <Folder Include="Controls\SidebarMenu\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="SplashScreen.xib" />
@@ -207,6 +209,8 @@
         <Compile Include="Views\Main\Cells\ContentVacationRequestItemView.cs" />
         <Compile Include="Views\Main\Cells\ContentVacationRequestItemTableViewCell.cs" />
         <Compile Include="Bindings\UIImageViewBindings.cs" />
+        <Compile Include="Views\Main\Source\ContentVacationRequestItemsSource.cs" />
+        <Compile Include="Controls\SidebarMenu\SidebarMenuViewController.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">
