@@ -2,6 +2,7 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
+using XMP.iOS.Views.Main.Cells;
 
 namespace XMP.iOS.Views.Main
 {
@@ -12,6 +13,8 @@ namespace XMP.iOS.Views.Main
         public UILabel NameLabel { get; private set; }
 
         public UITableView MenuTableView { get; private set; }
+
+        public UIView MenuDeviderView { get; private set; }
 
         protected override void SetupSubviews()
         {
@@ -28,7 +31,18 @@ namespace XMP.iOS.Views.Main
 
             MenuTableView = new UITableView
             {
-                BackgroundColor = Theme.Colors.MenuFooter
+                BackgroundColor = Theme.Colors.MenuFooter,
+                RowHeight = Theme.Dimensions.MenuItemHeight,
+                SeparatorStyle = UITableViewCellSeparatorStyle.SingleLine,
+                SeparatorInset = UIEdgeInsets.Zero,
+                SeparatorColor = Theme.Colors.MenuDevider,
+                Bounces = false
+            };
+            MenuTableView.RegisterClassForCellReuse(typeof(MenuFilterItemTableViewCell), MenuFilterItemTableViewCell.CellId);
+
+            MenuDeviderView = new UIView
+            {
+                BackgroundColor = Theme.Colors.MenuDevider
             };
         }
 
@@ -39,6 +53,8 @@ namespace XMP.iOS.Views.Main
             this.AddLayoutSubview(AvatarImageView);
 
             this.AddLayoutSubview(NameLabel);
+
+            this.AddLayoutSubview(MenuDeviderView);
 
             this.AddLayoutSubview(MenuTableView);
         }
@@ -60,7 +76,12 @@ namespace XMP.iOS.Views.Main
                 NameLabel.AtLeadingOf(this, 16),
                 NameLabel.AtTrailingOf(this, 16),
 
-                MenuTableView.Below(NameLabel, 14),
+                MenuDeviderView.AtLeadingOf(this, 0),
+                MenuDeviderView.AtTrailingOf(this, 0),
+                MenuDeviderView.Height().EqualTo(1),
+                MenuDeviderView.Below(NameLabel, 14),
+
+                MenuTableView.Below(MenuDeviderView),
                 MenuTableView.AtLeadingOf(this),
                 MenuTableView.AtTrailingOf(this),
                 MenuTableView.AtBottomOf(this)

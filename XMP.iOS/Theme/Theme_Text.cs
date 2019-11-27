@@ -21,6 +21,31 @@ namespace XMP.iOS
                 LineBreakMode = UILineBreakMode.MiddleTruncation,
                 TextAlignment = UITextAlignment.Center
             };
+
+            public static UILabelStyle MenuItem => new UILabelStyle
+            {
+                TextColor = Theme.Colors.DarkGrayText,
+                Font = UIFont.SystemFontOfSize(20, UIFontWeight.Bold),
+                Lines = 1,
+            };
+
+            public static UILabelStyle AccentText => new UILabelStyle
+            {
+                TextColor = Theme.Colors.Accent,
+                Font = UIFont.SystemFontOfSize(22, UIFontWeight.Semibold),
+                Lines = 1,
+            };
+
+            public static UILabelStyle GrayText => new UILabelStyle
+            {
+                TextColor = Theme.Colors.DarkGrayText,
+                Font = UIFont.SystemFontOfSize(13, UIFontWeight.Regular),
+                Lines = 1,
+            };
+
+            public static UILabelStyle HugeGrayText
+                => GrayText
+                .WithTune(s => s.Font = UIFont.SystemFontOfSize(15));
         }
 
         public static UILabel WithStyle(this UILabel label, UILabelStyle style)
@@ -44,6 +69,13 @@ namespace XMP.iOS
                 label.LineBreakMode = style.LineBreakMode.Value;
 
             return label;
+        }
+
+        public static UILabelStyle WithTune(this UILabelStyle labelStyle, Action<UILabelStyle> tune)
+        {
+            tune(labelStyle);
+
+            return labelStyle;
         }
 
         public class UILabelStyle

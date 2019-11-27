@@ -3,6 +3,7 @@ using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
 using System.Linq;
+using XMP.iOS.Views.Main.Cells;
 
 namespace XMP.iOS.Views.Main
 {
@@ -20,12 +21,14 @@ namespace XMP.iOS.Views.Main
 
             ContentTableView = new UITableView
             {
-                BackgroundColor = UIColor.White
+                BackgroundColor = UIColor.White,
+                RowHeight = Theme.Dimensions.MainContentVacationRequestItemHeight,
+                SeparatorStyle = UITableViewCellSeparatorStyle.None,
             };
 
-            deviderView = new UIView { BackgroundColor = Theme.Colors.MenuDevider };
+            ContentTableView.RegisterClassForCellReuse(typeof(ContentVacationRequestItemTableViewCell), ContentVacationRequestItemTableViewCell.CellId);
 
-            this.ClipsToBounds = false;
+            deviderView = new UIView { BackgroundColor = Theme.Colors.MenuDevider };
         }
 
         protected override void SetupLayout()

@@ -1,7 +1,9 @@
 ﻿using System;
 using FlexiMvvm.Bindings;
+using FlexiMvvm.Collections;
 using UIKit;
 using XMP.Core.ViewModels.Main;
+using XMP.iOS.Views.Main.Cells;
 
 namespace XMP.iOS.Views.Main
 {
@@ -13,9 +15,22 @@ namespace XMP.iOS.Views.Main
             set => base.View = value;
         }
 
+        private TableViewObservablePlainSource MenuFilterSource { get; set; }
+
         public override void LoadView()
         {
             View = new MenuView();
+        }
+
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+
+            MenuFilterSource = new TableViewObservablePlainSource(View.MenuTableView, vm => MenuFilterItemTableViewCell.CellId);
+
+            View.MenuTableView.Source = MenuFilterSource;
+
+            View.AvatarImageView.Image = UIImage.FromBundle("UserAvatar");
         }
 
         public void Bind(BindingSet<MainViewModel> bindingSet)
@@ -25,7 +40,13 @@ namespace XMP.iOS.Views.Main
                 .For(v => v.TextBinding())
                 .To(vm => vm.UserName);
 
-            View.AvatarImageView.Image = UIImage.FromBundle("UserAvatar");
+            bindingSet.Bind(MenuFilterSource)
+                .For(v => v.ItemsBinding())
+                .To(vm => vm.FilterItems);
+
+            bindingSet.Bind(MenuFilterSource)
+                .For(v => v.RowSelectedBinding())
+                .To(vm => vm.FilterCmd);
         }
     }
 }

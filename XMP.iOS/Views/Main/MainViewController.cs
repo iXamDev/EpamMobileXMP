@@ -63,7 +63,7 @@ namespace XMP.iOS.Views.Main
 
             ViewModel.CloseMenuInteraction.RequestedWeakSubscribe(OnCloseMenuInteraction);
 
-            ContentHolder.Bind(bindingSet);
+            ContentHolder.Bind(bindingSet, ViewModel);
 
             MenuHolder.Bind(bindingSet);
         }
@@ -100,6 +100,7 @@ namespace XMP.iOS.Views.Main
             ContentHolder = new ContentHolderVC();
 
             MenuHolder = new MenuHolderVC();
+
             SidebarController = CreateSidebarMenu();
         }
 

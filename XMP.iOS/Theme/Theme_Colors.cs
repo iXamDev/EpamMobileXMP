@@ -18,11 +18,17 @@ namespace XMP.iOS
 
             public static UIColor ErrorText { get; } = ColorConverters.FromHex("#932D54").ToPlatformColor();
 
+            public static UIColor DarkGrayText { get; } = ColorConverters.FromHex("#666666").ToPlatformColor();
+
             public static UIColor OverlayBackground { get; } = ColorConverters.FromHex("#F8F8F8").ToPlatformColor();
 
             public static UIColor MenuDevider { get; } = ColorConverters.FromHex("#CDCDCD").ToPlatformColor();
 
             public static UIColor MenuFooter { get; } = ColorConverters.FromHex("#CCCCCC").ToPlatformColor();
+
+            public static UIColor MenuItemBackground { get; } = ColorConverters.FromHex("#FAFAFA").ToPlatformColor();
+
+            public static UIColor ItemsDevider { get; } = ColorConverters.FromHex("#E9E9E9").ToPlatformColor();
         }
     }
 }

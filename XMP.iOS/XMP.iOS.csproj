@@ -133,6 +133,18 @@
         <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Menu.pdf" />
         <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Contents.json" />
         <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Avatar_Ark.png" />
+        <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Arrow.pdf" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Contents.json" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Icon_Request_Green.png" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Icon_Request_Plum.png" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Icon_Request_Dark.png" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Icon_Request_Blue.png" />
+        <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Icon_Request_Gray.png" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
@@ -151,6 +163,14 @@
         <Folder Include="Resources\Images.xcassets\Menu.imageset\" />
         <Folder Include="Resources\Images.xcassets\Plus.imageset\" />
         <Folder Include="Resources\Images.xcassets\UserAvatar.imageset\" />
+        <Folder Include="Views\Main\Cells\" />
+        <Folder Include="Resources\Images.xcassets\Arrow.imageset\" />
+        <Folder Include="Bindings\" />
+        <Folder Include="Resources\Images.xcassets\VacationRegular.imageset\" />
+        <Folder Include="Resources\Images.xcassets\VacationSickDays.imageset\" />
+        <Folder Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\" />
+        <Folder Include="Resources\Images.xcassets\VacationOvertime.imageset\" />
+        <Folder Include="Resources\Images.xcassets\VacationNotPayable.imageset\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="SplashScreen.xib" />
@@ -182,6 +202,11 @@
         <Compile Include="Theme\Theme_Text.cs" />
         <Compile Include="Extensions\XMPExtensions.cs" />
         <Compile Include="Views\Main\ContentView.cs" />
+        <Compile Include="Views\Main\Cells\MenuFilterItemTableViewCell.cs" />
+        <Compile Include="Views\Main\Cells\MenuFilterItemView.cs" />
+        <Compile Include="Views\Main\Cells\ContentVacationRequestItemView.cs" />
+        <Compile Include="Views\Main\Cells\ContentVacationRequestItemTableViewCell.cs" />
+        <Compile Include="Bindings\UIImageViewBindings.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">
