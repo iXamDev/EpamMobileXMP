@@ -8,11 +8,11 @@ namespace XMP.Core.Helpers
         {
             switch (vacationType)
             {
-                case VacationType.ExceptionalLeave:
+                case VacationType.Exceptional:
                     return "Exceptional Leave";
 
-                case VacationType.NotPayable:
-                    return "Not Payable";
+                case VacationType.WithoutPay:
+                    return "Leave Without Pay";
 
                 case VacationType.Overtime:
                     return "Overtime";
@@ -20,7 +20,7 @@ namespace XMP.Core.Helpers
                 case VacationType.Regular:
                     return "Regular";
 
-                case VacationType.SickDays:
+                case VacationType.Sick:
                     return "Sick Days";
             }
 

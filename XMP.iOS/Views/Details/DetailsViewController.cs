@@ -4,6 +4,15 @@ using XMP.Core.ViewModels.Details;
 using UIKit;
 using FlexiMvvm.Bindings;
 using XMP.iOS.Extensions;
+using XMP.iOS.Bindings;
+using FlexiMvvm.Collections;
+using XMP.iOS.Views.Details.Cells;
+using XMP.iOS.Views.Details.Source;
+using XMP.Core.ValueConverters;
+using XMP.Core.Models;
+using System.Linq;
+using XMP.Core.Helpers;
+using System.Collections.Generic;
 
 namespace XMP.iOS.Views.Details
 {
@@ -11,16 +20,19 @@ namespace XMP.iOS.Views.Details
     {
         private UILabel navbarTitleLabel;
 
-        public DetailsViewController()
-        {
+        private DetailsItemsSource itemsSource;
 
+        private Dictionary<VacationState, nint> statesMapping;
+
+        public new DetailsView View
+        {
+            get => (DetailsView)base.View;
+            set => base.View = value;
         }
 
         public override void LoadView()
         {
-            View = new UIKit.UIView();
-
-            View.BackgroundColor = UIColor.Brown;
+            View = new DetailsView();
         }
 
         public override void ViewDidLoad()
@@ -29,23 +41,65 @@ namespace XMP.iOS.Views.Details
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem("Save", UIBarButtonItemStyle.Plain, null);
 
-            NavigationItem.RightBarButtonItem.ClickedWeakSubscribe(HandleEventHandler);
-
             NavigationItem.CreateAndSetScreenTitleLabel(out navbarTitleLabel);
+
+            itemsSource = new DetailsItemsSource(View.CollectionView, View.PageControl)
+            {
+                ItemsContext = ViewModel
+            };
+
+            View.CollectionView.Source = itemsSource;
+
+            statesMapping = View.StateSegmentedControl.SetupSegmentsMapping(ViewModel.States, state => state.DisplayTitle());
         }
 
         public override void Bind(BindingSet<DetailsViewModel> bindingSet)
         {
             base.Bind(bindingSet);
 
-            bindingSet.Bind(navbarTitleLabel)
+            bindingSet
+                .Bind(navbarTitleLabel)
                 .For(v => v.TextBinding())
                 .To(vm => vm.ScreenTitle);
-        }
 
-        void HandleEventHandler(object sender, EventArgs e)
-        {
-            ViewModel?.SaveCmd.Execute(null);
+            bindingSet
+                .Bind(View.StartDateControlView)
+                .For(v => v.DateBinding())
+                .To(vm => vm.StartDate);
+
+            bindingSet
+                .Bind(View.StartDateControlView)
+                .For(v => v.TapBinding())
+                .To(vm => vm.ShowStartDateDialogCmd);
+
+            bindingSet
+                .Bind(View.EndDateControlView)
+                .For(v => v.DateBinding())
+                .To(vm => vm.EndDate);
+
+            bindingSet
+                .Bind(View.EndDateControlView)
+                .For(v => v.TapBinding())
+                .To(vm => vm.ShowEndDateDialogCmd);
+
+            bindingSet
+                .Bind(itemsSource)
+                .For(v => v.ItemsBinding())
+                .To(vm => vm.VacationTypeItems);
+
+            bindingSet
+                .Bind(itemsSource)
+                .For(v => v.FocusedItemBinding())
+                .To(vm => vm.SelectedVacationType);
+
+            bindingSet.Bind(View.StateSegmentedControl)
+                .For(v => v.SelectedSegmentAndValueChangedBinding())
+                .To(vm => vm.VacationState)
+                .WithConversion<DictionaryValueConverter<VacationState, nint>>(statesMapping);
+
+            bindingSet.Bind(NavigationItem.RightBarButtonItem)
+                .For(v => v.ClickedBinding())
+                .To(vm => vm.SaveCmd);
         }
     }
 }

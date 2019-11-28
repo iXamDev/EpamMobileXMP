@@ -76,6 +76,9 @@
       <PackageReference Include="SidebarNavigation">
         <Version>2.0.0</Version>
       </PackageReference>
+      <PackageReference Include="Acr.UserDialogs">
+        <Version>7.0.35</Version>
+      </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -172,7 +175,10 @@
         <Folder Include="Resources\Images.xcassets\VacationOvertime.imageset\" />
         <Folder Include="Resources\Images.xcassets\VacationNotPayable.imageset\" />
         <Folder Include="Views\Main\Source\" />
-        <Folder Include="Controls\SidebarMenu\" />
+        <Folder Include="Views\SidebarMenu\" />
+        <Folder Include="Views\Details\Cells\" />
+        <Folder Include="ValueConverters\" />
+        <Folder Include="Views\Details\Source\" />
     </ItemGroup>
     <ItemGroup>
         <InterfaceDefinition Include="SplashScreen.xib" />
@@ -210,7 +216,15 @@
         <Compile Include="Views\Main\Cells\ContentVacationRequestItemTableViewCell.cs" />
         <Compile Include="Bindings\UIImageViewBindings.cs" />
         <Compile Include="Views\Main\Source\ContentVacationRequestItemsSource.cs" />
-        <Compile Include="Controls\SidebarMenu\SidebarMenuViewController.cs" />
+        <Compile Include="Views\Details\DetailsView.cs" />
+        <Compile Include="Views\SidebarMenu\SidebarMenuViewController.cs" />
+        <Compile Include="Controls\DateControlView.cs" />
+        <Compile Include="Bindings\DateControlViewBindings.cs" />
+        <Compile Include="Views\Details\Cells\DetailsItemView.cs" />
+        <Compile Include="Views\Details\Cells\DetailsItemCollectionViewCell.cs" />
+        <Compile Include="ValueConverters\VacationTypeToBundleImageNameValueConverter.cs" />
+        <Compile Include="Views\Details\Source\DetailsItemsSource.cs" />
+        <Compile Include="Bindings\DetailsItemsSourceBinding.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">

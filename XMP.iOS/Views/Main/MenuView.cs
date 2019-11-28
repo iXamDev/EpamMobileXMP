@@ -20,7 +20,7 @@ namespace XMP.iOS.Views.Main
         {
             base.SetupSubviews();
 
-            BackgroundColor = UIColor.White;
+            BackgroundColor = Theme.Colors.ScreenBackground;
 
             AvatarImageView = new UIImageView
             {
@@ -78,7 +78,7 @@ namespace XMP.iOS.Views.Main
 
                 MenuDeviderView.AtLeadingOf(this, 0),
                 MenuDeviderView.AtTrailingOf(this, 0),
-                MenuDeviderView.Height().EqualTo(1),
+                MenuDeviderView.Height().EqualTo(Theme.Dimensions.DeviderWidth),
                 MenuDeviderView.Below(NameLabel, 14),
 
                 MenuTableView.Below(MenuDeviderView),

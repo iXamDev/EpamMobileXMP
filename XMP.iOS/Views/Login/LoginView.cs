@@ -3,8 +3,9 @@ using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
 using CoreGraphics;
-using XMP.iOS.Controls;
+using XMP.iOS.Views;
 using XMP.iOS.Extensions;
+using XMP.iOS.Controls;
 
 namespace XMP.iOS.Views.Login
 {

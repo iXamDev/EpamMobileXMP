@@ -67,7 +67,7 @@ namespace XMP.Core.ViewModels.Main
                     Id = Guid.NewGuid().ToString(),
                     StartDate = new DateTime(2019,2,15),
                     EndDate = new DateTime(2019,2,15),
-                    VacationType = VacationType.ExceptionalLeave,
+                    VacationType = VacationType.Exceptional,
                     State = VacationState.Approved
                 },
                 new VacantionRequest
@@ -83,7 +83,7 @@ namespace XMP.Core.ViewModels.Main
                     Id = Guid.NewGuid().ToString(),
                     StartDate = new DateTime(2019,3,20),
                     EndDate = new DateTime(2019,4,14),
-                    VacationType = VacationType.SickDays,
+                    VacationType = VacationType.Sick,
                     State = VacationState.Closed
                 },
                 new VacantionRequest
@@ -91,7 +91,7 @@ namespace XMP.Core.ViewModels.Main
                     Id = Guid.NewGuid().ToString(),
                     StartDate = new DateTime(2019,7,20),
                     EndDate = new DateTime(2019,7,26),
-                    VacationType = VacationType.NotPayable,
+                    VacationType = VacationType.WithoutPay,
                     State = VacationState.Approved
                 },
             };

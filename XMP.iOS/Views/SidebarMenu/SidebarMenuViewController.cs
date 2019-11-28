@@ -3,7 +3,7 @@ using UIKit;
 using CoreGraphics;
 using SidebarNavigation;
 
-namespace XMP.iOS.Controls.SidebarMenu
+namespace XMP.iOS.Views.SidebarMenu
 {
     public class SidebarMenuViewController : SidebarController
     {

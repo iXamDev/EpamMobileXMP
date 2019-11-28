@@ -4,9 +4,9 @@ namespace XMP.Core.Models
     public enum VacationType
     {
         Regular,
-        SickDays,
-        ExceptionalLeave,
-        Overtime,
-        NotPayable //TODO ?
+        Sick,
+        Exceptional,
+        WithoutPay,
+        Overtime
     }
 }

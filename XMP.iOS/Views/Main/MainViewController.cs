@@ -6,7 +6,7 @@ using UIKit;
 using System.Threading.Tasks;
 using XMP.iOS.Extensions;
 using FlexiMvvm.ViewModels;
-using XMP.iOS.Controls.SidebarMenu;
+using XMP.iOS.Views.SidebarMenu;
 using SidebarNavigation;
 
 namespace XMP.iOS.Views.Main

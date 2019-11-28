@@ -90,7 +90,7 @@ namespace XMP.iOS.Views.Main.Cells
                 StateLabel.ToLeadingOf(ArrowImageView, 6),
                 StateLabel.WithSameCenterY(this),
 
-                MainDeviderView.Height().EqualTo(1),
+                MainDeviderView.Height().EqualTo(Theme.Dimensions.DeviderWidth),
                 MainDeviderView.AtBottomOf(this),
                 MainDeviderView.AtTrailingOf(this),
                 MainDeviderView.WithSameLeading(RangeLabel),

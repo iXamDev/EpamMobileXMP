@@ -1,5 +1,7 @@
 ﻿using System;
 using UIKit;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace XMP.iOS.Extensions
 {
@@ -39,6 +41,16 @@ namespace XMP.iOS.Extensions
             self.SetImage(image, UIControlState.Selected);
 
             return self;
+        }
+
+        public static Dictionary<T, nint> SetupSegmentsMapping<T>(this UISegmentedControl control, T[] variants, Func<T, string> nameProvider)
+        {
+            var states = variants.Select((t, i) => new { Type = t, Title = nameProvider(t), Index = i });
+
+            foreach (var state in states)
+                control.InsertSegment(state.Title, state.Index, false);
+
+            return states.ToDictionary(key => key.Type, value => (nint)value.Index);
         }
     }
 }

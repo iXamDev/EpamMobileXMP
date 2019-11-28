@@ -29,6 +29,12 @@ namespace XMP.iOS
             public static UIColor MenuItemBackground { get; } = ColorConverters.FromHex("#FAFAFA").ToPlatformColor();
 
             public static UIColor ItemsDevider { get; } = ColorConverters.FromHex("#E9E9E9").ToPlatformColor();
+
+            public static UIColor ScreenBackground { get; } = UIColor.White;
+
+            public static UIColor Green { get; } = ColorConverters.FromHex("#A2C644").ToPlatformColor();
+
+            public static UIColor Gray { get; } = ColorConverters.FromHex("#999999").ToPlatformColor();
         }
     }
 }

@@ -12,6 +12,10 @@ namespace XMP.iOS
             public static int MenuItemHeight { get; } = 54;
 
             public static int MainContentVacationRequestItemHeight { get; } = 72;
+
+            public static int DateControlHeight { get; } = 94;
+
+            public static int DeviderWidth { get; } = 1;
         }
     }
 }

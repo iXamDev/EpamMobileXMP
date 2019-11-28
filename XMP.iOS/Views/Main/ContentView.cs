@@ -17,7 +17,7 @@ namespace XMP.iOS.Views.Main
         {
             base.SetupSubviews();
 
-            BackgroundColor = UIColor.White;
+            BackgroundColor = Theme.Colors.ScreenBackground;
 
             ContentTableView = new UITableView
             {
@@ -55,7 +55,7 @@ namespace XMP.iOS.Views.Main
                         deviderView.AtTopOf(this),
                         deviderView.AtBottomOf(this),
                         deviderView.AtLeadingOf(this, -1),
-                        deviderView.Width().EqualTo(1)
+                        deviderView.Width().EqualTo(Theme.Dimensions.DeviderWidth)
                     }
                 )
             );

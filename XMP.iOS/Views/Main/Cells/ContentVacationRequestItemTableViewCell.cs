@@ -10,6 +10,7 @@ using XMP.Core.Models;
 using System.Collections.Generic;
 using FlexiMvvm.ValueConverters;
 using FlexiMvvm;
+using XMP.iOS.ValueConverters;
 
 namespace XMP.iOS.Views.Main.Cells
 {
@@ -54,17 +55,7 @@ namespace XMP.iOS.Views.Main.Cells
             bindingSet.Bind(View.IconImageView)
                 .For(v => v.BundleImageBinding())
                 .To(vm => vm.Type)
-                .WithConversion<DictionaryValueConverter<VacationType, string>>
-                (
-                    new Dictionary<VacationType, string>
-                    {
-                        { VacationType.ExceptionalLeave, "VacationExceptionalLeave" },
-                        { VacationType.NotPayable, "VacationNotPayable" },
-                        { VacationType.Overtime, "VacationOvertime" },
-                        { VacationType.Regular, "VacationRegular" },
-                        { VacationType.SickDays, "VacationSickDays" },
-                    }
-                );
+                .WithConversion<VacationTypeToBundleImageNameValueConverter>();
         }
     }
 }

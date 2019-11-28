@@ -15,11 +15,6 @@ namespace XMP.iOS.Views.Login
             set => base.View = value;
         }
 
-        public LoginViewController()
-        {
-
-        }
-
         public override void LoadView()
         {
             View = new LoginView();

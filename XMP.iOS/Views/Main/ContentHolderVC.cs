@@ -41,7 +41,7 @@ namespace XMP.iOS.Views.Main
 
             bindingSet.Bind(ContentItemsSource)
                 .For(v => v.RowSelectedBinding())
-                .To(vm => vm.FilterCmd);
+                .To(vm => vm.ShowDetailsCmd);
         }
     }
 }
