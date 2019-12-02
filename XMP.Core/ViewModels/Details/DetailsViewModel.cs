@@ -13,9 +13,11 @@ namespace XMP.Core.ViewModels.Details
 {
     public class DetailsViewModel : LifecycleViewModel
     {
-        public DetailsViewModel(INavigationService navigationService)
+        public DetailsViewModel(INavigationService navigationService, IUserDialogs userDialogs)
         {
             NavigationService = navigationService;
+
+            UserDialogs = userDialogs;
 
             SetupVacationTypeItems();
 
@@ -28,6 +30,8 @@ namespace XMP.Core.ViewModels.Details
 
             SelectedVacationType = VacationTypeItems.ElementAt(3);
         }
+
+        protected IUserDialogs UserDialogs { get; }
 
         protected INavigationService NavigationService { get; }
 
@@ -76,7 +80,7 @@ namespace XMP.Core.ViewModels.Details
 
         private async Task<DateTime> ChangeDate(DateTime selectedDate)
         {
-            var dialogResult = await UserDialogs.Instance.DatePromptAsync(new DatePromptConfig { SelectedDate = selectedDate });
+            var dialogResult = await UserDialogs.DatePromptAsync(new DatePromptConfig { SelectedDate = selectedDate });
 
             if (dialogResult.Ok)
                 return dialogResult.SelectedDate;

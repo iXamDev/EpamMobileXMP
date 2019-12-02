@@ -43,6 +43,7 @@ namespace XMP.Droid
             config.SetSimpleIoc(new SimpleIoc());
 
             var compositeBootstrapper = new CompositeBootstrapper(new AndroidBootstrapper(), new CoreBootstrapper());
+
             compositeBootstrapper.Execute(config);
         }
 
