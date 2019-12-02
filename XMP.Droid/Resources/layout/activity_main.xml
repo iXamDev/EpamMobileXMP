@@ -15,8 +15,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            app:title="sdfsdf"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
             android:theme="@style/Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
@@ -29,6 +29,15 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/requests_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
@@ -44,21 +53,23 @@
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navition_view"
-            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_width="@dimen/drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/drawer_background"
                 android:orientation="vertical">
 
                 <include layout="@layout/main_drawer_header" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/drawer_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:background="@color/drawer_footer"
+                    android:overScrollMode="never" />
             </LinearLayout>
 
         </android.support.design.widget.NavigationView>

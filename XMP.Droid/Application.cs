@@ -8,6 +8,7 @@ using FlexiMvvm.Ioc;
 using FlexiMvvm.ViewModels;
 using XMP.Core.Bootstrapper;
 using XMP.Droid.Bootstrapper;
+using Acr.UserDialogs;
 
 namespace XMP.Droid
 {
@@ -28,7 +29,11 @@ namespace XMP.Droid
 
             RegisterActivityLifecycleCallbacks(this);
 
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
+            UserDialogs.Init(() => CurrentActivity);
+
+            DatePromptConfig.DefaultAndroidStyleId = Resource.Style.DialogTheme;
+
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en");
         }
 
         private void InitFramework()

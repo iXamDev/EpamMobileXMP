@@ -10,6 +10,11 @@ using Android.Views;
 using Android.Support.V7.Widget;
 using Android.Support.V4.View;
 using Android.Widget;
+using XMP.Droid.Bindings;
+using FlexiMvvm.Collections;
+using XMP.Droid.Adapters;
+using FlexiMvvm.ViewModels;
+using XMP.Droid.Views.Main.Items;
 
 namespace XMP.Droid.Views.Main
 {
@@ -21,6 +26,9 @@ namespace XMP.Droid.Views.Main
         private MainActivityViewHolder ViewHolder { get; set; }
 
         private TextView DrawerUserNameText { get; set; }
+
+        private RecyclerPlainAdapter<MainDrawerCellViewHolder> drawerAdapter;
+        private RecyclerPlainAdapter<MainRequestCellViewHolder> requestsAdapter;
 
         private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
         {
@@ -48,6 +56,18 @@ namespace XMP.Droid.Views.Main
             SetupDrawer(ViewHolder.Drawer, ViewHolder.Toolbar);
 
             DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
+
+            drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
+            ViewHolder.DrawerRecycler.SetAdapter(drawerAdapter);
+            ViewHolder.DrawerRecycler.HasFixedSize = true;
+            ViewHolder.DrawerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+
+            requestsAdapter = new RecyclerPlainAdapter<MainRequestCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_request);
+
+            ViewHolder.RequestsRecycler.AddItemDecoration(new MainRequesttemDecoration());
+            ViewHolder.RequestsRecycler.SetAdapter(requestsAdapter);
+            ViewHolder.RequestsRecycler.HasFixedSize = true;
+            ViewHolder.RequestsRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -68,18 +88,60 @@ namespace XMP.Droid.Views.Main
                 .To(vm => vm.AddCmd);
 
             bindingSet
+                .Bind(ViewHolder.Toolbar)
+                .For(v => v.TitleBinding())
+                .To(vm => vm.ScreenTitle);
+
+            bindingSet
+                .Bind(DrawerUserNameText)
+                .For(v => v.TextBinding())
+                .To(vm => vm.UserName);
+
+            bindingSet
                 .Bind(DrawerUserNameText)
                 .For(v => v.ClickBinding())
                 .To(vm => vm.AddCmd);
+
+            bindingSet
+                .Bind(drawerAdapter)
+                .For(v => v.ItemsBinding())
+                .To(vm => vm.FilterItems);
+
+            bindingSet
+                .Bind(drawerAdapter)
+                .For(v => v.ItemClickedBinding())
+                .To(vm => vm.FilterCmd);
+
+            bindingSet
+                .Bind(requestsAdapter)
+                .For(v => v.ItemsBinding())
+                .To(vm => vm.RequestItems);
+
+            bindingSet
+                .Bind(requestsAdapter)
+                .For(v => v.ItemClickedBinding())
+                .To(vm => vm.ShowDetailsCmd);
+
+            ViewModel.CloseMenuInteraction.RequestedWeakSubscribe(OnCloseMenuInteraction);
         }
 
-        public override void OnBackPressed()
+        private void OnCloseMenuInteraction(object sender, EventArgs e)
+        => CloseDrawer();
+
+        private bool CloseDrawer()
         {
             if (this.ViewHolder.Drawer.IsDrawerOpen(GravityCompat.Start))
             {
                 this.ViewHolder.Drawer.CloseDrawer(GravityCompat.Start);
+                return true;
             }
-            else
+
+            return false;
+        }
+
+        public override void OnBackPressed()
+        {
+            if (!CloseDrawer())
                 base.OnBackPressed();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using FlexiMvvm.ViewModels;
 using XMP.Core.Models;
+
 namespace XMP.Core.ViewModels.Main.Items
 {
     public class VacationRequestItemVM : ViewModel
@@ -32,7 +33,7 @@ namespace XMP.Core.ViewModels.Main.Items
         {
             Model = model;
 
-            string FormatDate(DateTime date) => date.ToString("MMM dd");
+            string FormatDate(DateTime date) => $"{date.ToString("MMM").ToUpper()} {date.ToString("dd")}";
 
             Range = $"{FormatDate(model.StartDate)} - {FormatDate(model.EndDate)}";
 

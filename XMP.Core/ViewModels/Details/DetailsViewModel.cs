@@ -76,7 +76,7 @@ namespace XMP.Core.ViewModels.Details
 
         private async Task<DateTime> ChangeDate(DateTime selectedDate)
         {
-            var dialogResult = await UserDialogs.Instance.DatePromptAsync(new DatePromptConfig { SelectedDate = StartDate });
+            var dialogResult = await UserDialogs.Instance.DatePromptAsync(new DatePromptConfig { SelectedDate = selectedDate });
 
             if (dialogResult.Ok)
                 return dialogResult.SelectedDate;

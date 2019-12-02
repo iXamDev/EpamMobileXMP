@@ -5,12 +5,12 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
+    <ImageView
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        android:background="@color/colorAccent" />
+        android:src="@drawable/ic_user_avatar"/>
 
     <TextView
         android:id="@+id/drawer_user_name_text"
@@ -21,11 +21,5 @@
         android:layout_marginStart="@dimen/side_margin"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="@dimen/side_margin"
-        android:layout_marginBottom="16dp"
-        android:text="sample" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/devider_height"
-        android:background="@color/menu_devider" />
+        android:layout_marginBottom="16dp"/>
 </LinearLayout>

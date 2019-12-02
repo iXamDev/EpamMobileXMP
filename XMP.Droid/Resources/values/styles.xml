@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.XMP.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.XMP.Base" parent="Theme.AppCompat.NoActionBar">
         <item name="android:statusBarColor">@color/status_bar_background</item>
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="Theme.XMP" parent="Theme.XMP.Base">
+        <item name="android:windowBackground">@color/white</item>
     </style>
+
     <style name="Theme.XMP.Splash" parent="Theme.XMP.Base">
         <item name="android:windowBackground">@drawable/ic_splash_bg</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/green</item>
     </style>
 </resources>

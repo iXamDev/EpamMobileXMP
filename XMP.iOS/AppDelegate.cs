@@ -1,4 +1,5 @@
-﻿using FlexiMvvm.Bootstrappers;
+﻿using System.Threading;
+using FlexiMvvm.Bootstrappers;
 using FlexiMvvm.Ioc;
 using Foundation;
 using UIKit;
@@ -20,6 +21,8 @@ namespace XMP.iOS
         public bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
             InitFramework();
+
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en");
 
             Theme.SetupGrobalStyle();
 

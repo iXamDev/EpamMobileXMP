@@ -9,6 +9,13 @@ using JetBrains.Annotations;
 
 namespace XMP.Droid.Views
 {
+    /*
+    "LayoutDefinitionOptions" are not specified for "control_date" layout file therefore view holder can't be generated for it.
+    public partial class DateControlViewHolder
+    {
+    }
+    */
+
     public partial class DetailsActivityViewHolder
     {
         [NotNull] private readonly Activity activity;
@@ -16,6 +23,15 @@ namespace XMP.Droid.Views
         [CanBeNull] private RelativeLayout toolbarLikeLayout;
         [CanBeNull] private TextView toolbarTitle;
         [CanBeNull] private Button saveButton;
+        [CanBeNull] private Android.Support.V4.View.ViewPager viewpager;
+        [CanBeNull] private Android.Support.Design.Widget.TabLayout pagingTabLayout;
+        [CanBeNull] private View deviderTop;
+        [CanBeNull] private XMP.Droid.Controls.DateControlLayout startDate;
+        [CanBeNull] private XMP.Droid.Controls.DateControlLayout endDate;
+        [CanBeNull] private View deviderMiddle;
+        [CanBeNull] private RadioButton approvedRadioButton;
+        [CanBeNull] private RadioButton closedRadioButton;
+        [CanBeNull] private View deviderBottom;
 
         public DetailsActivityViewHolder([NotNull] Activity activity)
         {
@@ -35,6 +51,42 @@ namespace XMP.Droid.Views
         [NotNull]
         public Button SaveButton =>
             saveButton ?? (saveButton = activity.FindViewById<Button>(Resource.Id.save_button));
+
+        [NotNull]
+        public Android.Support.V4.View.ViewPager Viewpager =>
+            viewpager ?? (viewpager = activity.FindViewById<Android.Support.V4.View.ViewPager>(Resource.Id.viewpager));
+
+        [NotNull]
+        public Android.Support.Design.Widget.TabLayout PagingTabLayout =>
+            pagingTabLayout ?? (pagingTabLayout = activity.FindViewById<Android.Support.Design.Widget.TabLayout>(Resource.Id.paging_tab_layout));
+
+        [NotNull]
+        public View DeviderTop =>
+            deviderTop ?? (deviderTop = activity.FindViewById<View>(Resource.Id.devider_top));
+
+        [NotNull]
+        public XMP.Droid.Controls.DateControlLayout StartDate =>
+            startDate ?? (startDate = activity.FindViewById<XMP.Droid.Controls.DateControlLayout>(Resource.Id.start_date));
+
+        [NotNull]
+        public XMP.Droid.Controls.DateControlLayout EndDate =>
+            endDate ?? (endDate = activity.FindViewById<XMP.Droid.Controls.DateControlLayout>(Resource.Id.end_date));
+
+        [NotNull]
+        public View DeviderMiddle =>
+            deviderMiddle ?? (deviderMiddle = activity.FindViewById<View>(Resource.Id.devider_middle));
+
+        [NotNull]
+        public RadioButton ApprovedRadioButton =>
+            approvedRadioButton ?? (approvedRadioButton = activity.FindViewById<RadioButton>(Resource.Id.approved_radio_button));
+
+        [NotNull]
+        public RadioButton ClosedRadioButton =>
+            closedRadioButton ?? (closedRadioButton = activity.FindViewById<RadioButton>(Resource.Id.closed_radio_button));
+
+        [NotNull]
+        public View DeviderBottom =>
+            deviderBottom ?? (deviderBottom = activity.FindViewById<View>(Resource.Id.devider_bottom));
     }
 
     /*
@@ -87,6 +139,66 @@ namespace XMP.Droid.Views
             errorOverlayTriangleImage ?? (errorOverlayTriangleImage = activity.FindViewById<ImageView>(Resource.Id.error_overlay_triangle_image));
     }
 
+    public partial class MainRequestCellViewHolder
+    {
+        [CanBeNull] private ImageView iconImage;
+        [CanBeNull] private TextView rangeText;
+        [CanBeNull] private TextView typeText;
+        [CanBeNull] private TextView stateText;
+
+
+
+        [NotNull]
+        public ImageView IconImage =>
+            iconImage ?? (iconImage = ItemView.FindViewById<ImageView>(Resource.Id.icon_image));
+
+        [NotNull]
+        public TextView RangeText =>
+            rangeText ?? (rangeText = ItemView.FindViewById<TextView>(Resource.Id.range_text));
+
+        [NotNull]
+        public TextView TypeText =>
+            typeText ?? (typeText = ItemView.FindViewById<TextView>(Resource.Id.type_text));
+
+        [NotNull]
+        public TextView StateText =>
+            stateText ?? (stateText = ItemView.FindViewById<TextView>(Resource.Id.state_text));
+    }
+
+    public partial class DetailsItemFragmentViewHolder
+    {
+        [NotNull] private readonly View rootView;
+
+        [CanBeNull] private ImageView iconImage;
+        [CanBeNull] private TextView titleText;
+
+        public DetailsItemFragmentViewHolder([NotNull] View rootView)
+        {
+            if (rootView == null) throw new ArgumentNullException(nameof(rootView));
+
+            this.rootView = rootView;
+        }
+
+        [NotNull]
+        public ImageView IconImage =>
+            iconImage ?? (iconImage = rootView.FindViewById<ImageView>(Resource.Id.icon_image));
+
+        [NotNull]
+        public TextView TitleText =>
+            titleText ?? (titleText = rootView.FindViewById<TextView>(Resource.Id.title_text));
+    }
+
+    public partial class MainDrawerCellViewHolder
+    {
+        [CanBeNull] private TextView title;
+
+
+
+        [NotNull]
+        public TextView Title =>
+            title ?? (title = ItemView.FindViewById<TextView>(Resource.Id.title));
+    }
+
     public partial class MainActivityViewHolder
     {
         [NotNull] private readonly Activity activity;
@@ -94,8 +206,10 @@ namespace XMP.Droid.Views
         [CanBeNull] private Android.Support.Design.Widget.AppBarLayout appbar;
         [CanBeNull] private Android.Support.V7.Widget.Toolbar toolbar;
         [CanBeNull] private Android.Support.V4.Widget.DrawerLayout drawer;
+        [CanBeNull] private Android.Support.V7.Widget.RecyclerView requestsRecycler;
         [CanBeNull] private Android.Support.Design.Widget.FloatingActionButton fab;
         [CanBeNull] private Android.Support.Design.Widget.NavigationView navitionView;
+        [CanBeNull] private Android.Support.V7.Widget.RecyclerView drawerRecycler;
 
         public MainActivityViewHolder([NotNull] Activity activity)
         {
@@ -117,12 +231,20 @@ namespace XMP.Droid.Views
             drawer ?? (drawer = activity.FindViewById<Android.Support.V4.Widget.DrawerLayout>(Resource.Id.drawer));
 
         [NotNull]
+        public Android.Support.V7.Widget.RecyclerView RequestsRecycler =>
+            requestsRecycler ?? (requestsRecycler = activity.FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.requests_recycler));
+
+        [NotNull]
         public Android.Support.Design.Widget.FloatingActionButton Fab =>
             fab ?? (fab = activity.FindViewById<Android.Support.Design.Widget.FloatingActionButton>(Resource.Id.fab));
 
         [NotNull]
         public Android.Support.Design.Widget.NavigationView NavitionView =>
             navitionView ?? (navitionView = activity.FindViewById<Android.Support.Design.Widget.NavigationView>(Resource.Id.navition_view));
+
+        [NotNull]
+        public Android.Support.V7.Widget.RecyclerView DrawerRecycler =>
+            drawerRecycler ?? (drawerRecycler = activity.FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.drawer_recycler));
     }
 
 }

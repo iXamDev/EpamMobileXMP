@@ -14,7 +14,8 @@
     LayoutDefinitionOptions.Namespace = "XMP.Droid.Views";
     LayoutDefinitionOptions.ViewTypeNameCustomFormat = new Dictionary<string, string>
     {
-        { "com.google.android.gms.maps.MapView", "Android.Gms.Maps.MapView"}
+        { "com.google.android.gms.maps.MapView", "Android.Gms.Maps.MapView"},
+        { "xmp.droid.controls.DateControlLayout", "XMP.Droid.Controls.DateControlLayout"}
     };
     LayoutDefinitionOptions.LayoutTypeNamePostfix = "ViewHolder";
     LayoutDefinitionOptions.GenerateAnnotations = true;

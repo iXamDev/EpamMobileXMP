@@ -6,4 +6,6 @@
     <string name="password">Password</string>
     <string name="sign_in">sign in</string>
     <string name="save">Save</string>
+    <string name="approved">Approved</string>
+    <string name="closed">Closed</string>
 </resources>
