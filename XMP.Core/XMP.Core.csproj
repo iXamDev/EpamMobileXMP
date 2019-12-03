@@ -25,5 +25,18 @@
     <Folder Include="ValueConverters\" />
     <Folder Include="Helpers\" />
     <Folder Include="ViewModels\Details\Items\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Abstract\" />
+    <Folder Include="Services\Implementation\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Operations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XMP.API\XMP.API.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\10.0.6.2\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

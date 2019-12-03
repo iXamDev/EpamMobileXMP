@@ -6,6 +6,7 @@ using UIKit;
 using XMP.Core.Bootstrapper;
 using XMP.iOS.Bootstrapper;
 using XMP.iOS.Views.Splash;
+using XMP.API.Bootstrappers;
 
 namespace XMP.iOS
 {

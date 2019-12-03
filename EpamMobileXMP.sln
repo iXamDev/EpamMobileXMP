@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMP.iOS", "XMP.iOS\XMP.iOS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMP.Droid", "XMP.Droid\XMP.Droid.csproj", "{6C5BB5A3-1DA5-4C6C-BBC5-8891EAD1C46B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMP.API", "XMP.API\XMP.API.csproj", "{0DEED80B-3448-4034-8555-997AC66915CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,5 +52,17 @@ Global
 		{6C5BB5A3-1DA5-4C6C-BBC5-8891EAD1C46B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{6C5BB5A3-1DA5-4C6C-BBC5-8891EAD1C46B}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{6C5BB5A3-1DA5-4C6C-BBC5-8891EAD1C46B}.Release|iPhone.Build.0 = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{0DEED80B-3448-4034-8555-997AC66915CA}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

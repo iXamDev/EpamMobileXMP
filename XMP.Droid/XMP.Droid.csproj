@@ -190,6 +190,10 @@
       <Project>{A0D57CF1-51BB-4C0D-8ECE-F1A9ADCF396C}</Project>
       <Name>XMP.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMP.API\XMP.API.csproj">
+      <Project>{0DEED80B-3448-4034-8555-997AC66915CA}</Project>
+      <Name>XMP.API</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

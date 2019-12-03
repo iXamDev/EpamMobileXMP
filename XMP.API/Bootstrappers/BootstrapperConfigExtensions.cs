@@ -2,9 +2,9 @@
 using FlexiMvvm.Bootstrappers;
 using FlexiMvvm.Ioc;
 
-namespace XMP.Core.Bootstrapper
+namespace XMP.API.Bootstrappers
 {
-    public static class BootstrapperConfigExtensions
+    public static class BootstrapperConfigExtensions //TODO move to common assembly
     {
         private const string SimpleIocKey = "SimpleIoc";
 

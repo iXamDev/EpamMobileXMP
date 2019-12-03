@@ -3,6 +3,14 @@ using FlexiMvvm.ViewModels;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using XMP.Core.Navigation;
+using XMP.API.Services.Abstract;
+using XMP.Core.Services.Abstract;
+using System.Security.Authentication;
+using Acr.UserDialogs;
+using XMP.Core.Models;
+using FlexiMvvm.Commands;
+using FlexiMvvm.Operations;
+using XMP.Core.Operations;
 
 namespace XMP.Core.ViewModels.Login
 {
@@ -10,7 +18,7 @@ namespace XMP.Core.ViewModels.Login
     {
         #region Commands
 
-        public ICommand LoginCmd => CommandProvider.GetForAsync(OnLogin);
+        public Command LoginCmd => CommandProvider.GetForAsync(OnLogin);
 
         #endregion
 
@@ -20,16 +28,25 @@ namespace XMP.Core.ViewModels.Login
         public string Login
         {
             get => login;
-            set => SetValue(ref login, value, nameof(Login));
+            set
+            {
+                SetValue(ref login, value, nameof(Login));
+
+                HideErrorMessage();
+            }
         }
 
         private string password;
         public string Password
         {
             get => password;
-            set => SetValue(ref password, value, nameof(Password));
+            set
+            {
+                SetValue(ref password, value, nameof(Password));
+            }
         }
 
+        private IOperationHandlerBuilder<bool> loginOperation;
         private bool showError;
         public bool ShowError
         {
@@ -56,13 +73,47 @@ namespace XMP.Core.ViewModels.Login
 
         protected INavigationService NavigationService { get; }
 
+        protected IUserDialogs UserDialogs { get; }
+
+        protected ISessionService SessionService { get; }
+
+        protected IOperationFactory OperationFactory { get; }
+
         #endregion
 
         #region Constructor
 
-        public LoginViewModel(INavigationService navigationService)
+        public LoginViewModel(INavigationService navigationService, IUserDialogs userDialogs, ISessionService sessionService, IOperationFactory operationFactory)
         {
             NavigationService = navigationService;
+
+            UserDialogs = userDialogs;
+
+            SessionService = sessionService;
+
+            OperationFactory = operationFactory;
+
+#if DEBUG
+            Login = "ark";
+            Password = "123";
+#endif
+
+            loginOperation =
+                OperationFactory
+                    .Create(this)
+                    .WithPreventRepetitiveExecutions()
+                    .WithExpressionAsync((cancellationToken) =>
+                    {
+                        if (ValidateCredentials(out var credentials))
+                            return SessionService.Start(credentials);
+
+                        return Task.FromResult(false);
+                    })
+                    .OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
+                    .OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
+                    .OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
+                    .OnCancel(() => Console.WriteLine("CANCELLED"))
+                    .OnFinish(() => Console.WriteLine("FINISHED"));
         }
 
         #endregion
@@ -71,9 +122,124 @@ namespace XMP.Core.ViewModels.Login
 
         private Task OnLogin()
         {
-            NavigationService.NavigateToMain(this);
+            return loginOperation.ExecuteAsync();
 
-            return Task.FromResult(0);
+            //.ExecuteAsync();
+
+            //var operation =
+            //OperationFactory
+            //.Create(this)
+            //.WithPreventRepetitiveExecutions()
+            ////.WithExpression(() => { ValidateCredentials(out var credentials); return credentials; })
+            //.WithExpressionAsync((token) => SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password }))
+            //.OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
+            //.OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
+            //.OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError));
+            //var loginOperation =
+            //OperationFactory
+            //.Create(this)
+            //.WithPreventRepetitiveExecutions()
+            ////.WithExpression(() => { ValidateCredentials(out var credentials); return credentials; })
+            //.WithExpressionAsync((cancellationToken) =>
+            //{
+            //    if (ValidateCredentials(out var credentials))
+            //        return SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password });
+
+            //    return Task.FromResult(false);
+            //})
+            //.OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
+            //.OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
+            //.OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
+            //.OnCancel(() => Console.WriteLine("CANCELLED"))
+            //.OnFinish(() => Console.WriteLine("FINISHED"));
+
+            //return loginOperation.ExecuteAsync();
+
+            //var success = false;
+
+            //HideErrorMessage();
+
+
+            //if (ValidateCredentials(out var credentials))
+            //{
+            //    //var loading = UserDialogs.Loading();
+
+            //    try
+            //    {
+            //        success = await SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password });
+
+            //        if (success)
+            //            NavigationService.NavigateToMain(this);
+            //    }
+            //    catch (InvalidCredentialException)
+            //    {
+            //        SetErrorMessage(LoginErrorCases.WrongCredentials);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        SetErrorMessage(LoginErrorCases.GeneralError);
+            //    }
+            //    finally
+            //    {
+            //        //loading.Dispose();
+            //    }
+            //}
+        }
+
+        private bool ValidateCredentials(out UserCredentials credentials)
+        {
+            credentials = null;
+
+            if (string.IsNullOrEmpty(Login))
+            {
+                SetErrorMessage(LoginErrorCases.EmptyLogin);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(Password))
+            {
+                SetErrorMessage(LoginErrorCases.EmptyPassword);
+                return false;
+            }
+
+            credentials = new UserCredentials
+            {
+                Login = Login,
+                Password = Password
+            };
+
+            return true;
+        }
+
+        private void SetErrorMessage(LoginErrorCases errorCase)
+        {
+            switch (errorCase)
+            {
+                case LoginErrorCases.EmptyLogin:
+                    ErrorMessage = "Please, enter your login";
+                    break;
+
+                case LoginErrorCases.EmptyPassword:
+                    ErrorMessage = "Please, enter your and password";
+                    break;
+
+                case LoginErrorCases.WrongCredentials:
+                    ErrorMessage = "Please, retry your login and password pair. Check current Caps Lock and input language settings";
+                    break;
+
+                default:
+                    ErrorMessage = "An error has occure, please retry later";
+                    break;
+            }
+
+            ShowError = true;
+        }
+
+        private void HideErrorMessage()
+        {
+            ShowError = false;
+
+            ErrorMessage = null;
         }
 
         #endregion

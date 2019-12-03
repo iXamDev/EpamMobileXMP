@@ -44,6 +44,11 @@ namespace XMP.Droid.Views.Login
                 .To(vm => vm.LoginCmd);
 
             bindingSet
+                .Bind(ViewHolder.SignInButton)
+                .For(v => v.EnabledBinding())
+                .To(vm => vm.LoginCmd);
+
+            bindingSet
                 .Bind(ViewHolder.ErrorOverlayView)
                 .For(v => v.VisibilityBinding())
                 .To(vm => vm.ShowError)

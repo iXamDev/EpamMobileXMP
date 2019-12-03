@@ -1,5 +1,6 @@
 ﻿using System;
 using FlexiMvvm.Bootstrappers;
+using XMP.API.Bootstrappers;
 using XMP.Core.Bootstrapper;
 using XMP.Core.Navigation;
 using XMP.iOS.Navigation;

@@ -9,6 +9,7 @@ using FlexiMvvm.ViewModels;
 using XMP.Core.Bootstrapper;
 using XMP.Droid.Bootstrapper;
 using Acr.UserDialogs;
+using XMP.API.Bootstrappers;
 
 namespace XMP.Droid
 {
