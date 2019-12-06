@@ -12,5 +12,12 @@ namespace XMP.Core.Operations
                 .WithCondition(new PreventRepetitiveExecutionsCondition())
                 .WithNotification(new PreventRepetitiveExecutionsNotification());
         }
+
+        public static IOperationBuilder WithLoadingNotification(
+            this IOperationBuilder operationBuilder)
+        {
+            return operationBuilder
+                .WithNotification(new LoadingNotification(0, 0, false));
+        }
     }
 }

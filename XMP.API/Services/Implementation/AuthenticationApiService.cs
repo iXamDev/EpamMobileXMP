@@ -25,6 +25,8 @@ namespace XMP.API.Services.Implementation
 
             request.Policy.RequireHttps = false;
 
+            request.Policy.ValidateIssuerName = false;
+
             var identityServer = await client.GetDiscoveryDocumentAsync(request);
 
             if (identityServer.IsError)

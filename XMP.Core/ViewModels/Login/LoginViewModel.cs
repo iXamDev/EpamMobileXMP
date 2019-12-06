@@ -16,6 +16,12 @@ namespace XMP.Core.ViewModels.Login
 {
     public class LoginViewModel : LifecycleViewModel
     {
+        #region Fields
+
+        private IOperationHandlerBuilder<bool> loginOperation;
+
+        #endregion
+
         #region Commands
 
         public Command LoginCmd => CommandProvider.GetForAsync(OnLogin);
@@ -46,7 +52,6 @@ namespace XMP.Core.ViewModels.Login
             }
         }
 
-        private IOperationHandlerBuilder<bool> loginOperation;
         private bool showError;
         public bool ShowError
         {
@@ -93,27 +98,28 @@ namespace XMP.Core.ViewModels.Login
 
             OperationFactory = operationFactory;
 
-#if DEBUG
-            Login = "ark";
-            Password = "123";
-#endif
-
             loginOperation =
                 OperationFactory
                     .Create(this)
-                    .WithPreventRepetitiveExecutions()
+                    .WithLoadingNotification()
+                    //.WithPreventRepetitiveExecutions()
                     .WithExpressionAsync((cancellationToken) =>
                     {
                         if (ValidateCredentials(out var credentials))
+                        {
                             return SessionService.Start(credentials);
+                        }
 
                         return Task.FromResult(false);
                     })
                     .OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
-                    .OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
-                    .OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
-                    .OnCancel(() => Console.WriteLine("CANCELLED"))
-                    .OnFinish(() => Console.WriteLine("FINISHED"));
+                    .OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.WrongCredentials))
+                    .OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError));
+
+#if DEBUG
+            Login = "ark";
+            Password = "123";
+#endif
         }
 
         #endregion
@@ -121,70 +127,7 @@ namespace XMP.Core.ViewModels.Login
         #region Private
 
         private Task OnLogin()
-        {
-            return loginOperation.ExecuteAsync();
-
-            //.ExecuteAsync();
-
-            //var operation =
-            //OperationFactory
-            //.Create(this)
-            //.WithPreventRepetitiveExecutions()
-            ////.WithExpression(() => { ValidateCredentials(out var credentials); return credentials; })
-            //.WithExpressionAsync((token) => SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password }))
-            //.OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
-            //.OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
-            //.OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError));
-            //var loginOperation =
-            //OperationFactory
-            //.Create(this)
-            //.WithPreventRepetitiveExecutions()
-            ////.WithExpression(() => { ValidateCredentials(out var credentials); return credentials; })
-            //.WithExpressionAsync((cancellationToken) =>
-            //{
-            //    if (ValidateCredentials(out var credentials))
-            //        return SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password });
-
-            //    return Task.FromResult(false);
-            //})
-            //.OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
-            //.OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
-            //.OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError))
-            //.OnCancel(() => Console.WriteLine("CANCELLED"))
-            //.OnFinish(() => Console.WriteLine("FINISHED"));
-
-            //return loginOperation.ExecuteAsync();
-
-            //var success = false;
-
-            //HideErrorMessage();
-
-
-            //if (ValidateCredentials(out var credentials))
-            //{
-            //    //var loading = UserDialogs.Loading();
-
-            //    try
-            //    {
-            //        success = await SessionService.Start(new Models.UserCredentials { Login = Login, Password = Password });
-
-            //        if (success)
-            //            NavigationService.NavigateToMain(this);
-            //    }
-            //    catch (InvalidCredentialException)
-            //    {
-            //        SetErrorMessage(LoginErrorCases.WrongCredentials);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        SetErrorMessage(LoginErrorCases.GeneralError);
-            //    }
-            //    finally
-            //    {
-            //        //loading.Dispose();
-            //    }
-            //}
-        }
+       => loginOperation.ExecuteAsync();
 
         private bool ValidateCredentials(out UserCredentials credentials)
         {
@@ -243,14 +186,5 @@ namespace XMP.Core.ViewModels.Login
         }
 
         #endregion
-
-        #region Protected
-
-        #endregion
-
-        #region Public
-
-        #endregion
-
     }
 }

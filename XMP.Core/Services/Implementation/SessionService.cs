@@ -28,11 +28,15 @@ namespace XMP.Core.Services.Implementation
 
         private string authorizationToken;
 
+        public event EventHandler OnCredentialsFails;
+
         protected IApiSettingsService ApiSettingsService { get; }
 
         protected IAuthenticationApiService AuthenticationApiService { get; }
 
         public bool Active => !string.IsNullOrEmpty(authorizationToken);
+
+        public string UserLogin { get; private set; }
 
         public User User { get; } = new User { FullName = "Arkadiy Dobkin" };
 
@@ -68,7 +72,7 @@ namespace XMP.Core.Services.Implementation
 
                 success = true;
             }
-            catch (AuthenticationException _)
+            catch (InvalidCredentialException)
             {
                 wrongCredentials = true;
             }
@@ -80,9 +84,13 @@ namespace XMP.Core.Services.Implementation
             {
                 if (success)
                     SetAuthorizationToken(token);
-
+                else
                 if (wrongCredentials)
-                    HandleWrongCredentials();
+                {
+                    Logout();
+
+                    FireCredentialsFails();
+                }
 
                 refreshTokenTCS.TrySetResult(success);
             }
@@ -103,13 +111,18 @@ namespace XMP.Core.Services.Implementation
         private Task SaveAuthorizationToken(string token)
         => SecureStorage.SetAsync(SecureStorageConstants.AccessTokenKey, token);
 
-        private void HandleWrongCredentials()
+        private void FireCredentialsFails()
+        => OnCredentialsFails?.Invoke(this, EventArgs.Empty);
+
+        private void Logout()
         {
             Credentials = null;
 
             authorizationToken = null;
 
             ApiSettingsService.SetAuthorizationToken(null);
+
+            UserLogin = null;
 
             SecureStorage.Remove(SecureStorageConstants.LoginKey);
 
@@ -128,6 +141,8 @@ namespace XMP.Core.Services.Implementation
         private bool Launch(UserCredentials credentials, string token)
         {
             Credentials = credentials;
+
+            UserLogin = credentials.Login;
 
             SetAuthorizationToken(token);
 

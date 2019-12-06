@@ -1,13 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using FlexiMvvm.Operations;
-using JetBrains.Annotations;
+﻿using FlexiMvvm.Operations;
 
 namespace XMP.Core.Operations
 {
     public class PreventRepetitiveExecutionsNotification : OperationNotification
     {
-        public PreventRepetitiveExecutionsNotification() : base(0, 0, true)
+        public PreventRepetitiveExecutionsNotification() : base(0, 0, false)
         {
         }
 

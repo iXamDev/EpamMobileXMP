@@ -8,12 +8,15 @@ using System.Collections.Generic;
 using XMP.Core.ViewModels.Details.Items;
 using XMP.Core.Models;
 using System.Linq;
+using XMP.Core.Helpers;
+using XMP.Core.Services.Abstract;
+using XMP.Core.Mapping;
 
 namespace XMP.Core.ViewModels.Details
 {
-    public class DetailsViewModel : LifecycleViewModel
+    public class DetailsViewModel : LifecycleViewModel<DetailsParameters>
     {
-        public DetailsViewModel(INavigationService navigationService, IUserDialogs userDialogs)
+        public DetailsViewModel(ISessionService sessionService, IVacationRequestsManagerService vacationRequestsManagerService, INavigationService navigationService, IUserDialogs userDialogs)
         {
             NavigationService = navigationService;
 
@@ -21,19 +24,22 @@ namespace XMP.Core.ViewModels.Details
 
             SetupVacationTypeItems();
 
-            //TODO
-            StartDate = new DateTime(2019, 1, 2);
+            VacationRequestsManagerService = vacationRequestsManagerService;
 
-            EndDate = new DateTime(2020, 11, 27);
-
-            VacationState = VacationState.Closed;
-
-            SelectedVacationType = VacationTypeItems.ElementAt(3);
+            SessionService = sessionService;
         }
+
+        private bool createNew;
+
+        private VacantionRequest model;
 
         protected IUserDialogs UserDialogs { get; }
 
         protected INavigationService NavigationService { get; }
+
+        protected ISessionService SessionService { get; }
+
+        protected IVacationRequestsManagerService VacationRequestsManagerService { get; }
 
         public ICommand SaveCmd => CommandProvider.Get(OnSave);
 
@@ -66,7 +72,7 @@ namespace XMP.Core.ViewModels.Details
             private set => SetValue(ref endDate, value, nameof(EndDate));
         }
 
-        public VacationState[] States { get; } = GetEnumStates<VacationState>();
+        public VacationState[] States { get; } = EnumHelper.GetEnumStates<VacationState>();
 
         private VacationState vacationState;
         public VacationState VacationState
@@ -76,7 +82,54 @@ namespace XMP.Core.ViewModels.Details
         }
 
         private void OnSave()
-        => NavigationService.NavigateBack(this);
+        {
+            if (Validate())
+            {
+                if (createNew)
+                    CreateNewRequest();
+                else
+                    UpdateRequestIfNeeded();
+
+                NavigationService.NavigateBack(this);
+            }
+        }
+
+        private void UpdateRequestIfNeeded()
+        {
+            if (model != null)
+            {
+                model.Start = StartDate.Date.VacationDateToDateTimeOffset();
+                model.End = EndDate.Date.VacationDateToDateTimeOffset();
+                model.VacationType = SelectedVacationType.Type;
+                model.State = VacationState;
+
+                VacationRequestsManagerService.UpdateVacation(model);
+            }
+        }
+
+        private void CreateNewRequest()
+        {
+            VacationRequestsManagerService.AddVacation(new NewVacationRequest
+            {
+                CreatedBy = SessionService.UserLogin,
+                Start = StartDate,
+                End = EndDate,
+                VacationType = SelectedVacationType.Type,
+                State = VacationState
+            });
+        }
+
+        private bool Validate()
+        {
+            if (StartDate.Date > EndDate.Date)
+            {
+                UserDialogs.Alert("Start date should be less than end date");
+
+                return false;
+            }
+
+            return true;
+        }
 
         private async Task<DateTime> ChangeDate(DateTime selectedDate)
         {
@@ -94,26 +147,36 @@ namespace XMP.Core.ViewModels.Details
         private async Task OnShowEndDateDialog()
         => EndDate = await ChangeDate(EndDate);
 
-        private static T[] GetEnumStates<T>()
-        {
-            var varians = Enum.GetValues(typeof(T));
-
-            var newItems = new List<T>();
-
-            foreach (var item in varians)
-                newItems.Add((T)item);
-
-            return newItems.ToArray();
-        }
-
         private void SetupVacationTypeItems()
         {
-            var varians = GetEnumStates<VacationType>();
+            var varians = EnumHelper.GetEnumStates<VacationType>();
 
             VacationTypeItems = varians.Select(SetupItem).ToList();
         }
 
         private DetailsItemVM SetupItem(VacationType vacationType)
         => new DetailsItemVM(vacationType);
+
+        public override void Initialize(DetailsParameters parameters, bool recreated)
+        {
+            SetModel((parameters?.CreateNew ?? true) ? null : VacationRequestsManagerService.GetVacantion(parameters.LocalId));
+
+            base.Initialize(parameters, recreated);
+        }
+
+        private void SetModel(VacantionRequest request)
+        {
+            model = request;
+
+            createNew = request == null;
+
+            StartDate = request?.Start.DateTime ?? DateTime.Now.Date;
+
+            EndDate = request?.End.DateTime ?? DateTime.Now.Date;
+
+            SelectedVacationType = request == null ? VacationTypeItems.FirstOrDefault() : VacationTypeItems.FirstOrDefault(t => t.Type == request.VacationType);
+
+            VacationState = request == null ? VacationState.Approved : request.State;
+        }
     }
 }

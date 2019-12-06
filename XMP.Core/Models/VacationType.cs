@@ -1,7 +1,7 @@
 ﻿using System;
 namespace XMP.Core.Models
 {
-    public enum VacationType
+    public enum VacationType : short
     {
         Regular,
         Sick,

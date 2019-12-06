@@ -9,6 +9,7 @@ using XMP.Core.ViewModels.Login;
 using XMP.Droid.Views.Main;
 using XMP.Droid.Views.Details;
 using XMP.Core.ViewModels.Details;
+using Android.Content;
 
 namespace XMP.Droid.Navigation
 {
@@ -25,16 +26,11 @@ namespace XMP.Droid.Navigation
             fromView.Finish();
         }
 
-        public void NavigateToDetails(MainViewModel fromViewModel)
+        public void NavigateToDetails(MainViewModel fromViewModel, DetailsParameters detailsParameters)
         {
             var fromView = NavigationViewProvider.GetActivity<MainActivity, MainViewModel>(fromViewModel);
 
-            Navigate<DetailsActivity>(fromView);
-        }
-
-        public void NavigateToHome(LauncherViewModel fromViewModel)
-        {
-            throw new NotImplementedException();
+            Navigate<DetailsActivity, DetailsParameters>(fromView, detailsParameters);
         }
 
         public void NavigateToLogin(LauncherViewModel fromViewModel)
@@ -44,9 +40,32 @@ namespace XMP.Droid.Navigation
             Navigate<LoginActivity>(fromView);
         }
 
+        public void NavigateToLogin()
+        {
+            var currentActivity = Application.CurrentActivity;
+
+            if (currentActivity != null && !(currentActivity is LoginActivity))
+            {
+                var intent = new Intent(Application.Context, typeof(LoginActivity));
+
+                intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
+
+                currentActivity.StartActivity(intent);
+
+                currentActivity.Finish();
+            }
+        }
+
         public void NavigateToMain(LoginViewModel fromViewModel)
         {
             var fromView = NavigationViewProvider.GetActivity<LoginActivity, LoginViewModel>(fromViewModel);
+
+            Navigate<MainActivity>(fromView);
+        }
+
+        public void NavigateToMain(LauncherViewModel fromViewModel)
+        {
+            var fromView = NavigationViewProvider.GetActivity<SplashActivity, LauncherViewModel>(fromViewModel);
 
             Navigate<MainActivity>(fromView);
         }

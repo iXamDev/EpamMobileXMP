@@ -5,11 +5,11 @@ namespace XMP.API.Services.Abstract
     {
         IOAuthSettings OAuthSettings { get; }
 
-        string HostUrl { get; }
+        string ServiceHostUrl { get; }
 
         string AuthorizationHostUrl { get; }
 
-        IRefreshTokenProvider RefreshTokenProvider { get; set; }
+        IRefreshTokenUpdater RefreshTokenUpdater { get; set; }
 
         void SetAuthorizationToken(string token);
     }

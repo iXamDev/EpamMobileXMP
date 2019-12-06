@@ -11,7 +11,6 @@ using Android.Support.V7.Widget;
 using Android.Support.V4.View;
 using Android.Widget;
 using XMP.Droid.Bindings;
-using FlexiMvvm.Collections;
 using XMP.Droid.Adapters;
 using FlexiMvvm.ViewModels;
 using XMP.Droid.Views.Main.Items;
@@ -28,6 +27,7 @@ namespace XMP.Droid.Views.Main
         private TextView DrawerUserNameText { get; set; }
 
         private RecyclerPlainAdapter<MainDrawerCellViewHolder> drawerAdapter;
+
         private RecyclerPlainAdapter<MainRequestCellViewHolder> requestsAdapter;
 
         private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
@@ -58,6 +58,7 @@ namespace XMP.Droid.Views.Main
             DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
 
             drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
+
             ViewHolder.DrawerRecycler.SetAdapter(drawerAdapter);
             ViewHolder.DrawerRecycler.HasFixedSize = true;
             ViewHolder.DrawerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
@@ -96,11 +97,6 @@ namespace XMP.Droid.Views.Main
                 .Bind(DrawerUserNameText)
                 .For(v => v.TextBinding())
                 .To(vm => vm.UserName);
-
-            bindingSet
-                .Bind(DrawerUserNameText)
-                .For(v => v.ClickBinding())
-                .To(vm => vm.AddCmd);
 
             bindingSet
                 .Bind(drawerAdapter)

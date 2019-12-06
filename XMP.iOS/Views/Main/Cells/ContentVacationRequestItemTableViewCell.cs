@@ -6,10 +6,6 @@ using XMP.Core.ViewModels.Main;
 using XMP.Core.ViewModels.Main.Items;
 using XMP.Core.ValueConverters;
 using XMP.iOS.Bindings;
-using XMP.Core.Models;
-using System.Collections.Generic;
-using FlexiMvvm.ValueConverters;
-using FlexiMvvm;
 using XMP.iOS.ValueConverters;
 
 namespace XMP.iOS.Views.Main.Cells

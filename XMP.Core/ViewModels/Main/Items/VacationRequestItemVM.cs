@@ -33,9 +33,9 @@ namespace XMP.Core.ViewModels.Main.Items
         {
             Model = model;
 
-            string FormatDate(DateTime date) => $"{date.ToString("MMM").ToUpper()} {date.ToString("dd")}";
+            string FormatDate(DateTimeOffset date) => $"{date.ToString("MMM").ToUpper()} {date.ToString("dd")}";
 
-            Range = $"{FormatDate(model.StartDate)} - {FormatDate(model.EndDate)}";
+            Range = $"{FormatDate(model.Start)} - {FormatDate(model.End)}";
 
             State = model.State;
 

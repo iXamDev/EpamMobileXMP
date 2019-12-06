@@ -3,16 +3,22 @@ using System.Threading.Tasks;
 using FlexiMvvm.ViewModels;
 using XMP.Core.Navigation;
 using Xamarin.Essentials;
+using XMP.Core.Services.Abstract;
 namespace XMP.Core.ViewModels.Launcher
 {
     public class LauncherViewModel : LifecycleViewModel
     {
-        protected INavigationService NavigationService { get; }
 
-        public LauncherViewModel(INavigationService navigationService)
+        public LauncherViewModel(INavigationService navigationService, ISessionService sessionService)
         {
             NavigationService = navigationService;
+
+            SessionService = sessionService;
         }
+
+        protected INavigationService NavigationService { get; }
+
+        protected ISessionService SessionService { get; }
 
         public override async Task InitializeAsync(bool recreated)
         {
@@ -25,7 +31,15 @@ namespace XMP.Core.ViewModels.Launcher
         {
             await Task.Delay(3000);
 
-            await MainThread.InvokeOnMainThreadAsync(() => NavigationService.NavigateToLogin(this));
+            var navigateToMain = await SessionService.Reactivate();
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                if (navigateToMain)
+                    NavigationService.NavigateToMain(this);
+                else
+                    NavigationService.NavigateToLogin(this);
+            });
         }
     }
 }

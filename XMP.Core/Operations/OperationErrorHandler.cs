@@ -8,9 +8,9 @@ namespace XMP.Core.Operations
     {
         public Task HandleAsync(OperationContext context, OperationError<Exception> error, CancellationToken cancellationToken)
         {
-            //TODO
+#if DEBUG
             Console.WriteLine($"{nameof(OperationErrorHandler)} : {error?.Exception?.Message}");
-
+#endif
             return Task.FromResult(0);
         }
     }

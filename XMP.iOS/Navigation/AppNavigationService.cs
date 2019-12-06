@@ -38,19 +38,25 @@ namespace XMP.iOS.Navigation
             NavigateBack(fromViewController, true);
         }
 
-        public void NavigateToDetails(MainViewModel fromViewModel)
-        {
-            var fromViewController = NavigationViewProvider.GetViewController<MainViewController, MainViewModel>(fromViewModel);
-
-            var newViewController = new DetailsViewController();
-
-            Navigate(fromViewController, newViewController, true);
-        }
-
         public void NavigateToLogin(LauncherViewModel fromViewModel)
         => ReplaceRootViewController(new LoginViewController());
 
         public void NavigateToMain(LoginViewModel fromViewModel)
         => ReplaceRootViewController(new MainViewController(), true);
+
+        public void NavigateToMain(LauncherViewModel fromViewModel)
+        => ReplaceRootViewController(new MainViewController(), true);
+
+        public void NavigateToDetails(MainViewModel fromViewModel, DetailsParameters detailsParameters)
+        {
+            var fromViewController = NavigationViewProvider.GetViewController<MainViewController, MainViewModel>(fromViewModel);
+
+            var newViewController = new DetailsViewController();
+
+            Navigate(fromViewController, newViewController, detailsParameters, true);
+        }
+
+        public void NavigateToLogin()
+        => ReplaceRootViewController(new LoginViewController());
     }
 }

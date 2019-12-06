@@ -16,7 +16,7 @@ using System.Collections.Generic;
 
 namespace XMP.iOS.Views.Details
 {
-    public class DetailsViewController : BindableViewController<DetailsViewModel>
+    public class DetailsViewController : BindableViewController<DetailsViewModel, DetailsParameters>
     {
         private UILabel navbarTitleLabel;
 

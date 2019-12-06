@@ -95,6 +95,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ViewHolderGenerator.cs</LastGenOutput>
     </Content>
+    <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_add_white_24dp.xml" />
@@ -183,6 +184,9 @@
     </PackageReference>
     <PackageReference Include="Acr.UserDialogs">
       <Version>7.0.35</Version>
+    </PackageReference>
+    <PackageReference Include="Realm.Database">
+      <Version>3.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

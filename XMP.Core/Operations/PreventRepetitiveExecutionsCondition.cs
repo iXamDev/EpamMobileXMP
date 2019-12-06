@@ -20,8 +20,8 @@ namespace XMP.Core.Operations
 
                     return Task.FromResult(true);
                 }
-                //throw new OperationCanceledException();
-                return Task.FromResult(false);
+
+                throw new OperationCanceledException();
             }
         }
     }

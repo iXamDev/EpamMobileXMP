@@ -18,7 +18,7 @@ using System.Linq;
 namespace XMP.Droid.Views.Details
 {
     [Activity]
-    public class DetailsActivity : BindableAppCompatActivity<DetailsViewModel>
+    public class DetailsActivity : BindableAppCompatActivity<DetailsViewModel, DetailsParameters>
     {
         private DetailsActivityViewHolder ViewHolder { get; set; }
 

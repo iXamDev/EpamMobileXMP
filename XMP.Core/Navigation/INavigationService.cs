@@ -8,11 +8,15 @@ namespace XMP.Core.Navigation
 {
     public interface INavigationService
     {
+        void NavigateToLogin();
+
         void NavigateToLogin(LauncherViewModel fromViewModel);
 
-        void NavigateToDetails(MainViewModel fromViewModel);
+        void NavigateToDetails(MainViewModel fromViewModel, DetailsParameters detailsParameters);
 
         void NavigateToMain(LoginViewModel fromViewModel);
+
+        void NavigateToMain(LauncherViewModel fromViewModel);
 
         void NavigateBack(DetailsViewModel fromViewModel);
     }
