@@ -127,7 +127,7 @@ namespace XMP.Core.ViewModels.Login
         #region Private
 
         private Task OnLogin()
-       => loginOperation.ExecuteAsync();
+        => loginOperation.ExecuteAsync();
 
         private bool ValidateCredentials(out UserCredentials credentials)
         {

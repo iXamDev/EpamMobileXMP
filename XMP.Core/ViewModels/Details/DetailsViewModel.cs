@@ -72,7 +72,7 @@ namespace XMP.Core.ViewModels.Details
             private set => SetValue(ref endDate, value, nameof(EndDate));
         }
 
-        public VacationState[] States { get; } = EnumHelper.GetEnumStates<VacationState>();
+        public VacationState[] AvailableVacationStates { get; } = { VacationState.Approved, VacationState.Closed };
 
         private VacationState vacationState;
         public VacationState VacationState

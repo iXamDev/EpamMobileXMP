@@ -22,7 +22,7 @@ namespace XMP.iOS.Views.Details
 
         private DetailsItemsSource itemsSource;
 
-        private Dictionary<VacationState, nint> statesMapping;
+        private Dictionary<VacationState, nint> stateSegmentedControlMapping;
 
         public new DetailsView View
         {
@@ -50,7 +50,7 @@ namespace XMP.iOS.Views.Details
 
             View.CollectionView.Source = itemsSource;
 
-            statesMapping = View.StateSegmentedControl.SetupSegmentsMapping(ViewModel.States, state => state.DisplayTitle());
+            stateSegmentedControlMapping = View.StateSegmentedControl.SetupSegmentsMapping(ViewModel.AvailableVacationStates, state => state.DisplayTitle());
         }
 
         public override void Bind(BindingSet<DetailsViewModel> bindingSet)
@@ -95,7 +95,8 @@ namespace XMP.iOS.Views.Details
             bindingSet.Bind(View.StateSegmentedControl)
                 .For(v => v.SelectedSegmentAndValueChangedBinding())
                 .To(vm => vm.VacationState)
-                .WithConversion<DictionaryValueConverter<VacationState, nint>>(statesMapping);
+                .WithConversion<DictionaryValueConverter<VacationState, nint>>(stateSegmentedControlMapping)
+                .WithFallbackValue(-1);
 
             bindingSet.Bind(NavigationItem.RightBarButtonItem)
                 .For(v => v.ClickedBinding())

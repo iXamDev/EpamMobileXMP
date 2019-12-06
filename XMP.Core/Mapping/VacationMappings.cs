@@ -28,11 +28,14 @@ namespace XMP.Core.Mapping
         (
             new System.Collections.Generic.Dictionary<API.Models.VacationStatus, Models.VacationState>
             {
+                { API.Models.VacationStatus.Draft, Models.VacationState.Draft },
+                { API.Models.VacationStatus.Submitted, Models.VacationState.Submitted },
                 { API.Models.VacationStatus.Approved, Models.VacationState.Approved },
-                { API.Models.VacationStatus.Closed, Models.VacationState.Closed },
+                { API.Models.VacationStatus.InProgress, Models.VacationState.InProgress },
+                { API.Models.VacationStatus.Closed, Models.VacationState.Closed }
             },
             API.Models.VacationStatus.Draft,
-            Models.VacationState.Approved
+            Models.VacationState.Draft
         );
 
         public static DateTimeOffset VacationDateToDateTimeOffset(this DateTime dateTime)

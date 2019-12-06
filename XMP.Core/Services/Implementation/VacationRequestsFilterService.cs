@@ -14,8 +14,8 @@ namespace XMP.Core.Services.Implementation
         {
             filterMap = new Dictionary<VacantionRequestFilterType, VacationState[]>
             {
-                {VacantionRequestFilterType.All, new VacationState[] { VacationState.Approved, VacationState.Closed } },
-                {VacantionRequestFilterType.Open, new VacationState[] { VacationState.Approved } },
+                {VacantionRequestFilterType.All, new VacationState[] { VacationState.Approved, VacationState.Closed, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
+                {VacantionRequestFilterType.Open, new VacationState[] { VacationState.Approved, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
                 {VacantionRequestFilterType.Closed, new VacationState[] { VacationState.Closed } }
             };
         }

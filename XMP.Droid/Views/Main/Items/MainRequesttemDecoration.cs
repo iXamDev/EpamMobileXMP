@@ -24,7 +24,7 @@ namespace XMP.Droid.Views.Main.Items
 
             paint.SetStyle(Paint.Style.Stroke);
 
-            sideSpace = Application.Context.Resources.GetDimensionPixelSize(Resource.Dimension.request_items_devider_side_space); //ContextCompat.(Application.Context, Resource.Color.devider)(int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 1f, Application.Context.Resources.DisplayMetrics);
+            sideSpace = Application.Context.Resources.GetDimensionPixelSize(Resource.Dimension.request_items_devider_side_space);
         }
 
         public override void OnDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state)

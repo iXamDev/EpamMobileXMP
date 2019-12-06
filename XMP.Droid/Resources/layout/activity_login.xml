@@ -34,6 +34,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="@dimen/side_margin"
         android:hint="@string/password"
+        android:password="true"
         android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

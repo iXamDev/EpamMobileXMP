@@ -8,8 +8,17 @@ namespace XMP.Core.Helpers
         {
             switch (state)
             {
+                case VacationState.Draft:
+                    return "Draft";
+
+                case VacationState.Submitted:
+                    return "Submitted";
+
                 case VacationState.Approved:
                     return "Approved";
+
+                case VacationState.InProgress:
+                    return "InProgress";
 
                 case VacationState.Closed:
                     return "Closed";
