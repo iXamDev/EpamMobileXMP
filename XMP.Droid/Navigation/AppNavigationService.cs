@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Android.Content;
 using FlexiMvvm.Navigation;
 using XMP.Core.Navigation;
-using XMP.Core.ViewModels.Launcher;
-using XMP.Droid.Views.Splash;
-using XMP.Droid.Views.Login;
-using XMP.Core.ViewModels.Main;
-using XMP.Core.ViewModels.Login;
-using XMP.Droid.Views.Main;
-using XMP.Droid.Views.Details;
 using XMP.Core.ViewModels.Details;
-using Android.Content;
+using XMP.Core.ViewModels.Launcher;
+using XMP.Core.ViewModels.Login;
+using XMP.Core.ViewModels.Main;
+using XMP.Droid.Views.Details;
+using XMP.Droid.Views.Login;
+using XMP.Droid.Views.Main;
+using XMP.Droid.Views.Splash;
 
 namespace XMP.Droid.Navigation
 {

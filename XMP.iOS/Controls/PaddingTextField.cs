@@ -1,6 +1,7 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
+
 namespace XMP.iOS.Controls
 {
     public class PaddingTextField : UITextField

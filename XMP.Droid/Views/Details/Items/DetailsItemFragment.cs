@@ -1,11 +1,8 @@
-﻿using System;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.OS;
 using Android.Views;
 using FlexiMvvm.Bindings;
-using FlexiMvvm.Views;
-using XMP.Core.ViewModels.Details.Items;
 using XMP.Core.ValueConverters;
+using XMP.Core.ViewModels.Details.Items;
 using XMP.Droid.Bindings;
 using XMP.Droid.ValueConverters;
 using XMP.Droid.Views.Common;

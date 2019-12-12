@@ -1,17 +1,19 @@
 ﻿using System;
-using UIKit;
 using CoreGraphics;
 using SidebarNavigation;
+using UIKit;
 
 namespace XMP.iOS.Views.SidebarMenu
 {
     public class SidebarMenuViewController : SidebarController
     {
-        public SidebarMenuViewController(IntPtr handle) : base(handle)
+        public SidebarMenuViewController(IntPtr handle)
+            : base(handle)
         {
         }
 
-        public SidebarMenuViewController(UIViewController rootViewController, UIViewController contentViewController, UIViewController menuViewController) : base(rootViewController, contentViewController, menuViewController)
+        public SidebarMenuViewController(UIViewController rootViewController, UIViewController contentViewController, UIViewController menuViewController)
+            : base(rootViewController, contentViewController, menuViewController)
         {
         }
 
@@ -19,7 +21,7 @@ namespace XMP.iOS.Views.SidebarMenu
         {
             base.ViewWillAppear(animated);
 
-            _sidebar.ContentViewController.View.Frame = new CoreGraphics.CGRect(CGPoint.Empty, this.View.Bounds.Size);
+            _sidebar.ContentViewController.View.Frame = new CoreGraphics.CGRect(CGPoint.Empty, View.Bounds.Size);
         }
     }
 }

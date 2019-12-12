@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using FlexiMvvm.ValueConverters;
-using XMP.Core.Models;
 using XMP.Core.Helpers;
+using XMP.Core.Models;
+
 namespace XMP.Core.ValueConverters
 {
     public class VacationTypeTitleValueConverter : ValueConverter<VacationType, string>

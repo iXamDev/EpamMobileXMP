@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
 using XMP.Droid.Adapters;
 using XMP.Droid.Views.Common;
-using System.Collections.Generic;
 
 namespace XMP.Droid.Bindings
 {

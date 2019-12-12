@@ -8,39 +8,19 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using XMP.API.Models;
 using XMP.API.Services.Abstract;
+
 namespace XMP.API.Services.Implementation
 {
     public class WebConnectionService : IWebConnectionService
     {
+        private bool _isDisposed;
+
+        private Lazy<HttpClient> _explicitHttpClient;
+
         public WebConnectionService()
         {
-            explicitHttpClient = new Lazy<HttpClient>(() => CreateHttpClient());
+            _explicitHttpClient = new Lazy<HttpClient>(() => CreateHttpClient());
         }
-
-        private HttpClient CreateHttpClient(HttpMessageHandler messageHandler)
-        {
-            return new HttpClient(messageHandler)
-            {
-                Timeout = TimeSpan.FromSeconds(RequestTimeoutInSeconds)
-            };
-        }
-
-        private HttpClient CreateHttpClient()
-        => CreateHttpClient((HttpHandler = CreateHandlerFunc?.Invoke() ?? CreateHandler()));
-
-        private HttpClientHandler CreateHandler()
-        {
-            var handler = new HttpClientHandler();
-
-            if (handler.SupportsAutomaticDecompression)
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            return handler;
-        }
-
-        private bool isDisposed;
-
-        private Lazy<HttpClient> explicitHttpClient;
 
         public virtual string AcceptHeader { get; set; } = "application/json";
 
@@ -52,7 +32,28 @@ namespace XMP.API.Services.Implementation
 
         public string Bearer { get; set; }
 
-        public HttpClient Client => explicitHttpClient.Value;
+        public HttpClient Client => _explicitHttpClient.Value;
+
+        private HttpClient CreateHttpClient(HttpMessageHandler messageHandler)
+        {
+            return new HttpClient(messageHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(RequestTimeoutInSeconds)
+            };
+        }
+
+        private HttpClient CreateHttpClient()
+        => CreateHttpClient(HttpHandler = CreateHandlerFunc?.Invoke() ?? CreateHandler());
+
+        private HttpClientHandler CreateHandler()
+        {
+            var handler = new HttpClientHandler();
+
+            if (handler.SupportsAutomaticDecompression)
+                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            return handler;
+        }
 
         private void SetupRequestHeaders(HttpRequestMessage message)
         {
@@ -69,16 +70,17 @@ namespace XMP.API.Services.Implementation
 
         protected virtual void Dispose(bool disposing)
         {
-            if (isDisposed) return;
+            if (_isDisposed)
+                return;
 
             if (disposing)
             {
-                explicitHttpClient.Value?.Dispose();
+                _explicitHttpClient.Value?.Dispose();
             }
 
-            explicitHttpClient = null;
+            _explicitHttpClient = null;
 
-            isDisposed = true;
+            _isDisposed = true;
         }
 
         public void Dispose()
@@ -93,7 +95,7 @@ namespace XMP.API.Services.Implementation
 
             var httpClient = Client;
 
-            var notNullCancellationToken = cancellationToken ?? new CancellationToken();
+            var notNullCancellationToken = cancellationToken ?? default;
 
             var requestResult = new RequestResult
             {
@@ -107,6 +109,7 @@ namespace XMP.API.Services.Implementation
                 if (postData != null)
                     httpRequestMessage.Content = postData;
             }
+
             try
             {
                 SetupRequestHeaders(httpRequestMessage);
@@ -137,7 +140,8 @@ namespace XMP.API.Services.Implementation
             return requestResult;
         }
 
-        public async Task<RequestResult<T>> ExecuteRequestAsync<T>(string url, HttpMethod method, HttpContent postData = null, CancellationToken? cancellationToken = null) where T : class
+        public async Task<RequestResult<T>> ExecuteRequestAsync<T>(string url, HttpMethod method, HttpContent postData = null, CancellationToken? cancellationToken = null)
+            where T : class
         {
             var requestResult = await ExecuteRequestAsync(url, method, postData, cancellationToken);
             var jsonResult = new RequestResult<T>(requestResult);

@@ -1,6 +1,7 @@
-﻿using FlexiMvvm.Views;
+﻿using Cirrious.FluentLayouts.Touch;
+using FlexiMvvm.Views;
 using UIKit;
-using Cirrious.FluentLayouts.Touch;
+
 namespace XMP.iOS.Views.Main.Cells
 {
     public class MenuFilterItemView : LayoutView
@@ -31,8 +32,7 @@ namespace XMP.iOS.Views.Main.Cells
 
             this.AddConstraints(
                 TitleLabel.AtTrailingOf(this, 30),
-                TitleLabel.WithSameCenterY(this)
-            );
+                TitleLabel.WithSameCenterY(this));
         }
     }
 }

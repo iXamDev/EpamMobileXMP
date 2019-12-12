@@ -11,7 +11,8 @@ namespace XMP.API.Services.Implementation
     {
         private const string ControllerUrl = "workflow";
 
-        public VacationRequestsApiService(IWebConnectionService webConnectionService, IApiSettingsService apiSettingService) : base(webConnectionService, apiSettingService)
+        public VacationRequestsApiService(IWebConnectionService webConnectionService, IApiSettingsService apiSettingService)
+            : base(webConnectionService, apiSettingService)
         {
         }
 

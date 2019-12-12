@@ -1,15 +1,16 @@
-﻿using FlexiMvvm.Operations;
-using Acr.UserDialogs;
+﻿using Acr.UserDialogs;
+using FlexiMvvm.Operations;
 
 namespace XMP.Core.Operations
 {
     public class LoadingNotification : OperationNotification
     {
-        public LoadingNotification(int delay, int minDuration, bool isCancelable) : base(delay, minDuration, isCancelable)
+        private IProgressDialog _loading;
+
+        public LoadingNotification(int delay, int minDuration, bool isCancelable)
+            : base(delay, minDuration, isCancelable)
         {
         }
-
-        private IProgressDialog loading;
 
         private IUserDialogs UserDialogs(OperationContext context)
         => context.DependencyProvider.Get<IUserDialogs>();
@@ -21,14 +22,14 @@ namespace XMP.Core.Operations
 
         private void DisposeLoading()
         {
-            loading?.Dispose();
-            loading = null;
+            _loading?.Dispose();
+            _loading = null;
         }
 
         protected override void Show(OperationContext context)
         {
             DisposeLoading();
-            loading = UserDialogs(context).Loading();
+            _loading = UserDialogs(context).Loading();
         }
     }
 }

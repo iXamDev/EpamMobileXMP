@@ -9,8 +9,11 @@ namespace XMP.API.Models
     public class RequestResult
     {
         public string Url { get; internal set; }
+
         public string Bearer { get; internal set; }
+
         public bool IsSuccess { get; internal set; }
+
         public bool IsCancelled { get; internal set; }
 
         public HttpContent Content { get; internal set; }
@@ -22,13 +25,8 @@ namespace XMP.API.Models
 
     public class RequestResult<T> : RequestResult
     {
-        public T Data { get; protected set; }
-
-        public bool IsParsed { get; protected set; }
-
         public RequestResult()
         {
-
         }
 
         public RequestResult(RequestResult requestResult)
@@ -41,6 +39,10 @@ namespace XMP.API.Models
             StatusCode = requestResult.StatusCode;
             Exception = requestResult.Exception;
         }
+
+        public T Data { get; protected set; }
+
+        public bool IsParsed { get; protected set; }
 
         public async Task<bool> ParseContent()
         {

@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using XMP.API.Exceptions;
 using XMP.API.Models;
 using XMP.API.Services.Abstract;
-using XMP.API.Exceptions;
 
 namespace XMP.API.Services.Implementation
 {
@@ -40,18 +40,15 @@ namespace XMP.API.Services.Implementation
             return new StringContent(
                 JsonConvert.SerializeObject(data, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }) ?? string.Empty,
                 Encoding.UTF8,
-                "application/json"
-            );
+                "application/json");
         }
 
-        protected virtual async Task<RequestResult> ExecuteRequestAsync
-        (
+        protected virtual async Task<RequestResult> ExecuteRequestAsync(
             string url,
             HttpMethod method,
             HttpContent postData = null,
             CancellationToken? cancellationToken = null,
-            bool tryToRefreshAccessToken = true
-        )
+            bool tryToRefreshAccessToken = true)
         {
             var needToTryGetNewAccessToken = tryToRefreshAccessToken;
 
@@ -73,20 +70,19 @@ namespace XMP.API.Services.Implementation
                 }
 
                 needToTryGetNewAccessToken = false;
-
-            } while (tryMoreTime);
+            }
+            while (tryMoreTime);
 
             return result;
         }
 
-        protected virtual async Task<RequestResult<T>> ExecuteRequestAsync<T>
-        (
+        protected virtual async Task<RequestResult<T>> ExecuteRequestAsync<T>(
             string url,
             HttpMethod method,
             HttpContent postData = null,
             CancellationToken? cancellationToken = null,
-            bool tryToRefreshAccessToken = true
-        ) where T : class
+            bool tryToRefreshAccessToken = true)
+            where T : class
         {
             var needToTryGetNewAccessToken = tryToRefreshAccessToken;
 
@@ -106,13 +102,14 @@ namespace XMP.API.Services.Implementation
 
                     ThrowWebConnectionExceptionIfNeeded(needToTryGetNewAccessToken, tryMoreTime, result);
                 }
-                else
-                    if (!result.IsParsed)
+                else if (!result.IsParsed)
+                {
                     throw result.Exception;
+                }
 
                 needToTryGetNewAccessToken = false;
-
-            } while (tryMoreTime);
+            }
+            while (tryMoreTime);
 
             return result;
         }
@@ -128,7 +125,8 @@ namespace XMP.API.Services.Implementation
             return tryMoreTime;
         }
 
-        protected virtual Task<bool> NeedToTryWithNewToken<T>(RequestResult<T> result) where T : class
+        protected virtual Task<bool> NeedToTryWithNewToken<T>(RequestResult<T> result)
+            where T : class
         => NeedToTryWithNewToken(result as RequestResult);
 
         protected virtual void ThrowWebConnectionExceptionIfNeeded(bool needToTryGetNewAccessToken, bool tokenSuccessfullyRefreshed, RequestResult result)
@@ -142,8 +140,6 @@ namespace XMP.API.Services.Implementation
             if (apiResponce.Code != "0")
                 throw new ApiException(apiResponce.Code, apiResponce.Message);
         }
-
-        #region HttpMethods
 
         public virtual async Task<T> Get<T>(string url, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
             where T : class
@@ -166,7 +162,5 @@ namespace XMP.API.Services.Implementation
 
         public virtual Task Post(string url, HttpContent postData, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
         => ExecuteRequestAsync(url, HttpMethod.Post, postData, cancellationToken, tryToRefreshAccessToken);
-
-        #endregion
     }
 }

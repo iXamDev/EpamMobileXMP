@@ -65,27 +65,22 @@ namespace XMP.iOS.Views.Main
 
             this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
-            this.AddConstraints
-            (
+            this.AddConstraints(
                 AvatarImageView.AtTopOf(this, 32),
                 AvatarImageView.WithSameCenterX(this),
                 AvatarImageView.Width().EqualTo(114),
                 AvatarImageView.Height().EqualTo(114),
-
                 NameLabel.Below(AvatarImageView, 18),
                 NameLabel.AtLeadingOf(this, 16),
                 NameLabel.AtTrailingOf(this, 16),
-
                 MenuDeviderView.AtLeadingOf(this, 0),
                 MenuDeviderView.AtTrailingOf(this, 0),
                 MenuDeviderView.Height().EqualTo(Theme.Dimensions.DeviderWidth),
                 MenuDeviderView.Below(NameLabel, 14),
-
                 MenuTableView.Below(MenuDeviderView),
                 MenuTableView.AtLeadingOf(this),
                 MenuTableView.AtTrailingOf(this),
-                MenuTableView.AtBottomOf(this)
-            );
+                MenuTableView.AtBottomOf(this));
         }
     }
 }

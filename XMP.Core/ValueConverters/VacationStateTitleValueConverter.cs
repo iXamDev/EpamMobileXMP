@@ -3,6 +3,7 @@ using System.Globalization;
 using FlexiMvvm.ValueConverters;
 using XMP.Core.Helpers;
 using XMP.Core.Models;
+
 namespace XMP.Core.ValueConverters
 {
     public class VacationStateTitleValueConverter : ValueConverter<VacationState, string>

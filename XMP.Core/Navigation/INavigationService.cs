@@ -1,8 +1,7 @@
-﻿using System;
+﻿using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
 using XMP.Core.ViewModels.Main;
-using XMP.Core.ViewModels.Details;
 
 namespace XMP.Core.Navigation
 {

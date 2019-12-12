@@ -1,10 +1,7 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
-using CoreGraphics;
-using XMP.iOS.Views;
-using XMP.iOS.Extensions;
 using XMP.iOS.Controls;
 
 namespace XMP.iOS.Views.Login
@@ -87,6 +84,7 @@ namespace XMP.iOS.Views.Login
             this.AddLayoutSubview(ErrorMessageTriangleImage);
         }
 
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1115:ParameterMustFollowComma", Justification = "Reviewed.")]
         protected override void SetupLayoutConstraints()
         {
             base.SetupLayoutConstraints();
@@ -117,8 +115,7 @@ namespace XMP.iOS.Views.Login
                 ErrorMessageView.WithSameWidth(LoginField),
 
                 ErrorMessageTriangleImage.Below(ErrorMessageView),
-                ErrorMessageTriangleImage.WithSameCenterX(this)
-            );
+                ErrorMessageTriangleImage.WithSameCenterX(this));
         }
     }
 }

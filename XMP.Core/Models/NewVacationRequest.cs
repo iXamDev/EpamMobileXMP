@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+
 namespace XMP.Core.Models
 {
     public class NewVacationRequest

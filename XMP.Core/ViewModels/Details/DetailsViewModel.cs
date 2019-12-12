@@ -1,21 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using FlexiMvvm.ViewModels;
-using XMP.Core.Navigation;
 using Acr.UserDialogs;
-using System.Collections.Generic;
-using XMP.Core.ViewModels.Details.Items;
-using XMP.Core.Models;
-using System.Linq;
+using FlexiMvvm.ViewModels;
 using XMP.Core.Helpers;
-using XMP.Core.Services.Abstract;
 using XMP.Core.Mapping;
+using XMP.Core.Models;
+using XMP.Core.Navigation;
+using XMP.Core.Services.Abstract;
+using XMP.Core.ViewModels.Details.Items;
 
 namespace XMP.Core.ViewModels.Details
 {
     public class DetailsViewModel : LifecycleViewModel<DetailsParameters>
     {
+        private DetailsItemVM _selectedVacationType;
+
+        private bool _createNew;
+
+        private VacantionRequest _model;
+
+        private DateTime _startDate;
+
+        private DateTime _endDate;
+
+        private VacationState _vacationState;
+
         public DetailsViewModel(ISessionService sessionService, IVacationRequestsManagerService vacationRequestsManagerService, INavigationService navigationService, IUserDialogs userDialogs)
         {
             NavigationService = navigationService;
@@ -28,10 +40,6 @@ namespace XMP.Core.ViewModels.Details
 
             SessionService = sessionService;
         }
-
-        private bool createNew;
-
-        private VacantionRequest model;
 
         protected IUserDialogs UserDialogs { get; }
 
@@ -51,41 +59,37 @@ namespace XMP.Core.ViewModels.Details
 
         public List<DetailsItemVM> VacationTypeItems { get; private set; }
 
-        private DetailsItemVM selectedVacationType;
         public DetailsItemVM SelectedVacationType
         {
-            get => selectedVacationType;
-            set => SetValue(ref selectedVacationType, value, nameof(SelectedVacationType));
+            get => _selectedVacationType;
+            set => SetValue(ref _selectedVacationType, value, nameof(SelectedVacationType));
         }
 
-        private DateTime startDate;
         public DateTime StartDate
         {
-            get => startDate;
-            private set => SetValue(ref startDate, value, nameof(StartDate));
+            get => _startDate;
+            private set => SetValue(ref _startDate, value, nameof(StartDate));
         }
 
-        private DateTime endDate;
         public DateTime EndDate
         {
-            get => endDate;
-            private set => SetValue(ref endDate, value, nameof(EndDate));
+            get => _endDate;
+            private set => SetValue(ref _endDate, value, nameof(EndDate));
         }
 
         public VacationState[] AvailableVacationStates { get; } = { VacationState.Approved, VacationState.Closed };
 
-        private VacationState vacationState;
         public VacationState VacationState
         {
-            get => vacationState;
-            set => SetValue(ref vacationState, value, nameof(VacationState));
+            get => _vacationState;
+            set => SetValue(ref _vacationState, value, nameof(VacationState));
         }
 
         private void OnSave()
         {
             if (Validate())
             {
-                if (createNew)
+                if (_createNew)
                     CreateNewRequest();
                 else
                     UpdateRequestIfNeeded();
@@ -96,14 +100,14 @@ namespace XMP.Core.ViewModels.Details
 
         private void UpdateRequestIfNeeded()
         {
-            if (model != null)
+            if (_model != null)
             {
-                model.Start = StartDate.Date.VacationDateToDateTimeOffset();
-                model.End = EndDate.Date.VacationDateToDateTimeOffset();
-                model.VacationType = SelectedVacationType.Type;
-                model.State = VacationState;
+                _model.Start = StartDate.Date.VacationDateToDateTimeOffset();
+                _model.End = EndDate.Date.VacationDateToDateTimeOffset();
+                _model.VacationType = SelectedVacationType.Type;
+                _model.State = VacationState;
 
-                VacationRequestsManagerService.UpdateVacation(model);
+                VacationRequestsManagerService.UpdateVacation(_model);
             }
         }
 
@@ -166,9 +170,9 @@ namespace XMP.Core.ViewModels.Details
 
         private void SetModel(VacantionRequest request)
         {
-            model = request;
+            _model = request;
 
-            createNew = request == null;
+            _createNew = request == null;
 
             StartDate = request?.Start.DateTime ?? DateTime.Now.Date;
 

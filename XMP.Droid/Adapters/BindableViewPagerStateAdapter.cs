@@ -1,14 +1,12 @@
 ﻿using System;
-using Android.Support.V4.View;
-using Android.Support.V4.App;
-using FlexiMvvm.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using FlexiMvvm;
-using XMP.Droid.Views.Common;
+using Android.Support.V4.App;
 using Android.Views;
-using Java.Lang;
+using FlexiMvvm;
+using FlexiMvvm.Collections;
+using XMP.Droid.Views.Common;
 
 namespace XMP.Droid.Adapters
 {
@@ -16,24 +14,26 @@ namespace XMP.Droid.Adapters
         where TViewModel : class
         where TFragment : BindableViewPagerFragment<TViewModel>
     {
-        public BindableViewPagerStateAdapter(FragmentManager fm, Func<TViewModel, TFragment> fragmentsCreator) : base(fm)
+        private DisposableCollection _itemsSubscriptions;
+
+        private IEnumerable<TViewModel> _items;
+
+        public BindableViewPagerStateAdapter(FragmentManager fm, Func<TViewModel, TFragment> fragmentsCreator)
+            : base(fm)
         {
             FragmentsCreator = fragmentsCreator;
         }
 
-        private DisposableCollection itemsSubscriptions;
-
         private Func<TViewModel, TFragment> FragmentsCreator { get; }
 
-        private IEnumerable<TViewModel> items;
         public IEnumerable<TViewModel> Items
         {
-            get => items;
+            get => _items;
             set
             {
-                if (!ReferenceEquals(items, value))
+                if (!ReferenceEquals(_items, value))
                 {
-                    items = value;
+                    _items = value;
 
                     RefreshItemsSubscriptions();
                     Reload(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
@@ -41,14 +41,14 @@ namespace XMP.Droid.Adapters
             }
         }
 
-        private DisposableCollection ItemsSubscriptions => itemsSubscriptions ?? (itemsSubscriptions = new DisposableCollection());
+        private DisposableCollection ItemsSubscriptions => _itemsSubscriptions ?? (_itemsSubscriptions = new DisposableCollection());
 
         public override int Count => Items?.Count() ?? 0;
 
         private void RefreshItemsSubscriptions()
         {
-            itemsSubscriptions?.Dispose();
-            itemsSubscriptions = null;
+            _itemsSubscriptions?.Dispose();
+            _itemsSubscriptions = null;
 
             if (Items is INotifyCollectionChanged observableItems)
             {
@@ -73,8 +73,8 @@ namespace XMP.Droid.Adapters
         {
             if (disposing)
             {
-                itemsSubscriptions?.Dispose();
-                itemsSubscriptions = null;
+                _itemsSubscriptions?.Dispose();
+                _itemsSubscriptions = null;
             }
 
             base.Dispose(disposing);

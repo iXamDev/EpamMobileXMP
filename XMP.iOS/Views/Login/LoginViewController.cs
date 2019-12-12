@@ -1,9 +1,7 @@
-﻿using System;
+﻿using FlexiMvvm.Bindings;
+using FlexiMvvm.ValueConverters;
 using FlexiMvvm.Views;
 using XMP.Core.ViewModels.Login;
-using UIKit;
-using FlexiMvvm.Bindings;
-using FlexiMvvm.ValueConverters;
 
 namespace XMP.iOS.Views.Login
 {

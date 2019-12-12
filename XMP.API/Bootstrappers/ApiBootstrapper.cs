@@ -1,8 +1,6 @@
-﻿using System;
-using FlexiMvvm.Bootstrappers;
+﻿using FlexiMvvm.Bootstrappers;
 using XMP.API.Services.Abstract;
 using XMP.API.Services.Implementation;
-using System.Net.Http;
 
 namespace XMP.API.Bootstrappers
 {

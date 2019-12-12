@@ -1,30 +1,27 @@
-﻿using System;
-using Microsoft.Win32;
-using Android.Support.V7.Widget;
-using Android.Graphics;
-using Android.Views;
-using Android.Util;
+﻿using Android.Graphics;
 using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
+using Android.Util;
 
 namespace XMP.Droid.Views.Main.Items
 {
     public class MainRequesttemDecoration : RecyclerView.ItemDecoration
     {
-        Paint paint;
+        private Paint _paint;
 
-        int sideSpace;
+        private int _sideSpace;
 
         public MainRequesttemDecoration()
         {
-            paint = new Paint()
+            _paint = new Paint()
             {
                 StrokeWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, 1f, Application.Context.Resources.DisplayMetrics),
                 Color = new Color(ContextCompat.GetColor(Application.Context, Resource.Color.devider))
             };
 
-            paint.SetStyle(Paint.Style.Stroke);
+            _paint.SetStyle(Paint.Style.Stroke);
 
-            sideSpace = Application.Context.Resources.GetDimensionPixelSize(Resource.Dimension.request_items_devider_side_space);
+            _sideSpace = Application.Context.Resources.GetDimensionPixelSize(Resource.Dimension.request_items_devider_side_space);
         }
 
         public override void OnDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state)
@@ -44,7 +41,7 @@ namespace XMP.Droid.Views.Main.Items
 
                 int top = (int)(child.Top + lp.TopMargin + lp.BottomMargin + child.TranslationY);
 
-                c.DrawLine(left + ((i + 1 < childCount) ? sideSpace : 0), top, right, top, paint);
+                c.DrawLine(left + ((i + 1 < childCount) ? _sideSpace : 0), top, right, top, _paint);
             }
         }
     }

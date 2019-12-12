@@ -1,15 +1,13 @@
-﻿using System;
-using FlexiMvvm.Navigation;
+﻿using FlexiMvvm.Navigation;
+using UIKit;
 using XMP.Core.Navigation;
 using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
 using XMP.Core.ViewModels.Main;
-using XMP.iOS.Views.Splash;
-using XMP.iOS.Views.Login;
-using UIKit;
-using XMP.iOS.Views.Main;
 using XMP.iOS.Views.Details;
+using XMP.iOS.Views.Login;
+using XMP.iOS.Views.Main;
 
 namespace XMP.iOS.Navigation
 {

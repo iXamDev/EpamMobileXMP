@@ -2,9 +2,9 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Collections;
+using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Details.Items;
-using XMP.Core.ValueConverters;
 using XMP.iOS.Bindings;
 using XMP.iOS.ValueConverters;
 
@@ -12,7 +12,8 @@ namespace XMP.iOS.Views.Details.Cells
 {
     public class DetailsItemCollectionViewCell : CollectionViewBindableItemCell<DetailsViewModel, DetailsItemVM>
     {
-        public DetailsItemCollectionViewCell(IntPtr handle) : base(handle)
+        public DetailsItemCollectionViewCell(IntPtr handle)
+            : base(handle)
         {
         }
 

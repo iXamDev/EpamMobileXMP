@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace XMP.Core.Models
 {
     public enum VacationType : short

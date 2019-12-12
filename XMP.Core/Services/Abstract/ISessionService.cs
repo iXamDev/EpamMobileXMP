@@ -1,12 +1,14 @@
-﻿using XMP.Core.Models;
+﻿using System;
 using System.Threading.Tasks;
 using XMP.API.Services.Abstract;
-using System;
+using XMP.Core.Models;
 
 namespace XMP.Core.Services.Abstract
 {
     public interface ISessionService : IRefreshTokenUpdater
     {
+        event EventHandler OnCredentialsFails;
+
         bool Active { get; }
 
         string UserLogin { get; }
@@ -16,7 +18,5 @@ namespace XMP.Core.Services.Abstract
         Task<bool> Start(UserCredentials credentials);
 
         Task<bool> Reactivate();
-
-        event EventHandler OnCredentialsFails;
     }
 }

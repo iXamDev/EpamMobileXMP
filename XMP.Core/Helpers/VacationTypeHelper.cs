@@ -1,5 +1,5 @@
-﻿using System;
-using XMP.Core.Models;
+﻿using XMP.Core.Models;
+
 namespace XMP.Core.Helpers
 {
     public static class VacationTypeHelper

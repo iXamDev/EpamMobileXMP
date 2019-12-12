@@ -1,7 +1,7 @@
-﻿using System;
-using ExpressMapper.Extensions;
+﻿using ExpressMapper.Extensions;
 using Realms;
 using XMP.Core.Database.Abstract;
+
 namespace XMP.Core.Mapping
 {
     public class ExpressMapperRealmRepositoryEntriesMapper<T, TDto> : IRealmRepositoryEntriesMapper<T, TDto>

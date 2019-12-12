@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Threading.Tasks;
-using XMP.API.Services.Abstract;
-using IdentityModel.Client;
 using System.Security.Authentication;
+using System.Threading.Tasks;
+using IdentityModel.Client;
 using XMP.API.Models;
-using System.Net.Http;
+using XMP.API.Services.Abstract;
 
 namespace XMP.API.Services.Implementation
 {
     public class AuthenticationApiService : CommonApiService, IAuthenticationApiService
     {
-        public AuthenticationApiService(IWebConnectionService webConnectionService, IApiSettingsService apiSettingService) : base(webConnectionService, apiSettingService)
+        public AuthenticationApiService(IWebConnectionService webConnectionService, IApiSettingsService apiSettingService)
+            : base(webConnectionService, apiSettingService)
         {
         }
 
@@ -32,8 +32,7 @@ namespace XMP.API.Services.Implementation
             if (identityServer.IsError)
                 throw identityServer.Exception;
 
-            var tokenResponce = await client.RequestPasswordTokenAsync
-            (
+            var tokenResponce = await client.RequestPasswordTokenAsync(
                 new PasswordTokenRequest
                 {
                     Address = identityServer.TokenEndpoint,
@@ -42,8 +41,7 @@ namespace XMP.API.Services.Implementation
                     Password = password,
                     UserName = login,
                     Scope = ApiSettingsService.OAuthSettings.ResourceId
-                }
-            );
+                });
 
             if (tokenResponce.IsError || tokenResponce.AccessToken == null)
             {

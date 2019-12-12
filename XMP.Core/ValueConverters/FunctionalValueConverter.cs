@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using FlexiMvvm.ValueConverters;
+
 namespace XMP.Core.ValueConverters
 {
     public class FunctionalValueConverter<TSource, TValue> : ValueConverter<TSource, TValue>
@@ -21,15 +22,15 @@ namespace XMP.Core.ValueConverters
 
     public class FunctionalValueParameter<TSource, TValue>
     {
-        public Func<TSource, TValue> Convert { get; }
-
-        public Func<TValue, TSource> ConvertBack { get; }
-
         public FunctionalValueParameter(Func<TSource, TValue> convert, Func<TValue, TSource> convertBack)
         {
             Convert = convert;
 
             ConvertBack = convertBack;
         }
+
+        public Func<TSource, TValue> Convert { get; }
+
+        public Func<TValue, TSource> ConvertBack { get; }
     }
 }

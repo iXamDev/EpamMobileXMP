@@ -1,15 +1,14 @@
-﻿using System;
+﻿using System.Linq;
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
-using System.Linq;
 using XMP.iOS.Views.Main.Cells;
 
 namespace XMP.iOS.Views.Main
 {
     public class ContentView : LayoutView
     {
-        private UIView deviderView;
+        private UIView _deviderView;
 
         public UITableView ContentTableView { get; private set; }
 
@@ -28,7 +27,7 @@ namespace XMP.iOS.Views.Main
 
             ContentTableView.RegisterClassForCellReuse(typeof(ContentVacationRequestItemTableViewCell), ContentVacationRequestItemTableViewCell.CellId);
 
-            deviderView = new UIView { BackgroundColor = Theme.Colors.MenuDevider };
+            _deviderView = new UIView { BackgroundColor = Theme.Colors.MenuDevider };
         }
 
         protected override void SetupLayout()
@@ -37,7 +36,7 @@ namespace XMP.iOS.Views.Main
 
             this.AddLayoutSubview(ContentTableView);
 
-            this.AddLayoutSubview(deviderView);
+            this.AddLayoutSubview(_deviderView);
         }
 
         protected override void SetupLayoutConstraints()
@@ -46,19 +45,15 @@ namespace XMP.iOS.Views.Main
 
             this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
-            this.AddConstraints
-            (
-                ContentTableView.FullSizeOf(this).Concat
-                (
+            this.AddConstraints(
+                ContentTableView.FullSizeOf(this).Concat(
                     new FluentLayout[]
                     {
-                        deviderView.AtTopOf(this),
-                        deviderView.AtBottomOf(this),
-                        deviderView.AtLeadingOf(this, -1),
-                        deviderView.Width().EqualTo(Theme.Dimensions.DeviderWidth)
-                    }
-                )
-            );
+                        _deviderView.AtTopOf(this),
+                        _deviderView.AtBottomOf(this),
+                        _deviderView.AtLeadingOf(this, -1),
+                        _deviderView.Width().EqualTo(Theme.Dimensions.DeviderWidth)
+                    }));
         }
     }
 }

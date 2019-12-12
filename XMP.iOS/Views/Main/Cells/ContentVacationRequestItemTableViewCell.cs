@@ -2,9 +2,9 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Collections;
+using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Main;
 using XMP.Core.ViewModels.Main.Items;
-using XMP.Core.ValueConverters;
 using XMP.iOS.Bindings;
 using XMP.iOS.ValueConverters;
 
@@ -12,7 +12,8 @@ namespace XMP.iOS.Views.Main.Cells
 {
     public class ContentVacationRequestItemTableViewCell : TableViewBindableItemCell<MainViewModel, VacationRequestItemVM>
     {
-        public ContentVacationRequestItemTableViewCell(IntPtr handle) : base(handle)
+        public ContentVacationRequestItemTableViewCell(IntPtr handle)
+            : base(handle)
         {
             SelectionStyle = UIKit.UITableViewCellSelectionStyle.None;
         }

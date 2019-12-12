@@ -75,31 +75,24 @@ namespace XMP.iOS.Views.Main.Cells
                 IconImageView.WithSameCenterY(this),
                 IconImageView.Width().EqualTo(36),
                 IconImageView.Height().EqualTo(36),
-
                 RangeLabel.ToTrailingOf(IconImageView, 16),
                 RangeLabel.AtTopOf(this, 16),
-
                 TypeLabel.AtLeadingOf(RangeLabel),
                 TypeLabel.Below(RangeLabel),
-
                 ArrowImageView.WithSameCenterY(this),
                 ArrowImageView.AtTrailingOf(this, 12),
                 ArrowImageView.Width().EqualTo(8),
                 ArrowImageView.Height().EqualTo(13),
-
                 StateLabel.ToLeadingOf(ArrowImageView, 6),
                 StateLabel.WithSameCenterY(this),
-
                 MainDeviderView.Height().EqualTo(Theme.Dimensions.DeviderWidth),
                 MainDeviderView.AtBottomOf(this),
                 MainDeviderView.AtTrailingOf(this),
                 MainDeviderView.WithSameLeading(RangeLabel),
-
                 LastItemDeviderView.WithSameHeight(MainDeviderView),
                 LastItemDeviderView.AtBottomOf(this),
                 LastItemDeviderView.AtLeadingOf(this),
-                LastItemDeviderView.ToLeadingOf(MainDeviderView)
-            );
+                LastItemDeviderView.ToLeadingOf(MainDeviderView));
         }
     }
 }

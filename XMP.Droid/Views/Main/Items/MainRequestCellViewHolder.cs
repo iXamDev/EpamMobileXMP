@@ -1,20 +1,19 @@
-﻿using System;
-using Android.Views;
+﻿using Android.Views;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Collections;
+using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Main;
 using XMP.Core.ViewModels.Main.Items;
 using XMP.Droid.Bindings;
 using XMP.Droid.ValueConverters;
-using XMP.Core.ValueConverters;
 
 namespace XMP.Droid.Views
 {
     public partial class MainRequestCellViewHolder : RecyclerViewBindableItemViewHolder<MainViewModel, VacationRequestItemVM>
     {
-        public MainRequestCellViewHolder(View itemView) : base(itemView)
+        public MainRequestCellViewHolder(View itemView)
+            : base(itemView)
         {
-
         }
 
         public override void Bind(BindingSet<VacationRequestItemVM> bindingSet)

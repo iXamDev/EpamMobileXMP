@@ -5,8 +5,6 @@ namespace XMP.API.Exceptions
 {
     public class WebConnectionException : Exception
     {
-        public RequestResult RequestResult { get; private set; }
-
         public WebConnectionException(RequestResult result)
         {
             RequestResult = result;
@@ -17,6 +15,8 @@ namespace XMP.API.Exceptions
         {
             RequestResult = result;
         }
+
+        public RequestResult RequestResult { get; private set; }
 
         public override Exception GetBaseException()
         {

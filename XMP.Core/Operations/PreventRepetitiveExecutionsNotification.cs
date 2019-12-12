@@ -4,7 +4,8 @@ namespace XMP.Core.Operations
 {
     public class PreventRepetitiveExecutionsNotification : OperationNotification
     {
-        public PreventRepetitiveExecutionsNotification() : base(0, 0, false)
+        public PreventRepetitiveExecutionsNotification()
+            : base(0, 0, false)
         {
         }
 

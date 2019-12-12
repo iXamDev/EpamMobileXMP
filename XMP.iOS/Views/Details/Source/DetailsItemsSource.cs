@@ -1,46 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using FlexiMvvm.Collections;
-using JetBrains.Annotations;
-using UIKit;
-using XMP.iOS.Views.Details.Cells;
-using XMP.Core.ViewModels.Details.Items;
-using System.Collections.Generic;
 using Foundation;
-using CoreGraphics;
+using UIKit;
+using XMP.Core.ViewModels.Details.Items;
+using XMP.iOS.Views.Details.Cells;
 
 namespace XMP.iOS.Views.Details.Source
 {
     public class DetailsItemsSource : CollectionViewObservablePlainSource
     {
-        public DetailsItemsSource(UICollectionView collectionView, UIPageControl pageControl) : base(collectionView, _ => DetailsItemCollectionViewCell.CellId)
+        private bool _ignoreFocusedItemChange;
+
+        private bool _shouldSetInitialPosition = true;
+
+        private int _lastPage = -1;
+
+        private DetailsItemVM _focusedItem;
+
+        private WeakReference<UIPageControl> _pageControlReference;
+
+        public DetailsItemsSource(UICollectionView collectionView, UIPageControl pageControl)
+            : base(collectionView, _ => DetailsItemCollectionViewCell.CellId)
         {
-            pageControlReference = new WeakReference<UIPageControl>(pageControl);
+            _pageControlReference = new WeakReference<UIPageControl>(pageControl);
         }
-
-        private bool ignoreFocusedItemChange;
-
-        private bool shouldSetInitialPosition = true;
-
-        private int lastPage = -1;
-
-        private WeakReference<UIPageControl> pageControlReference;
-
-        public bool AnimateFocusedItemChange { get; set; }
 
         public event EventHandler FocusedItemChanged;
 
-        private DetailsItemVM focusedItem;
+        public bool AnimateFocusedItemChange { get; set; }
+
         public DetailsItemVM FocusedItem
         {
-            get => focusedItem;
+            get => _focusedItem;
             set
             {
-                if (!ReferenceEquals(focusedItem, value))
+                if (!ReferenceEquals(_focusedItem, value))
                 {
-                    focusedItem = value;
+                    _focusedItem = value;
 
                     ScrollToItem(value);
                 }
@@ -59,9 +58,9 @@ namespace XMP.iOS.Views.Details.Source
         {
             var currentPage = GetCurrentPageIndex(scrollView as UICollectionView);
 
-            if (lastPage != currentPage)
+            if (_lastPage != currentPage)
             {
-                lastPage = currentPage;
+                _lastPage = currentPage;
 
                 ScrolledToPage(currentPage);
             }
@@ -69,9 +68,9 @@ namespace XMP.iOS.Views.Details.Source
 
         public override void WillDisplayCell(UICollectionView collectionView, UICollectionViewCell cell, NSIndexPath indexPath)
         {
-            if (shouldSetInitialPosition)
+            if (_shouldSetInitialPosition)
             {
-                shouldSetInitialPosition = false;
+                _shouldSetInitialPosition = false;
 
                 ScrollToItem(FocusedItem);
             }
@@ -87,7 +86,7 @@ namespace XMP.iOS.Views.Details.Source
         {
             UIPageControl pageControl = null;
 
-            if (pageControlReference.TryGetTarget(out var control))
+            if (_pageControlReference.TryGetTarget(out var control))
             {
                 pageControl = control;
 
@@ -117,19 +116,19 @@ namespace XMP.iOS.Views.Details.Source
 
         private void ScrolledToPage(int page)
         {
-            if (!ignoreFocusedItemChange)
+            if (!_ignoreFocusedItemChange)
             {
                 var newFocusedItem = Items?.ElementAtOrDefault(page);
 
-                if (!ReferenceEquals(focusedItem, newFocusedItem))
+                if (!ReferenceEquals(_focusedItem, newFocusedItem))
                 {
-                    focusedItem = newFocusedItem;
+                    _focusedItem = newFocusedItem;
 
                     RaiseFocusedItemChanged();
                 }
             }
 
-            if (pageControlReference.TryGetTarget(out var pageControl))
+            if (_pageControlReference.TryGetTarget(out var pageControl))
                 pageControl.CurrentPage = page;
         }
 
@@ -151,7 +150,7 @@ namespace XMP.iOS.Views.Details.Source
 
         private void SetSettingAdjustingScrollPosition(bool executing)
         {
-            ignoreFocusedItemChange = executing;
+            _ignoreFocusedItemChange = executing;
 
             if (CollectionViewWeakReference.TryGetTarget(out var collectionView))
                 collectionView.ScrollEnabled = !executing;

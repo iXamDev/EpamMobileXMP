@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using Xamarin.Essentials;
 using XMP.API.Services.Abstract;
 
@@ -6,16 +6,17 @@ namespace XMP.API.Services.Implementation
 {
     public class ApiSettingsService : IApiSettingsService
     {
+        private const string AndroidHost = "10.0.2.2";
+
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1303:ConstFieldNamesMustBeginWithUpperCaseLetter", Justification = "Reviewed.")]
+        private const string iOSHost = "localhost";
+
         public ApiSettingsService(IWebConnectionService webConnectionService)
         {
             WebConnectionService = webConnectionService;
 
             Host = DeviceInfo.Platform == DevicePlatform.iOS ? iOSHost : AndroidHost;
         }
-
-        private const string AndroidHost = "10.0.2.2";
-
-        private const string iOSHost = "localhost";
 
         protected string Host { get; }
 

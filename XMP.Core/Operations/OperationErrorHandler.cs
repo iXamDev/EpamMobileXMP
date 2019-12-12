@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using FlexiMvvm.Operations;
+
 namespace XMP.Core.Operations
 {
     public class OperationErrorHandler : IErrorHandler

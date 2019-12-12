@@ -1,11 +1,18 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using XMP.Core.Models;
+
 namespace XMP.Core.Services.Abstract
 {
     public interface IVacationRequestsManagerService
     {
+        event EventHandler<EventArgs<VacantionRequest>> VacationAdded;
+
+        event EventHandler<EventArgs<VacantionRequest>> VacationChanged;
+
+        event EventHandler VacationsChanged;
+
         IEnumerable<VacantionRequest> GetVacantionRequests();
 
         void AddVacation(NewVacationRequest vacantion);
@@ -15,11 +22,5 @@ namespace XMP.Core.Services.Abstract
         VacantionRequest GetVacantion(string localId);
 
         Task<bool> Sync(bool force = false);
-
-        event EventHandler<VacantionRequest> VacationAdded;
-
-        event EventHandler<VacantionRequest> VacationChanged;
-
-        event EventHandler VacationsChanged;
     }
 }

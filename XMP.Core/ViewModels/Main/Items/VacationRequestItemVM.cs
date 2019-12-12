@@ -6,25 +6,28 @@ namespace XMP.Core.ViewModels.Main.Items
 {
     public class VacationRequestItemVM : ViewModel
     {
-        private string range;
+        private string _range;
+
+        private VacationType _type;
+
+        private VacationState _state;
+
         public string Range
         {
-            get => range;
-            private set => SetValue(ref range, value, nameof(Range));
+            get => _range;
+            private set => SetValue(ref _range, value, nameof(Range));
         }
 
-        private VacationType type;
         public VacationType Type
         {
-            get => type;
-            private set => SetValue(ref type, value, nameof(Type));
+            get => _type;
+            private set => SetValue(ref _type, value, nameof(Type));
         }
 
-        private VacationState state;
         public VacationState State
         {
-            get => state;
-            private set => SetValue(ref state, value, nameof(State));
+            get => _state;
+            private set => SetValue(ref _state, value, nameof(State));
         }
 
         public VacantionRequest Model { get; private set; }

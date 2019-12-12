@@ -1,12 +1,9 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.OS;
 using FlexiMvvm.Bindings;
+using FlexiMvvm.ValueConverters;
 using FlexiMvvm.Views;
 using XMP.Core.ViewModels.Login;
-using Android.Widget;
-using FlexiMvvm.ValueConverters;
-using Android.Views;
 
 namespace XMP.Droid.Views.Login
 {

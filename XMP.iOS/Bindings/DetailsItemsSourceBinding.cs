@@ -1,8 +1,8 @@
 ﻿using System;
 using FlexiMvvm.Bindings;
-using XMP.iOS.Views.Details.Source;
-using XMP.Core.ViewModels.Details.Items;
 using FlexiMvvm.Bindings.Custom;
+using XMP.Core.ViewModels.Details.Items;
+using XMP.iOS.Views.Details.Source;
 
 namespace XMP.iOS.Bindings
 {

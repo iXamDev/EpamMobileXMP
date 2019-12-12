@@ -1,6 +1,6 @@
 ﻿using System;
-using FlexiMvvm.Bindings;
 using Android.Support.V7.Widget;
+using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
 
 namespace XMP.Droid.Bindings

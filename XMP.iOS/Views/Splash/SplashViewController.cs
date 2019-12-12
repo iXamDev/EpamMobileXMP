@@ -1,7 +1,6 @@
-﻿using System;
-using FlexiMvvm.Views;
-using XMP.Core.ViewModels.Launcher;
+﻿using FlexiMvvm.Views;
 using UIKit;
+using XMP.Core.ViewModels.Launcher;
 
 namespace XMP.iOS.Views.Splash
 {
@@ -20,4 +19,3 @@ namespace XMP.iOS.Views.Splash
         }
     }
 }
-

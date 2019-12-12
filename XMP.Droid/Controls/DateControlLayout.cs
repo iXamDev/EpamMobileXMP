@@ -5,48 +5,57 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V4.Content;
+
 namespace XMP.Droid.Controls
 {
     [Register("xmp.droid.controls.DateControlLayout")]
     public class DateControlLayout : FrameLayout
     {
-        public DateControlLayout(Context context) : base(context)
+        private TextView _dayText;
+
+        private TextView _monthText;
+
+        private TextView _yearText;
+
+        private DateTime _date;
+
+        private Color _color;
+
+        public DateControlLayout(Context context)
+            : base(context)
         {
             Initialize(context, null);
         }
 
-        public DateControlLayout(Context context, IAttributeSet attrs) : base(context, attrs)
+        public DateControlLayout(Context context, IAttributeSet attrs)
+            : base(context, attrs)
         {
             Initialize(context, attrs);
         }
 
-        public DateControlLayout(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr)
+        public DateControlLayout(Context context, IAttributeSet attrs, int defStyleAttr)
+            : base(context, attrs, defStyleAttr)
         {
             Initialize(context, attrs);
         }
 
-        private TextView dayText, monthText, yearText;
-
-        private DateTime date;
         public DateTime Date
         {
-            get => date;
+            get => _date;
             set
             {
-                date = value;
+                _date = value;
 
                 ApplyDate(value);
             }
         }
 
-        private Color color;
         public Color Color
         {
-            get => color;
+            get => _color;
             set
             {
-                color = value;
+                _color = value;
 
                 ApplyColor(value);
             }
@@ -64,11 +73,11 @@ namespace XMP.Droid.Controls
 
         private void InitializeSubviews(View view)
         {
-            dayText = view.FindViewById<TextView>(Resource.Id.day_text);
+            _dayText = view.FindViewById<TextView>(Resource.Id.day_text);
 
-            monthText = view.FindViewById<TextView>(Resource.Id.month_text);
+            _monthText = view.FindViewById<TextView>(Resource.Id.month_text);
 
-            yearText = view.FindViewById<TextView>(Resource.Id.year_text);
+            _yearText = view.FindViewById<TextView>(Resource.Id.year_text);
         }
 
         private void ParseAttrs(IAttributeSet attrs)
@@ -84,16 +93,16 @@ namespace XMP.Droid.Controls
 
         private void ApplyDate(DateTime newDate)
         {
-            SetPartDateText(dayText, newDate.Day);
-            SetPartDateText(monthText, newDate.ToString("MMM").ToUpper());
-            SetPartDateText(yearText, newDate.Year);
+            SetPartDateText(_dayText, newDate.Day);
+            SetPartDateText(_monthText, newDate.ToString("MMM").ToUpper());
+            SetPartDateText(_yearText, newDate.Year);
         }
 
         private void ApplyColor(Color value)
         {
-            dayText.SetTextColor(value);
-            monthText.SetTextColor(value);
-            yearText.SetTextColor(value);
+            _dayText.SetTextColor(value);
+            _monthText.SetTextColor(value);
+            _yearText.SetTextColor(value);
         }
 
         private void SetPartDateText(TextView label, int dateInt)

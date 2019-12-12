@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Globalization;
-using FlexiMvvm.ValueConverters;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using FlexiMvvm.ValueConverters;
 
 namespace XMP.Core.ValueConverters
 {

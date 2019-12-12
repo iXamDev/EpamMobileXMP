@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using ExpressMapper.Extensions;
+using XMP.API.Models;
 using XMP.API.Services.Abstract;
+using XMP.Core.Database.Abstract;
 using XMP.Core.Models;
 using XMP.Core.Services.Abstract;
-using XMP.API.Models;
-using ExpressMapper.Extensions;
-using XMP.Core.Database.Abstract;
-using System.Threading;
+
 namespace XMP.Core.Services.Implementation
 {
     public class VacationRequestsManagerService : IVacationRequestsManagerService
     {
+        private object _syncRoot = new object();
+
+        private CancellationTokenSource _syncCTS;
+
+        private TaskCompletionSource<bool> _syncTCS;
+
         public VacationRequestsManagerService(IVacationRequestsRepository vacationRequestsRepository, IVacationRequestsApiService vacationRequestsApiService)
         {
             VacationRequestsApiService = vacationRequestsApiService;
@@ -20,19 +27,15 @@ namespace XMP.Core.Services.Implementation
             VacationRequestsRepository = vacationRequestsRepository;
         }
 
-        private object syncRoot = new object();
+        public event EventHandler<EventArgs<VacantionRequest>> VacationAdded;
 
-        private CancellationTokenSource syncCTS;
+        public event EventHandler<EventArgs<VacantionRequest>> VacationChanged;
 
-        private TaskCompletionSource<bool> syncTCS;
+        public event EventHandler VacationsChanged;
 
         protected IVacationRequestsRepository VacationRequestsRepository { get; }
 
         protected IVacationRequestsApiService VacationRequestsApiService { get; }
-
-        public event EventHandler<VacantionRequest> VacationAdded;
-        public event EventHandler<VacantionRequest> VacationChanged;
-        public event EventHandler VacationsChanged;
 
         protected string GenerateLocalId()
         => Guid.NewGuid().ToString();
@@ -40,13 +43,13 @@ namespace XMP.Core.Services.Implementation
         private VacantionRequest SetupVacationRequest(VacationDto dto)
         => dto.Map<VacationDto, VacantionRequest>();
 
-        private void FireVacationAdded(VacantionRequest vacation)
-        => VacationAdded?.Invoke(this, vacation);
+        private void RaiseVacationAdded(VacantionRequest vacation)
+        => VacationAdded?.Invoke(this, new EventArgs<VacantionRequest>(vacation));
 
-        private void FireVacationChanged(VacantionRequest vacation)
-        => VacationChanged?.Invoke(this, vacation);
+        private void RaiseVacationChanged(VacantionRequest vacation)
+        => VacationChanged?.Invoke(this, new EventArgs<VacantionRequest>(vacation));
 
-        private void FireVacationsChanged()
+        private void RaiseVacationsChanged()
         => VacationsChanged?.Invoke(this, EventArgs.Empty);
 
         private VacantionRequest SetupVacationRequest(NewVacationRequest newVacantion)
@@ -66,16 +69,16 @@ namespace XMP.Core.Services.Implementation
 
         private void CancelCurrentSync()
         {
-            syncCTS?.Cancel();
+            _syncCTS?.Cancel();
 
-            syncCTS?.Dispose();
+            _syncCTS?.Dispose();
 
-            syncCTS = null;
+            _syncCTS = null;
         }
 
         private void ChangeLocalDataAndRunSync(Action changeAction)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
                 CancelCurrentSync();
 
@@ -87,12 +90,12 @@ namespace XMP.Core.Services.Implementation
 
         private void ExecuteNewSync()
         {
-            syncCTS = new CancellationTokenSource();
+            _syncCTS = new CancellationTokenSource();
 
-            if (syncTCS == null)
-                syncTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            if (_syncTCS == null)
+                _syncTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            var cancellationToken = syncCTS.Token;
+            var cancellationToken = _syncCTS.Token;
 
             Task.Run(() => Synchronization(cancellationToken));
         }
@@ -152,14 +155,14 @@ namespace XMP.Core.Services.Implementation
             {
             }
 
-            lock (syncRoot)
+            lock (_syncRoot)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                syncTCS.TrySetResult(success);
+                _syncTCS.TrySetResult(success);
 
-                syncTCS = null;
+                _syncTCS = null;
             }
         }
 
@@ -175,26 +178,26 @@ namespace XMP.Core.Services.Implementation
 
                     if (!backendModel.Equals(local))
                     {
-                        lock (syncRoot)
+                        lock (_syncRoot)
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
                             UpdateByBackendModel(backendModel);
                         }
 
-                        FireVacationChanged(backendModel);
+                        RaiseVacationChanged(backendModel);
                     }
                 }
                 else
                 {
-                    lock (syncRoot)
+                    lock (_syncRoot)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
                         AddNewBackendModel(backendModel);
                     }
 
-                    FireVacationAdded(backendModel);
+                    RaiseVacationAdded(backendModel);
                 }
             }
         }
@@ -217,7 +220,7 @@ namespace XMP.Core.Services.Implementation
 
         private void ResetLocalItems(IEnumerable<VacantionRequest> localSyncedModels, IEnumerable<VacantionRequest> backendModels, CancellationToken cancellationToken)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
                 VacationRequestsRepository.RemoveRange(localSyncedModels);
 
@@ -229,7 +232,7 @@ namespace XMP.Core.Services.Implementation
                 VacationRequestsRepository.AddRange(backendModels);
             }
 
-            FireVacationsChanged();
+            RaiseVacationsChanged();
         }
 
         private async Task<bool> UploadSynchronization(IEnumerable<VacantionRequest> changedModels, CancellationToken cancellationToken)
@@ -247,7 +250,7 @@ namespace XMP.Core.Services.Implementation
 
                 model.SyncState = SynchronizationState.Synced;
 
-                lock (syncRoot)
+                lock (_syncRoot)
                     VacationRequestsRepository.Update(model);
             }
 
@@ -276,17 +279,19 @@ namespace XMP.Core.Services.Implementation
 
         public Task<bool> Sync(bool cancelCurrentSync = false)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                if (syncTCS != null)
+                if (_syncTCS != null)
+                {
                     if (cancelCurrentSync)
                         CancelCurrentSync();
                     else
-                        return syncTCS.Task;
+                        return _syncTCS.Task;
+                }
 
                 ExecuteNewSync();
 
-                return syncTCS.Task;
+                return _syncTCS.Task;
             }
         }
 
@@ -302,7 +307,7 @@ namespace XMP.Core.Services.Implementation
 
             ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Update(vacation));
 
-            FireVacationChanged(vacation);
+            RaiseVacationChanged(vacation);
         }
 
         public void AddVacation(NewVacationRequest newVacantion)
@@ -311,7 +316,7 @@ namespace XMP.Core.Services.Implementation
 
             ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Add(vacation));
 
-            FireVacationAdded(vacation);
+            RaiseVacationAdded(vacation);
         }
 
         public VacantionRequest GetVacantion(string localId)

@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using FlexiMvvm;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FlexiMvvm;
+
 namespace XMP.Core.Mapping
 {
-    public class EnumMapping<T, V>
+    public class EnumMapping<TFirst, TSecond>
     {
-        private readonly Dictionary<T, V> mapping;
+        private readonly Dictionary<TFirst, TSecond> _mapping;
 
-        private readonly T defaultT;
+        private readonly TFirst _defaultT;
 
-        private readonly V defaultV;
+        private readonly TSecond _defaultV;
 
-        public EnumMapping(Dictionary<T, V> mapping, T defaultT, V defaultV)
+        public EnumMapping(Dictionary<TFirst, TSecond> mapping, TFirst defaultT, TSecond defaultV)
         {
-            this.mapping = mapping;
+            _mapping = mapping;
 
-            this.defaultT = defaultT;
+            _defaultT = defaultT;
 
-            this.defaultV = defaultV;
+            _defaultV = defaultV;
         }
 
-        public T Get(V value)
-        => mapping.ContainsValue(value) ? mapping.First(t => t.Value.Equals(value)).Key : defaultT;
+        public TFirst Get(TSecond value)
+        => _mapping.ContainsValue(value) ? _mapping.First(t => t.Value.Equals(value)).Key : _defaultT;
 
-        public V Get(T key)
-        => mapping.GetValueOrDefault(key, defaultV);
+        public TSecond Get(TFirst key)
+        => _mapping.GetValueOrDefault(key, _defaultV);
     }
 }

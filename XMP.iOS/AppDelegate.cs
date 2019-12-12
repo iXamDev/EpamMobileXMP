@@ -3,10 +3,10 @@ using FlexiMvvm.Bootstrappers;
 using FlexiMvvm.Ioc;
 using Foundation;
 using UIKit;
+using XMP.API.Bootstrappers;
 using XMP.Core.Bootstrapper;
 using XMP.iOS.Bootstrapper;
 using XMP.iOS.Views.Splash;
-using XMP.API.Bootstrappers;
 
 namespace XMP.iOS
 {
@@ -47,4 +47,3 @@ namespace XMP.iOS
         }
     }
 }
-

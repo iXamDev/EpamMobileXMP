@@ -102,11 +102,13 @@ namespace XMP.Core.Database.Implementation.RealmDatabase.Common
                 var dtos = items?.Select((arg) => FindDtoForItem(realm, arg))?.Where(p => p != null)?.ToArray();
 
                 if (dtos != null)
+                {
                     realm.Write(() =>
-                    {
-                        foreach (var dto in dtos)
-                            realm.Remove(dto);
-                    });
+                     {
+                         foreach (var dto in dtos)
+                             realm.Remove(dto);
+                     });
+                }
             }
         }
 

@@ -1,25 +1,41 @@
 ﻿using System;
-using FlexiMvvm.ViewModels;
-using XMP.Core.Navigation;
-using System.Windows.Input;
-using FlexiMvvm.Commands;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using XMP.Core.ViewModels.Main.Items;
-using FlexiMvvm.Collections;
-using XMP.Core.Models;
 using System.Linq;
-using XMP.Core.Services.Abstract;
-using Acr.UserDialogs;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Acr.UserDialogs;
+using FlexiMvvm.Collections;
+using FlexiMvvm.Commands;
+using FlexiMvvm.ViewModels;
+using FlexiMvvm.Weak.Subscriptions;
 using Xamarin.Essentials;
 using XMP.Core.Helpers;
-using FlexiMvvm.Weak.Subscriptions;
+using XMP.Core.Models;
+using XMP.Core.Navigation;
+using XMP.Core.Services.Abstract;
+using XMP.Core.ViewModels.Main.Items;
 
 namespace XMP.Core.ViewModels.Main
 {
     public class MainViewModel : LifecycleViewModel
     {
+        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService> _vacationsChangedSubcription;
+
+        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService, EventArgs<VacantionRequest>> _vacationChangedSubcription;
+
+        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService, EventArgs<VacantionRequest>> _vacationAddedSubcription;
+
+        private CancellationTokenSource _resetItemsCTS;
+
+        private object _requestItemsSyncRoot = new object();
+
+        private string _userName;
+
+        private ObservableCollection<VacationRequestItemVM> _requestItems;
+
+        private IEnumerable<FilterItemVM> _filterItems;
+
         public MainViewModel(IVacationRequestsManagerService vacationRequestsManagerService, IVacationRequestsFilterService vacationRequestsFilterService, ISessionService sessionService, IUserDialogs userDialogs, INavigationService navigationService)
         {
             NavigationService = navigationService;
@@ -34,14 +50,6 @@ namespace XMP.Core.ViewModels.Main
 
             ResetItems();
         }
-
-        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService> vacationsChangedSubcription;
-        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService, VacantionRequest> vacationChangedSubcription;
-        private EventHandlerWeakEventSubscription<IVacationRequestsManagerService, VacantionRequest> vacationAddedSubcription;
-
-        private CancellationTokenSource resetItemsCTS;
-
-        private object requestItemsSyncRoot = new object();
 
         private VacantionRequestFilterType CurrentFilter { get; set; }
 
@@ -61,27 +69,24 @@ namespace XMP.Core.ViewModels.Main
 
         public ICommand FilterCmd => CommandProvider.Get<FilterItemVM>(OnFilter);
 
-        private IEnumerable<FilterItemVM> filterItems;
         public IEnumerable<FilterItemVM> FilterItems
         {
-            get => filterItems;
-            private set => SetValue(ref filterItems, value, nameof(FilterItems));
+            get => _filterItems;
+            private set => SetValue(ref _filterItems, value, nameof(FilterItems));
         }
 
-        private ObservableCollection<VacationRequestItemVM> requestItems;
         public ObservableCollection<VacationRequestItemVM> RequestItems
         {
-            get => requestItems;
-            private set => SetValue(ref requestItems, value, nameof(RequestItems));
+            get => _requestItems;
+            private set => SetValue(ref _requestItems, value, nameof(RequestItems));
         }
 
         public Interaction CloseMenuInteraction { get; } = new Interaction();
 
-        private string userName;
         public string UserName
         {
-            get => userName;
-            private set => SetValue(ref userName, value, nameof(UserName));
+            get => _userName;
+            private set => SetValue(ref _userName, value, nameof(UserName));
         }
 
         public string AddButtonTitle => "New";
@@ -92,11 +97,11 @@ namespace XMP.Core.ViewModels.Main
         {
             SetFilterItems();
 
-            vacationsChangedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService>(VacationRequestsManagerService, (source, handler) => source.VacationsChanged += handler, (source, handler) => source.VacationsChanged -= handler, VacationsChangedEventHandler);
+            _vacationsChangedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService>(VacationRequestsManagerService, (source, handler) => source.VacationsChanged += handler, (source, handler) => source.VacationsChanged -= handler, VacationsChangedEventHandler);
 
-            vacationChangedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService, VacantionRequest>(VacationRequestsManagerService, (source, handler) => source.VacationChanged += handler, (source, handler) => source.VacationChanged -= handler, VacationChangedEventHandler);
+            _vacationChangedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService, EventArgs<VacantionRequest>>(VacationRequestsManagerService, (source, handler) => source.VacationChanged += handler, (source, handler) => source.VacationChanged -= handler, VacationChangedEventHandler);
 
-            vacationAddedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService, VacantionRequest>(VacationRequestsManagerService, (source, handler) => source.VacationAdded += handler, (source, handler) => source.VacationAdded -= handler, VacationAddedEventHandler);
+            _vacationAddedSubcription = new EventHandlerWeakEventSubscription<IVacationRequestsManagerService, EventArgs<VacantionRequest>>(VacationRequestsManagerService, (source, handler) => source.VacationAdded += handler, (source, handler) => source.VacationAdded -= handler, VacationAddedEventHandler);
 
             var loading = UserDialogs.Loading();
 
@@ -109,8 +114,8 @@ namespace XMP.Core.ViewModels.Main
             loading.Dispose();
         }
 
-        private void VacationAddedEventHandler(object sender, VacantionRequest e)
-        => AddVacationRequestIfNeeded(e);
+        private void VacationAddedEventHandler(object sender, EventArgs<VacantionRequest> e)
+        => AddVacationRequestIfNeeded(e.Value);
 
         private void AddVacationRequestIfNeeded(VacantionRequest e)
         {
@@ -120,32 +125,32 @@ namespace XMP.Core.ViewModels.Main
 
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    lock (requestItemsSyncRoot)
+                    lock (_requestItemsSyncRoot)
                         RequestItems.Add(itemVM);
                 });
             }
         }
 
-        private void VacationChangedEventHandler(object sender, VacantionRequest e)
+        private void VacationChangedEventHandler(object sender, EventArgs<VacantionRequest> e)
         {
-            var shoulBeVisible = VacationRequestsFilterService.Filter(e, CurrentFilter);
+            var shoulBeVisible = VacationRequestsFilterService.Filter(e.Value, CurrentFilter);
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                lock (requestItemsSyncRoot)
+                lock (_requestItemsSyncRoot)
                 {
-                    var item = RequestItems.FirstOrDefault(t => t.Model.LocalId == e.LocalId);
+                    var item = RequestItems.FirstOrDefault(t => t.Model.LocalId == e.Value.LocalId);
 
                     if (item != null)
                     {
-                        item.SetModel(e);
+                        item.SetModel(e.Value);
 
                         if (!shoulBeVisible)
                             RequestItems.Remove(item);
                     }
                     else if (shoulBeVisible)
                     {
-                        var itemVM = SetupRequestItemVM(e);
+                        var itemVM = SetupRequestItemVM(e.Value);
 
                         RequestItems.Add(itemVM);
                     }
@@ -179,15 +184,15 @@ namespace XMP.Core.ViewModels.Main
         {
             CancellationToken cancellationToken;
 
-            lock (requestItemsSyncRoot)
+            lock (_requestItemsSyncRoot)
             {
-                resetItemsCTS?.Cancel();
+                _resetItemsCTS?.Cancel();
 
-                resetItemsCTS?.Dispose();
+                _resetItemsCTS?.Dispose();
 
-                resetItemsCTS = new CancellationTokenSource();
+                _resetItemsCTS = new CancellationTokenSource();
 
-                cancellationToken = resetItemsCTS.Token;
+                cancellationToken = _resetItemsCTS.Token;
             }
 
             Task.Run(() => ResetItems(cancellationToken));
@@ -209,7 +214,7 @@ namespace XMP.Core.ViewModels.Main
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                lock (requestItemsSyncRoot)
+                lock (_requestItemsSyncRoot)
                 {
                     RequestItems = new ObservableCollection<VacationRequestItemVM>(newItems);
                 }

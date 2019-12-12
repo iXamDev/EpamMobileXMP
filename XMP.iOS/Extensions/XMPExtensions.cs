@@ -1,5 +1,6 @@
 ﻿using System;
 using UIKit;
+
 namespace XMP.iOS.Extensions
 {
     public static class XMPExtensions

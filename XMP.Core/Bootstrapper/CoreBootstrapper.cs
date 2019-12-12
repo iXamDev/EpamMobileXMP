@@ -1,26 +1,24 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using ExpressMapper;
 using FlexiMvvm.Bootstrappers;
+using FlexiMvvm.Operations;
 using FlexiMvvm.ViewModels;
+using Xamarin.Essentials;
+using XMP.API.Bootstrappers;
+using XMP.API.Services.Abstract;
+using XMP.Core.Database.Abstract;
+using XMP.Core.Database.Implementation.RealmDatabase;
+using XMP.Core.Database.Implementation.RealmDatabase.VacationRequests;
+using XMP.Core.Mapping;
+using XMP.Core.Models;
 using XMP.Core.Navigation;
+using XMP.Core.Operations;
+using XMP.Core.Services.Abstract;
+using XMP.Core.Services.Implementation;
+using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
 using XMP.Core.ViewModels.Main;
-using XMP.Core.ViewModels.Details;
-using Acr.UserDialogs;
-using XMP.API.Bootstrappers;
-using XMP.API.Services.Abstract;
-using XMP.Core.Services.Abstract;
-using XMP.Core.Services.Implementation;
-using FlexiMvvm.Operations;
-using XMP.Core.Operations;
-using ExpressMapper;
-using XMP.API.Models;
-using XMP.Core.Models;
-using XMP.Core.Database.Abstract;
-using XMP.Core.Database.Implementation.RealmDatabase;
-using XMP.Core.Mapping;
-using XMP.Core.Database.Implementation.RealmDatabase.VacationRequests;
-using Xamarin.Essentials;
 
 namespace XMP.Core.Bootstrapper
 {
@@ -77,7 +75,7 @@ namespace XMP.Core.Bootstrapper
             Mapper.Compile();
         }
 
-        private static void InitApi(BootstrapperConfig config)
+        private void InitApi(BootstrapperConfig config)
         {
             var apiBootstrapper = new ApiBootstrapper();
 

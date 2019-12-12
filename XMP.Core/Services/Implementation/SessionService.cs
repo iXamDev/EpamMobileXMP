@@ -1,16 +1,24 @@
 ﻿using System;
+using System.Security.Authentication;
 using System.Threading.Tasks;
-using XMP.Core.Models;
-using XMP.Core.Services.Abstract;
+using Xamarin.Essentials;
 using XMP.API.Services.Abstract;
 using XMP.Core.Constants;
-using System.Security.Authentication;
-using Xamarin.Essentials;
+using XMP.Core.Models;
+using XMP.Core.Services.Abstract;
 
 namespace XMP.Core.Services.Implementation
 {
     public class SessionService : ISessionService
     {
+        private object _syncRoot = new object();
+
+        private TaskCompletionSource<bool> _refreshTokenTCS;
+
+        private bool _isRefreshingToken;
+
+        private string _authorizationToken;
+
         public SessionService(IApiSettingsService apiSettingsService, IAuthenticationApiService authenticationApiService)
         {
             ApiSettingsService = apiSettingsService;
@@ -18,23 +26,15 @@ namespace XMP.Core.Services.Implementation
             AuthenticationApiService = authenticationApiService;
         }
 
-        private object syncRoot = new object();
+        public event EventHandler OnCredentialsFails;
 
         private UserCredentials Credentials { get; set; }
-
-        private TaskCompletionSource<bool> refreshTokenTCS;
-
-        private bool isRefreshingToken;
-
-        private string authorizationToken;
-
-        public event EventHandler OnCredentialsFails;
 
         protected IApiSettingsService ApiSettingsService { get; }
 
         protected IAuthenticationApiService AuthenticationApiService { get; }
 
-        public bool Active => !string.IsNullOrEmpty(authorizationToken);
+        public bool Active => !string.IsNullOrEmpty(_authorizationToken);
 
         public string UserLogin { get; private set; }
 
@@ -42,19 +42,19 @@ namespace XMP.Core.Services.Implementation
 
         public Task<bool> RefreshToken()
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
                 if (Credentials == null)
                     return Task.FromResult(false);
 
-                if (!isRefreshingToken)
+                if (!_isRefreshingToken)
                 {
-                    isRefreshingToken = true;
-                    refreshTokenTCS = new TaskCompletionSource<bool>();
+                    _isRefreshingToken = true;
+                    _refreshTokenTCS = new TaskCompletionSource<bool>();
                     Task.Run(() => ExecuteTokenRefresh(Credentials));
                 }
 
-                return refreshTokenTCS.Task;
+                return _refreshTokenTCS.Task;
             }
         }
 
@@ -80,19 +80,21 @@ namespace XMP.Core.Services.Implementation
             {
             }
 
-            lock (syncRoot)
+            lock (_syncRoot)
             {
                 if (success)
+                {
                     SetAuthorizationToken(token);
+                }
                 else
                 if (wrongCredentials)
                 {
                     Logout();
 
-                    FireCredentialsFails();
+                    RaiseCredentialsFails();
                 }
 
-                refreshTokenTCS.TrySetResult(success);
+                _refreshTokenTCS.TrySetResult(success);
             }
 
             if (success)
@@ -103,7 +105,7 @@ namespace XMP.Core.Services.Implementation
 
         private void SetAuthorizationToken(string token)
         {
-            authorizationToken = token;
+            _authorizationToken = token;
 
             ApiSettingsService.SetAuthorizationToken(token);
         }
@@ -111,14 +113,14 @@ namespace XMP.Core.Services.Implementation
         private Task SaveAuthorizationToken(string token)
         => SecureStorage.SetAsync(SecureStorageConstants.AccessTokenKey, token);
 
-        private void FireCredentialsFails()
+        private void RaiseCredentialsFails()
         => OnCredentialsFails?.Invoke(this, EventArgs.Empty);
 
         private void Logout()
         {
             Credentials = null;
 
-            authorizationToken = null;
+            _authorizationToken = null;
 
             ApiSettingsService.SetAuthorizationToken(null);
 
@@ -181,7 +183,7 @@ namespace XMP.Core.Services.Implementation
 
             if (Valid(login) && Valid(password) && Valid(accessToken))
             {
-                this.authorizationToken = accessToken;
+                _authorizationToken = accessToken;
 
                 return Launch(new UserCredentials { Login = login, Password = password }, accessToken);
             }

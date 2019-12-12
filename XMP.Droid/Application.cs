@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Threading;
+using Acr.UserDialogs;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
 using FlexiMvvm.Bootstrappers;
 using FlexiMvvm.Ioc;
-using FlexiMvvm.ViewModels;
+using XMP.API.Bootstrappers;
 using XMP.Core.Bootstrapper;
 using XMP.Droid.Bootstrapper;
-using Acr.UserDialogs;
-using XMP.API.Bootstrappers;
 
 namespace XMP.Droid
 {
     [Application]
     public class Application : Android.App.Application, Android.App.Application.IActivityLifecycleCallbacks
     {
-        public static Activity CurrentActivity { get; private set; }
-
-        protected Application(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+        protected Application(IntPtr javaReference, JniHandleOwnership transfer)
+            : base(javaReference, transfer)
         {
         }
+
+        public static Activity CurrentActivity { get; private set; }
 
         public override void OnCreate()
         {

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FlexiMvvm.ViewModels;
-using XMP.Core.Navigation;
 using Xamarin.Essentials;
+using XMP.Core.Navigation;
 using XMP.Core.Services.Abstract;
+
 namespace XMP.Core.ViewModels.Launcher
 {
     public class LauncherViewModel : LifecycleViewModel
     {
-
         public LauncherViewModel(INavigationService navigationService, ISessionService sessionService)
         {
             NavigationService = navigationService;
@@ -24,7 +23,7 @@ namespace XMP.Core.ViewModels.Launcher
         {
             await base.InitializeAsync(recreated);
 
-            Task.Run(NavigateToMainScreen);
+            _ = Task.Run(NavigateToMainScreen);
         }
 
         private async Task NavigateToMainScreen()

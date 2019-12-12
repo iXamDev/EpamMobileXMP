@@ -1,28 +1,25 @@
 ﻿using System;
-using FlexiMvvm.Views;
-using XMP.Core.ViewModels.Details;
-using UIKit;
-using FlexiMvvm.Bindings;
-using XMP.iOS.Extensions;
-using XMP.iOS.Bindings;
-using FlexiMvvm.Collections;
-using XMP.iOS.Views.Details.Cells;
-using XMP.iOS.Views.Details.Source;
-using XMP.Core.ValueConverters;
-using XMP.Core.Models;
-using System.Linq;
-using XMP.Core.Helpers;
 using System.Collections.Generic;
+using FlexiMvvm.Bindings;
+using FlexiMvvm.Views;
+using UIKit;
+using XMP.Core.Helpers;
+using XMP.Core.Models;
+using XMP.Core.ValueConverters;
+using XMP.Core.ViewModels.Details;
+using XMP.iOS.Bindings;
+using XMP.iOS.Extensions;
+using XMP.iOS.Views.Details.Source;
 
 namespace XMP.iOS.Views.Details
 {
     public class DetailsViewController : BindableViewController<DetailsViewModel, DetailsParameters>
     {
-        private UILabel navbarTitleLabel;
+        private UILabel _navbarTitleLabel;
 
-        private DetailsItemsSource itemsSource;
+        private DetailsItemsSource _itemsSource;
 
-        private Dictionary<VacationState, nint> stateSegmentedControlMapping;
+        private Dictionary<VacationState, nint> _stateSegmentedControlMapping;
 
         public new DetailsView View
         {
@@ -41,16 +38,16 @@ namespace XMP.iOS.Views.Details
 
             NavigationItem.RightBarButtonItem = new UIBarButtonItem("Save", UIBarButtonItemStyle.Plain, null);
 
-            NavigationItem.CreateAndSetScreenTitleLabel(out navbarTitleLabel);
+            NavigationItem.CreateAndSetScreenTitleLabel(out _navbarTitleLabel);
 
-            itemsSource = new DetailsItemsSource(View.CollectionView, View.PageControl)
+            _itemsSource = new DetailsItemsSource(View.CollectionView, View.PageControl)
             {
                 ItemsContext = ViewModel
             };
 
-            View.CollectionView.Source = itemsSource;
+            View.CollectionView.Source = _itemsSource;
 
-            stateSegmentedControlMapping = View.StateSegmentedControl.SetupSegmentsMapping(ViewModel.AvailableVacationStates, state => state.DisplayTitle());
+            _stateSegmentedControlMapping = View.StateSegmentedControl.SetupSegmentsMapping(ViewModel.AvailableVacationStates, state => state.DisplayTitle());
         }
 
         public override void Bind(BindingSet<DetailsViewModel> bindingSet)
@@ -58,7 +55,7 @@ namespace XMP.iOS.Views.Details
             base.Bind(bindingSet);
 
             bindingSet
-                .Bind(navbarTitleLabel)
+                .Bind(_navbarTitleLabel)
                 .For(v => v.TextBinding())
                 .To(vm => vm.ScreenTitle);
 
@@ -83,19 +80,19 @@ namespace XMP.iOS.Views.Details
                 .To(vm => vm.ShowEndDateDialogCmd);
 
             bindingSet
-                .Bind(itemsSource)
+                .Bind(_itemsSource)
                 .For(v => v.ItemsBinding())
                 .To(vm => vm.VacationTypeItems);
 
             bindingSet
-                .Bind(itemsSource)
+                .Bind(_itemsSource)
                 .For(v => v.FocusedItemBinding())
                 .To(vm => vm.SelectedVacationType);
 
             bindingSet.Bind(View.StateSegmentedControl)
                 .For(v => v.SelectedSegmentAndValueChangedBinding())
                 .To(vm => vm.VacationState)
-                .WithConversion<DictionaryValueConverter<VacationState, nint>>(stateSegmentedControlMapping)
+                .WithConversion<DictionaryValueConverter<VacationState, nint>>(_stateSegmentedControlMapping)
                 .WithFallbackValue(-1);
 
             bindingSet.Bind(NavigationItem.RightBarButtonItem)

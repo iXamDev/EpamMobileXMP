@@ -1,18 +1,18 @@
 ﻿using System;
 using Android.App;
 using Android.OS;
+using Android.Support.V4.View;
 using Android.Support.V4.Widget;
+using Android.Support.V7.App;
+using Android.Support.V7.Widget;
+using Android.Views;
+using Android.Widget;
 using FlexiMvvm.Bindings;
+using FlexiMvvm.ViewModels;
 using FlexiMvvm.Views;
 using XMP.Core.ViewModels.Main;
-using Android.Support.V7.App;
-using Android.Views;
-using Android.Support.V7.Widget;
-using Android.Support.V4.View;
-using Android.Widget;
-using XMP.Droid.Bindings;
 using XMP.Droid.Adapters;
-using FlexiMvvm.ViewModels;
+using XMP.Droid.Bindings;
 using XMP.Droid.Views.Main.Items;
 
 namespace XMP.Droid.Views.Main
@@ -20,23 +20,23 @@ namespace XMP.Droid.Views.Main
     [Activity(Label = "All Requests")]
     public class MainActivity : BindableAppCompatActivity<MainViewModel>
     {
-        private ActionBarDrawerToggle toggle;
+        private ActionBarDrawerToggle _toggle;
+
+        private RecyclerPlainAdapter<MainDrawerCellViewHolder> _drawerAdapter;
+
+        private RecyclerPlainAdapter<MainRequestCellViewHolder> _requestsAdapter;
 
         private MainActivityViewHolder ViewHolder { get; set; }
 
         private TextView DrawerUserNameText { get; set; }
 
-        private RecyclerPlainAdapter<MainDrawerCellViewHolder> drawerAdapter;
-
-        private RecyclerPlainAdapter<MainRequestCellViewHolder> requestsAdapter;
-
         private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
         {
-            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
+            _toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
 
-            drawer.AddDrawerListener(toggle);
+            drawer.AddDrawerListener(_toggle);
 
-            toggle.SyncState();
+            _toggle.SyncState();
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -57,23 +57,23 @@ namespace XMP.Droid.Views.Main
 
             DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
 
-            drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
+            _drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
 
-            ViewHolder.DrawerRecycler.SetAdapter(drawerAdapter);
+            ViewHolder.DrawerRecycler.SetAdapter(_drawerAdapter);
             ViewHolder.DrawerRecycler.HasFixedSize = true;
             ViewHolder.DrawerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
 
-            requestsAdapter = new RecyclerPlainAdapter<MainRequestCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_request);
+            _requestsAdapter = new RecyclerPlainAdapter<MainRequestCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_request);
 
             ViewHolder.RequestsRecycler.AddItemDecoration(new MainRequesttemDecoration());
-            ViewHolder.RequestsRecycler.SetAdapter(requestsAdapter);
+            ViewHolder.RequestsRecycler.SetAdapter(_requestsAdapter);
             ViewHolder.RequestsRecycler.HasFixedSize = true;
             ViewHolder.RequestsRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (toggle.OnOptionsItemSelected(item))
+            if (_toggle.OnOptionsItemSelected(item))
                 return true;
 
             return base.OnOptionsItemSelected(item);
@@ -99,22 +99,22 @@ namespace XMP.Droid.Views.Main
                 .To(vm => vm.UserName);
 
             bindingSet
-                .Bind(drawerAdapter)
+                .Bind(_drawerAdapter)
                 .For(v => v.ItemsBinding())
                 .To(vm => vm.FilterItems);
 
             bindingSet
-                .Bind(drawerAdapter)
+                .Bind(_drawerAdapter)
                 .For(v => v.ItemClickedBinding())
                 .To(vm => vm.FilterCmd);
 
             bindingSet
-                .Bind(requestsAdapter)
+                .Bind(_requestsAdapter)
                 .For(v => v.ItemsBinding())
                 .To(vm => vm.RequestItems);
 
             bindingSet
-                .Bind(requestsAdapter)
+                .Bind(_requestsAdapter)
                 .For(v => v.ItemClickedBinding())
                 .To(vm => vm.ShowDetailsCmd);
 
@@ -126,9 +126,9 @@ namespace XMP.Droid.Views.Main
 
         private bool CloseDrawer()
         {
-            if (this.ViewHolder.Drawer.IsDrawerOpen(GravityCompat.Start))
+            if (ViewHolder.Drawer.IsDrawerOpen(GravityCompat.Start))
             {
-                this.ViewHolder.Drawer.CloseDrawer(GravityCompat.Start);
+                ViewHolder.Drawer.CloseDrawer(GravityCompat.Start);
                 return true;
             }
 

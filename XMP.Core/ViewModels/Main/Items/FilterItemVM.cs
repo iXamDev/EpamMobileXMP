@@ -1,7 +1,6 @@
-﻿using System;
-using FlexiMvvm.ViewModels;
-using XMP.Core.Models;
+﻿using FlexiMvvm.ViewModels;
 using XMP.Core.Helpers;
+using XMP.Core.Models;
 
 namespace XMP.Core.ViewModels.Main.Items
 {

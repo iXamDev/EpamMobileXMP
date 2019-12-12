@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace XMP.Core.Constants
 {
     public static class SecureStorageConstants

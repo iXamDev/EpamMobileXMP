@@ -8,15 +8,15 @@ namespace XMP.Core.Services.Implementation
 {
     public class VacationRequestsFilterService : IVacationRequestsFilterService
     {
-        private Dictionary<VacantionRequestFilterType, VacationState[]> filterMap;
+        private Dictionary<VacantionRequestFilterType, VacationState[]> _filterMap;
 
         public VacationRequestsFilterService()
         {
-            filterMap = new Dictionary<VacantionRequestFilterType, VacationState[]>
+            _filterMap = new Dictionary<VacantionRequestFilterType, VacationState[]>
             {
-                {VacantionRequestFilterType.All, new VacationState[] { VacationState.Approved, VacationState.Closed, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
-                {VacantionRequestFilterType.Open, new VacationState[] { VacationState.Approved, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
-                {VacantionRequestFilterType.Closed, new VacationState[] { VacationState.Closed } }
+                { VacantionRequestFilterType.All, new VacationState[] { VacationState.Approved, VacationState.Closed, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
+                { VacantionRequestFilterType.Open, new VacationState[] { VacationState.Approved, VacationState.Draft, VacationState.InProgress, VacationState.Submitted } },
+                { VacantionRequestFilterType.Closed, new VacationState[] { VacationState.Closed } }
             };
         }
 
@@ -27,6 +27,6 @@ namespace XMP.Core.Services.Implementation
         => model != null && Filter(model.State, filterType);
 
         public bool Filter(VacationState state, VacantionRequestFilterType filterType)
-        => filterMap[filterType].Contains(state);
+        => _filterMap[filterType].Contains(state);
     }
 }

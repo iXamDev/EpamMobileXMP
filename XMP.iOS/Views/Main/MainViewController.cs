@@ -1,30 +1,30 @@
 ﻿using System;
 using FlexiMvvm.Bindings;
-using FlexiMvvm.Views;
-using XMP.Core.ViewModels.Main;
-using UIKit;
-using System.Threading.Tasks;
-using XMP.iOS.Extensions;
 using FlexiMvvm.ViewModels;
-using XMP.iOS.Views.SidebarMenu;
+using FlexiMvvm.Views;
 using SidebarNavigation;
+using UIKit;
+using XMP.Core.ViewModels.Main;
+using XMP.iOS.Extensions;
+using XMP.iOS.Views.SidebarMenu;
 
 namespace XMP.iOS.Views.Main
 {
     public class MainViewController : BindableViewController<MainViewModel>
     {
-        private UIButton navbarAddButton;
-        private UILabel navbarTitleLabel;
+        private UIButton _navbarAddButton;
+
+        private UILabel _navbarTitleLabel;
+
+        public MainViewController()
+        {
+        }
 
         public SidebarMenuViewController SidebarControllerVC { get; private set; }
 
         protected ContentHolderVC ContentHolder { get; private set; }
 
         protected MenuHolderVC MenuHolder { get; private set; }
-
-        public MainViewController()
-        {
-        }
 
         private void OnCloseMenuInteraction(object sender, EventArgs e)
         {
@@ -50,15 +50,15 @@ namespace XMP.iOS.Views.Main
         {
             base.Bind(bindingSet);
 
-            bindingSet.Bind(navbarAddButton)
+            bindingSet.Bind(_navbarAddButton)
                 .For(v => v.SetTitleBinding())
                 .To(vm => vm.AddButtonTitle);
 
-            bindingSet.Bind(navbarAddButton)
+            bindingSet.Bind(_navbarAddButton)
                 .For(v => v.TouchUpInsideBinding())
                 .To(vm => vm.AddCmd);
 
-            bindingSet.Bind(navbarTitleLabel)
+            bindingSet.Bind(_navbarTitleLabel)
                 .For(v => v.TextBinding())
                 .To(vm => vm.ScreenTitle);
 
@@ -79,7 +79,7 @@ namespace XMP.iOS.Views.Main
 
             NavigationItem.LeftBarButtonItem = menuButton;
 
-            navbarAddButton = new UIButton(UIButtonType.Custom)
+            _navbarAddButton = new UIButton(UIButtonType.Custom)
             {
                 ImageEdgeInsets = new UIEdgeInsets(8, 0, 8, 0),
                 BackgroundColor = UIColor.Clear,
@@ -87,11 +87,11 @@ namespace XMP.iOS.Views.Main
             }
             .WithImageForAllStates(UIImage.FromBundle("Plus"));
 
-            navbarAddButton.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
+            _navbarAddButton.ImageView.ContentMode = UIViewContentMode.ScaleAspectFit;
 
-            NavigationItem.RightBarButtonItem = new UIBarButtonItem(navbarAddButton);
+            NavigationItem.RightBarButtonItem = new UIBarButtonItem(_navbarAddButton);
 
-            NavigationItem.CreateAndSetScreenTitleLabel(out navbarTitleLabel);
+            NavigationItem.CreateAndSetScreenTitleLabel(out _navbarTitleLabel);
         }
 
         public override void LoadView()

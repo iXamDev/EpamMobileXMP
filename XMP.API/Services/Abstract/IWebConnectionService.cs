@@ -16,6 +16,7 @@ namespace XMP.API.Services.Abstract
 
         Task<RequestResult> ExecuteRequestAsync(string url, HttpMethod method, HttpContent postData = null, CancellationToken? cancellationToken = null);
 
-        Task<RequestResult<T>> ExecuteRequestAsync<T>(string url, HttpMethod method, HttpContent postData = null, CancellationToken? cancellationToken = null) where T : class;
+        Task<RequestResult<T>> ExecuteRequestAsync<T>(string url, HttpMethod method, HttpContent postData = null, CancellationToken? cancellationToken = null)
+            where T : class;
     }
 }

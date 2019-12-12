@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using XMP.API.Models;
+﻿using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using XMP.API.Models;
 
 namespace XMP.API.Services.Abstract
 {

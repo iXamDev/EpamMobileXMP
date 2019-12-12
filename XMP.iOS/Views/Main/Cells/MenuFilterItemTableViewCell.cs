@@ -9,7 +9,8 @@ namespace XMP.iOS.Views.Main.Cells
 {
     public class MenuFilterItemTableViewCell : TableViewBindableItemCell<MainViewModel, FilterItemVM>
     {
-        public MenuFilterItemTableViewCell(IntPtr handle) : base(handle)
+        public MenuFilterItemTableViewCell(IntPtr handle)
+            : base(handle)
         {
         }
 
@@ -25,7 +26,7 @@ namespace XMP.iOS.Views.Main.Cells
             ContentView.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
             ContentView.AddConstraints(View.FullSizeOf(ContentView));
 
-            this.SelectionStyle = UIKit.UITableViewCellSelectionStyle.None;
+            SelectionStyle = UIKit.UITableViewCellSelectionStyle.None;
         }
 
         public override void Bind(BindingSet<FilterItemVM> bindingSet)

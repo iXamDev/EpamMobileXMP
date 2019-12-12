@@ -1,92 +1,29 @@
 ﻿using System;
-using FlexiMvvm.ViewModels;
-using System.Windows.Input;
-using System.Threading.Tasks;
-using XMP.Core.Navigation;
-using XMP.API.Services.Abstract;
-using XMP.Core.Services.Abstract;
+using System.Diagnostics;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 using Acr.UserDialogs;
-using XMP.Core.Models;
 using FlexiMvvm.Commands;
 using FlexiMvvm.Operations;
+using FlexiMvvm.ViewModels;
+using XMP.Core.Models;
+using XMP.Core.Navigation;
 using XMP.Core.Operations;
+using XMP.Core.Services.Abstract;
 
 namespace XMP.Core.ViewModels.Login
 {
     public class LoginViewModel : LifecycleViewModel
     {
-        #region Fields
+        private IOperationHandlerBuilder<bool> _loginOperation;
 
-        private IOperationHandlerBuilder<bool> loginOperation;
+        private string _password;
 
-        #endregion
+        private string _login;
 
-        #region Commands
+        private bool _showError;
 
-        public Command LoginCmd => CommandProvider.GetForAsync(OnLogin);
-
-        #endregion
-
-        #region Properties
-
-        private string login;
-        public string Login
-        {
-            get => login;
-            set
-            {
-                SetValue(ref login, value, nameof(Login));
-
-                HideErrorMessage();
-            }
-        }
-
-        private string password;
-        public string Password
-        {
-            get => password;
-            set
-            {
-                SetValue(ref password, value, nameof(Password));
-            }
-        }
-
-        private bool showError;
-        public bool ShowError
-        {
-            get => showError;
-            private set => SetValue(ref showError, value, nameof(ShowError));
-        }
-
-        private string errorMessage;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            private set => SetValue(ref errorMessage, value, nameof(ErrorMessage));
-        }
-
-        public string LoginButtonTitle => "Sign in".ToUpper();
-
-        public string LoginHint => "Login";
-
-        public string PasswordHint => "Password";
-
-        #endregion
-
-        #region Services
-
-        protected INavigationService NavigationService { get; }
-
-        protected IUserDialogs UserDialogs { get; }
-
-        protected ISessionService SessionService { get; }
-
-        protected IOperationFactory OperationFactory { get; }
-
-        #endregion
-
-        #region Constructor
+        private string _errorMessage;
 
         public LoginViewModel(INavigationService navigationService, IUserDialogs userDialogs, ISessionService sessionService, IOperationFactory operationFactory)
         {
@@ -98,11 +35,12 @@ namespace XMP.Core.ViewModels.Login
 
             OperationFactory = operationFactory;
 
-            loginOperation =
+            _loginOperation =
                 OperationFactory
                     .Create(this)
                     .WithLoadingNotification()
-                    //.WithPreventRepetitiveExecutions()
+
+                    // .WithPreventRepetitiveExecutions()
                     .WithExpressionAsync((cancellationToken) =>
                     {
                         if (ValidateCredentials(out var credentials))
@@ -112,22 +50,74 @@ namespace XMP.Core.ViewModels.Login
 
                         return Task.FromResult(false);
                     })
-                    .OnSuccess(success => { if (success) NavigationService.NavigateToMain(this); })
+                    .OnSuccess(success =>
+                    {
+                        if (success)
+                            NavigationService.NavigateToMain(this);
+                    })
                     .OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.WrongCredentials))
                     .OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError));
 
-#if DEBUG
-            Login = "ark";
-            Password = "123";
-#endif
+            SetDebugCredentials();
         }
 
-        #endregion
+        public Command LoginCmd => CommandProvider.GetForAsync(OnLogin);
 
-        #region Private
+        public string Login
+        {
+            get => _login;
+            set
+            {
+                SetValue(ref _login, value, nameof(Login));
+
+                HideErrorMessage();
+            }
+        }
+
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                SetValue(ref _password, value, nameof(Password));
+            }
+        }
+
+        public bool ShowError
+        {
+            get => _showError;
+            private set => SetValue(ref _showError, value, nameof(ShowError));
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            private set => SetValue(ref _errorMessage, value, nameof(ErrorMessage));
+        }
+
+        public string LoginButtonTitle => "Sign in".ToUpper();
+
+        public string LoginHint => "Login";
+
+        public string PasswordHint => "Password";
+
+        protected INavigationService NavigationService { get; }
+
+        protected IUserDialogs UserDialogs { get; }
+
+        protected ISessionService SessionService { get; }
+
+        protected IOperationFactory OperationFactory { get; }
+
+        [Conditional("DEBUG")]
+        private void SetDebugCredentials()
+        {
+            Login = "ark";
+            Password = "123";
+        }
 
         private Task OnLogin()
-        => loginOperation.ExecuteAsync();
+        => _loginOperation.ExecuteAsync();
 
         private bool ValidateCredentials(out UserCredentials credentials)
         {
@@ -184,7 +174,5 @@ namespace XMP.Core.ViewModels.Login
 
             ErrorMessage = null;
         }
-
-        #endregion
     }
 }

@@ -3,15 +3,18 @@ using System.Threading.Tasks;
 using Realms;
 using Realms.Exceptions;
 using XMP.Core.Services.Abstract;
+
 namespace XMP.Core.Services.Implementation
 {
     public class RealmProvider : IRealmProvider
     {
-        private RealmConfiguration configuration;
-        public RealmConfiguration Configuration => configuration ?? (configuration = new RealmConfiguration());
+        private bool _initialized;
 
-        private bool initialized;
-        public bool Initialized => initialized;
+        private RealmConfiguration _configuration;
+
+        public RealmConfiguration Configuration => _configuration ?? (_configuration = new RealmConfiguration());
+
+        public bool Initialized => _initialized;
 
         public async Task Drop()
         {
@@ -25,13 +28,13 @@ namespace XMP.Core.Services.Implementation
                 {
                     i++;
 
-                    initialized = false;
+                    _initialized = false;
 
                     var deleteConfig = Configuration;
 
                     Realm.DeleteRealm(deleteConfig);
 
-                    configuration = null;
+                    _configuration = null;
 
                     success = true;
                 }
@@ -42,9 +45,9 @@ namespace XMP.Core.Services.Implementation
                 }
                 catch (Exception)
                 {
-
                 }
-            } while (!success && i < 10);
+            }
+            while (!success && i < 10);
         }
 
         public Realm GetRealm()
@@ -54,7 +57,7 @@ namespace XMP.Core.Services.Implementation
         {
             await Realm.GetInstanceAsync();
 
-            initialized = true;
+            _initialized = true;
         }
     }
 }

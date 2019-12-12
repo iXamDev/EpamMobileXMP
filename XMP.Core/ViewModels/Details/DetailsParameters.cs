@@ -1,5 +1,6 @@
 ﻿using System;
 using FlexiMvvm.ViewModels;
+
 namespace XMP.Core.ViewModels.Details
 {
     public class DetailsParameters : Parameters

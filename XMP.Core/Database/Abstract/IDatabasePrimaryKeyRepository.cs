@@ -1,11 +1,12 @@
 ﻿using System;
+
 namespace XMP.Core.Database.Abstract
 {
-    public interface IDatabasePrimaryKeyRepository<T, K> : IDatabaseRepository<T>
-        where T : class
+    public interface IDatabasePrimaryKeyRepository<TItem, TKey> : IDatabaseRepository<TItem>
+        where TItem : class
     {
-        T GetByKey(K key);
+        TItem GetByKey(TKey key);
 
-        void RemoveByKey(K key);
+        void RemoveByKey(TKey key);
     }
 }

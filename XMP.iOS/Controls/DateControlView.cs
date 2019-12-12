@@ -1,14 +1,22 @@
 ﻿using System;
+using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using FlexiMvvm.Views;
 using UIKit;
-using Cirrious.FluentLayouts.Touch;
 
 namespace XMP.iOS.Controls
 {
     public class DateControlView : LayoutView
     {
-        private UILabel dayLabel, monthLabel, yearLabel;
+        private UILabel _dayLabel;
+
+        private UILabel _monthLabel;
+
+        private UILabel _yearLabel;
+
+        private UIColor _textColor;
+
+        private DateTime _date;
 
         private static int DayNumberSpacing { get; } = 6;
 
@@ -18,43 +26,41 @@ namespace XMP.iOS.Controls
 
         private static UIFont YearFont { get; } = UIFont.SystemFontOfSize(26);
 
-        private UIColor textColor;
         public UIColor TextColor
         {
-            get => textColor;
+            get => _textColor;
             set
             {
-                textColor = value;
+                _textColor = value;
 
-                dayLabel.TextColor = value;
-                monthLabel.TextColor = value;
-                yearLabel.TextColor = value;
+                _dayLabel.TextColor = value;
+                _monthLabel.TextColor = value;
+                _yearLabel.TextColor = value;
             }
         }
 
-        private DateTime date;
         public DateTime Date
         {
-            get => date;
+            get => _date;
             set
             {
-                date = value;
+                _date = value;
 
-                ApplyDate(date);
+                ApplyDate(_date);
             }
         }
 
         protected nfloat IntrinsicHeight => Theme.Dimensions.DateControlHeight;
 
-        protected nfloat IntrinsicWidth => dayLabel.Bounds.Width + DayNumberSpacing + (nfloat)Math.Max(monthLabel.Bounds.Width, monthLabel.Bounds.Width);
+        protected nfloat IntrinsicWidth => _dayLabel.Bounds.Width + DayNumberSpacing + (nfloat)Math.Max(_monthLabel.Bounds.Width, _monthLabel.Bounds.Width);
 
         public override CGSize IntrinsicContentSize => new CGSize(IntrinsicWidth, IntrinsicHeight);
 
         private void ApplyDate(DateTime newDate)
         {
-            SetPartDateText(dayLabel, newDate.Day);
-            SetPartDateText(monthLabel, newDate.ToString("MMM").ToUpper());
-            SetPartDateText(yearLabel, newDate.Year);
+            SetPartDateText(_dayLabel, newDate.Day);
+            SetPartDateText(_monthLabel, newDate.ToString("MMM").ToUpper());
+            SetPartDateText(_yearLabel, newDate.Year);
 
             InvalidateIntrinsicContentSize();
         }
@@ -84,18 +90,18 @@ namespace XMP.iOS.Controls
         {
             base.SetupSubviews();
 
-            dayLabel = SetupLabel(DayFont);
+            _dayLabel = SetupLabel(DayFont);
 
-            monthLabel = SetupLabel(MonthFont);
+            _monthLabel = SetupLabel(MonthFont);
 
-            yearLabel = SetupLabel(YearFont);
+            _yearLabel = SetupLabel(YearFont);
         }
 
         protected override void SetupLayout()
         {
             base.SetupLayout();
 
-            AddSubviews(dayLabel, monthLabel, yearLabel);
+            AddSubviews(_dayLabel, _monthLabel, _yearLabel);
         }
 
         protected override void SetupLayoutConstraints()
@@ -104,17 +110,13 @@ namespace XMP.iOS.Controls
 
             this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
-            this.AddConstraints
-            (
-                dayLabel.WithSameCenterY(this),
-                dayLabel.AtLeadingOf(this),
-
-                monthLabel.AtTopOf(this, 10),
-                monthLabel.AtTrailingOf(this),
-
-                yearLabel.AtBottomOf(this, 12),
-                yearLabel.AtTrailingOf(this)
-            );
+            this.AddConstraints(
+                _dayLabel.WithSameCenterY(this),
+                _dayLabel.AtLeadingOf(this),
+                _monthLabel.AtTopOf(this, 10),
+                _monthLabel.AtTrailingOf(this),
+                _yearLabel.AtBottomOf(this, 12),
+                _yearLabel.AtTrailingOf(this));
         }
     }
 }

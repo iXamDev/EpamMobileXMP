@@ -1,18 +1,18 @@
 ﻿using System;
+using Cirrious.FluentLayouts.Touch;
+using CoreGraphics;
 using FlexiMvvm.Views;
 using UIKit;
 using XMP.iOS.Controls;
-using CoreGraphics;
-using Cirrious.FluentLayouts.Touch;
-using XMP.Core.Models;
-using XMP.Core.Helpers;
 using XMP.iOS.Views.Details.Cells;
 
 namespace XMP.iOS.Views.Details
 {
     public class DetailsView : LayoutView
     {
-        private UIView topDevider, bottomDevider;
+        private UIView _topDevider;
+
+        private UIView _bottomDevider;
 
         private nfloat CollectionHeight => 188;
 
@@ -32,8 +32,7 @@ namespace XMP.iOS.Views.Details
 
             BackgroundColor = Theme.Colors.ScreenBackground;
 
-            CollectionView = new UICollectionView
-            (
+            CollectionView = new UICollectionView(
                 CGRect.Empty,
                 new UICollectionViewFlowLayout
                 {
@@ -41,8 +40,7 @@ namespace XMP.iOS.Views.Details
                     ItemSize = new CGSize(UIScreen.MainScreen.Bounds.Width, CollectionHeight),
                     MinimumLineSpacing = 0,
                     MinimumInteritemSpacing = 0
-                }
-            )
+                })
             {
                 PagingEnabled = true,
                 BackgroundColor = Theme.Colors.ScreenBackground,
@@ -50,9 +48,9 @@ namespace XMP.iOS.Views.Details
             };
             CollectionView.RegisterClassForCell(typeof(DetailsItemCollectionViewCell), DetailsItemCollectionViewCell.CellId);
 
-            topDevider = new UIView { BackgroundColor = Theme.Colors.Accent };
+            _topDevider = new UIView { BackgroundColor = Theme.Colors.Accent };
 
-            bottomDevider = new UIView { BackgroundColor = Theme.Colors.Accent };
+            _bottomDevider = new UIView { BackgroundColor = Theme.Colors.Accent };
 
             StartDateControlView = new DateControlView
             {
@@ -75,20 +73,22 @@ namespace XMP.iOS.Views.Details
             {
                 SelectedSegmentTintColor = Theme.Colors.Green
             };
-            StateSegmentedControl.SetTitleTextAttributes(new UITextAttributes
-            {
-                TextColor = Theme.Colors.Gray
-            }, UIControlState.Normal);
-            StateSegmentedControl.SetTitleTextAttributes(new UITextAttributes
-            {
-                TextColor = UIColor.White
-            }, UIControlState.Selected);
-            StateSegmentedControl.SetTitleTextAttributes(new UITextAttributes
-            {
-                TextColor = UIColor.White
-            }, UIControlState.Highlighted);
+            StateSegmentedControl.SetTitleTextAttributes(
+                new UITextAttributes
+                {
+                    TextColor = Theme.Colors.Gray
+                }, UIControlState.Normal);
+            StateSegmentedControl.SetTitleTextAttributes(
+                new UITextAttributes
+                {
+                    TextColor = UIColor.White
+                }, UIControlState.Selected);
+            StateSegmentedControl.SetTitleTextAttributes(
+                new UITextAttributes
+                {
+                    TextColor = UIColor.White
+                }, UIControlState.Highlighted);
         }
-
 
         protected override void SetupLayout()
         {
@@ -98,13 +98,13 @@ namespace XMP.iOS.Views.Details
 
             this.AddLayoutSubview(PageControl);
 
-            this.AddLayoutSubview(topDevider);
+            this.AddLayoutSubview(_topDevider);
 
             this.AddLayoutSubview(StartDateControlView);
 
             this.AddLayoutSubview(EndDateControlView);
 
-            this.AddLayoutSubview(bottomDevider);
+            this.AddLayoutSubview(_bottomDevider);
 
             this.AddLayoutSubview(StateSegmentedControl);
         }
@@ -115,36 +115,28 @@ namespace XMP.iOS.Views.Details
 
             this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
-            this.AddConstraints
-            (
+            this.AddConstraints(
                 CollectionView.AtTopOf(this),
                 CollectionView.AtLeadingOf(this),
                 CollectionView.AtTrailingOf(this),
                 CollectionView.Height().EqualTo(CollectionHeight),
-
                 PageControl.AtBottomOf(CollectionView, 25),
                 PageControl.WithSameCenterX(this),
                 PageControl.Height().EqualTo(8),
-
-                topDevider.Below(CollectionView),
-                topDevider.AtLeadingOf(this),
-                topDevider.AtTrailingOf(this),
-                topDevider.Height().EqualTo(Theme.Dimensions.DeviderWidth),
-
-                StartDateControlView.Below(topDevider, 6),
+                _topDevider.Below(CollectionView),
+                _topDevider.AtLeadingOf(this),
+                _topDevider.AtTrailingOf(this),
+                _topDevider.Height().EqualTo(Theme.Dimensions.DeviderWidth),
+                StartDateControlView.Below(_topDevider, 6),
                 StartDateControlView.AtLeadingOf(this, 10),
-
                 EndDateControlView.WithSameTop(StartDateControlView),
                 EndDateControlView.AtTrailingOf(this, 12),
-
-                bottomDevider.Below(StartDateControlView, 4),
-                bottomDevider.AtLeadingOf(this),
-                bottomDevider.AtTrailingOf(this),
-                bottomDevider.Height().EqualTo(Theme.Dimensions.DeviderWidth),
-
-                StateSegmentedControl.Below(bottomDevider, 32),
-                StateSegmentedControl.WithSameCenterX(this)
-            );
+                _bottomDevider.Below(StartDateControlView, 4),
+                _bottomDevider.AtLeadingOf(this),
+                _bottomDevider.AtTrailingOf(this),
+                _bottomDevider.Height().EqualTo(Theme.Dimensions.DeviderWidth),
+                StateSegmentedControl.Below(_bottomDevider, 32),
+                StateSegmentedControl.WithSameCenterX(this));
         }
     }
 }

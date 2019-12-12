@@ -2,6 +2,7 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
+
 namespace XMP.iOS.Views.Details.Cells
 {
     public class DetailsItemView : LayoutView
@@ -38,16 +39,13 @@ namespace XMP.iOS.Views.Details.Cells
 
             this.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
-            this.AddConstraints
-            (
+            this.AddConstraints(
                 ImageView.Width().EqualTo(74),
                 ImageView.Height().EqualTo(74),
                 ImageView.AtTopOf(this, 15),
                 ImageView.WithSameCenterX(this),
-
                 TitleLabel.Below(ImageView, 8),
-                TitleLabel.WithSameCenterX(this)
-            );
+                TitleLabel.WithSameCenterX(this));
         }
     }
 }

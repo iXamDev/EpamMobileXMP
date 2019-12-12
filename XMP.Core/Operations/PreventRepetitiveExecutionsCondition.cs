@@ -1,8 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FlexiMvvm.Operations;
-using System;
 
 namespace XMP.Core.Operations
 {

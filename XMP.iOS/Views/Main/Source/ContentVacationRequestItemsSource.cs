@@ -11,7 +11,8 @@ namespace XMP.iOS.Views.Main.Source
 {
     public class ContentVacationRequestItemsSource : TableViewObservablePlainSource
     {
-        public ContentVacationRequestItemsSource(UITableView tableView) : base(tableView, vm => ContentVacationRequestItemTableViewCell.CellId)
+        public ContentVacationRequestItemsSource(UITableView tableView)
+            : base(tableView, vm => ContentVacationRequestItemTableViewCell.CellId)
         {
         }
 

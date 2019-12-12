@@ -1,9 +1,40 @@
 ﻿using System;
 using UIKit;
+
 namespace XMP.iOS
 {
     public static partial class Theme
     {
+        public static UILabel WithStyle(this UILabel label, UILabelStyle style)
+        {
+            if (style.BackgroundColor != null)
+                label.BackgroundColor = style.BackgroundColor;
+
+            if (style.Font != null)
+                label.Font = style.Font;
+
+            if (style.TextColor != null)
+                label.TextColor = style.TextColor;
+
+            if (style.TextAlignment.HasValue)
+                label.TextAlignment = style.TextAlignment.Value;
+
+            if (style.Lines != null)
+                label.Lines = style.Lines.Value;
+
+            if (style.LineBreakMode.HasValue)
+                label.LineBreakMode = style.LineBreakMode.Value;
+
+            return label;
+        }
+
+        public static UILabelStyle WithTune(this UILabelStyle labelStyle, Action<UILabelStyle> tune)
+        {
+            tune(labelStyle);
+
+            return labelStyle;
+        }
+
         public static class Text
         {
             public static UILabelStyle NavbarTitle => new UILabelStyle
@@ -46,36 +77,6 @@ namespace XMP.iOS
             public static UILabelStyle HugeGrayText
                 => GrayText
                 .WithTune(s => s.Font = UIFont.SystemFontOfSize(15));
-        }
-
-        public static UILabel WithStyle(this UILabel label, UILabelStyle style)
-        {
-            if (style.BackgroundColor != null)
-                label.BackgroundColor = style.BackgroundColor;
-
-            if (style.Font != null)
-                label.Font = style.Font;
-
-            if (style.TextColor != null)
-                label.TextColor = style.TextColor;
-
-            if (style.TextAlignment.HasValue)
-                label.TextAlignment = style.TextAlignment.Value;
-
-            if (style.Lines != null)
-                label.Lines = style.Lines.Value;
-
-            if (style.LineBreakMode.HasValue)
-                label.LineBreakMode = style.LineBreakMode.Value;
-
-            return label;
-        }
-
-        public static UILabelStyle WithTune(this UILabelStyle labelStyle, Action<UILabelStyle> tune)
-        {
-            tune(labelStyle);
-
-            return labelStyle;
         }
 
         public class UILabelStyle
