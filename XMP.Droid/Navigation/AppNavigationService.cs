@@ -14,11 +14,7 @@ namespace XMP.Droid.Navigation
 {
     public class AppNavigationService : NavigationService, INavigationService
     {
-        public AppNavigationService()
-        {
-        }
-
-        public new void NavigateBack(DetailsViewModel fromViewModel)
+        public void NavigateBack(DetailsViewModel fromViewModel)
         {
             var fromView = NavigationViewProvider.GetActivity<DetailsActivity, DetailsViewModel>(fromViewModel);
 
