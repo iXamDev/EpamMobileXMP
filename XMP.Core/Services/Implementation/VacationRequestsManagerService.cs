@@ -37,6 +37,54 @@ namespace XMP.Core.Services.Implementation
 
         protected IVacationRequestsApiService VacationRequestsApiService { get; }
 
+        public IEnumerable<VacantionRequest> GetVacantionRequests()
+        => VacationRequestsRepository.GetAll();
+
+        public Task<bool> Sync(bool cancelCurrentSync = false)
+        {
+            lock (_syncRoot)
+            {
+                if (_syncTCS != null)
+                {
+                    if (cancelCurrentSync)
+                        CancelCurrentSync();
+                    else
+                        return _syncTCS.Task;
+                }
+
+                ExecuteNewSync();
+
+                return _syncTCS.Task;
+            }
+        }
+
+        public void UpdateVacation(VacantionRequest vacation)
+        {
+            var current = VacationRequestsRepository.GetByKey(vacation.LocalId);
+
+            if (current.Equals(vacation))
+                return;
+
+            if (vacation.SyncState == SynchronizationState.Synced)
+                vacation.SyncState = SynchronizationState.Changed;
+
+            ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Update(vacation));
+
+            RaiseVacationChanged(vacation);
+        }
+
+        public void AddVacation(NewVacationRequest newVacantion)
+        {
+            var vacation = SetupVacationRequest(newVacantion);
+
+            ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Add(vacation));
+
+            RaiseVacationAdded(vacation);
+        }
+
+        public VacantionRequest GetVacantion(string localId)
+        => VacationRequestsRepository.GetByKey(localId);
+
         protected string GenerateLocalId()
         => Guid.NewGuid().ToString();
 
@@ -273,53 +321,5 @@ namespace XMP.Core.Services.Implementation
 
             return dto;
         }
-
-        public IEnumerable<VacantionRequest> GetVacantionRequests()
-        => VacationRequestsRepository.GetAll();
-
-        public Task<bool> Sync(bool cancelCurrentSync = false)
-        {
-            lock (_syncRoot)
-            {
-                if (_syncTCS != null)
-                {
-                    if (cancelCurrentSync)
-                        CancelCurrentSync();
-                    else
-                        return _syncTCS.Task;
-                }
-
-                ExecuteNewSync();
-
-                return _syncTCS.Task;
-            }
-        }
-
-        public void UpdateVacation(VacantionRequest vacation)
-        {
-            var current = VacationRequestsRepository.GetByKey(vacation.LocalId);
-
-            if (current.Equals(vacation))
-                return;
-
-            if (vacation.SyncState == SynchronizationState.Synced)
-                vacation.SyncState = SynchronizationState.Changed;
-
-            ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Update(vacation));
-
-            RaiseVacationChanged(vacation);
-        }
-
-        public void AddVacation(NewVacationRequest newVacantion)
-        {
-            var vacation = SetupVacationRequest(newVacantion);
-
-            ChangeLocalDataAndRunSync(() => VacationRequestsRepository.Add(vacation));
-
-            RaiseVacationAdded(vacation);
-        }
-
-        public VacantionRequest GetVacantion(string localId)
-        => VacationRequestsRepository.GetByKey(localId);
     }
 }

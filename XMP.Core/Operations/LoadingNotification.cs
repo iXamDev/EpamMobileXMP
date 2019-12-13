@@ -12,24 +12,24 @@ namespace XMP.Core.Operations
         {
         }
 
-        private IUserDialogs UserDialogs(OperationContext context)
-        => context.DependencyProvider.Get<IUserDialogs>();
-
         protected override void Hide(OperationContext context, OperationStatus status)
         {
             DisposeLoading();
-        }
-
-        private void DisposeLoading()
-        {
-            _loading?.Dispose();
-            _loading = null;
         }
 
         protected override void Show(OperationContext context)
         {
             DisposeLoading();
             _loading = UserDialogs(context).Loading();
+        }
+
+        private IUserDialogs UserDialogs(OperationContext context)
+        => context.DependencyProvider.Get<IUserDialogs>();
+
+        private void DisposeLoading()
+        {
+            _loading?.Dispose();
+            _loading = null;
         }
     }
 }

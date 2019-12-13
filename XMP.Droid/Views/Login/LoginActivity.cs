@@ -12,15 +12,6 @@ namespace XMP.Droid.Views.Login
     {
         private LoginActivityViewHolder ViewHolder { get; set; }
 
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            SetContentView(Resource.Layout.activity_login);
-
-            ViewHolder = new LoginActivityViewHolder(this);
-        }
-
         public override void Bind(BindingSet<LoginViewModel> bindingSet)
         {
             base.Bind(bindingSet);
@@ -61,6 +52,15 @@ namespace XMP.Droid.Views.Login
                 .Bind(ViewHolder.ErrorText)
                 .For(v => v.TextBinding())
                 .To(vm => vm.ErrorMessage);
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            SetContentView(Resource.Layout.activity_login);
+
+            ViewHolder = new LoginActivityViewHolder(this);
         }
     }
 }

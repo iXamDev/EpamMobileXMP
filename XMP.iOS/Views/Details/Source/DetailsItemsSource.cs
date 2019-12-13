@@ -52,8 +52,6 @@ namespace XMP.iOS.Views.Details.Source
             set => base.Items = value;
         }
 
-        protected nfloat ItemWidth(UICollectionView collectionView) => (collectionView.CollectionViewLayout as UICollectionViewFlowLayout)?.ItemSize.Width ?? 0;
-
         public override void Scrolled(UIScrollView scrollView)
         {
             var currentPage = GetCurrentPageIndex(scrollView as UICollectionView);
@@ -78,6 +76,8 @@ namespace XMP.iOS.Views.Details.Source
 
         public override void ScrollAnimationEnded(UIScrollView scrollView)
         => SetSettingAdjustingScrollPosition(false);
+
+        protected nfloat ItemWidth(UICollectionView collectionView) => (collectionView.CollectionViewLayout as UICollectionViewFlowLayout)?.ItemSize.Width ?? 0;
 
         protected void RaiseFocusedItemChanged()
         => FocusedItemChanged?.Invoke(this, EventArgs.Empty);

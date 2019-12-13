@@ -30,47 +30,6 @@ namespace XMP.Droid.Views.Main
 
         private TextView DrawerUserNameText { get; set; }
 
-        private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
-        {
-            _toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
-
-            drawer.AddDrawerListener(_toggle);
-
-            _toggle.SyncState();
-        }
-
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            SetContentView(Resource.Layout.activity_main);
-
-            ViewHolder = new MainActivityViewHolder(this);
-
-            SetSupportActionBar(ViewHolder.Toolbar);
-
-            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
-
-            SupportActionBar.SetHomeButtonEnabled(true);
-
-            SetupDrawer(ViewHolder.Drawer, ViewHolder.Toolbar);
-
-            DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
-
-            _drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
-
-            ViewHolder.DrawerRecycler.SetAdapter(_drawerAdapter);
-            ViewHolder.DrawerRecycler.HasFixedSize = true;
-            ViewHolder.DrawerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
-
-            _requestsAdapter = new RecyclerPlainAdapter<MainRequestCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_request);
-
-            ViewHolder.RequestsRecycler.AddItemDecoration(new MainRequesttemDecoration());
-            ViewHolder.RequestsRecycler.SetAdapter(_requestsAdapter);
-            ViewHolder.RequestsRecycler.HasFixedSize = true;
-            ViewHolder.RequestsRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
-        }
-
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             if (_toggle.OnOptionsItemSelected(item))
@@ -121,6 +80,53 @@ namespace XMP.Droid.Views.Main
             ViewModel.CloseMenuInteraction.RequestedWeakSubscribe(OnCloseMenuInteraction);
         }
 
+        public override void OnBackPressed()
+        {
+            if (!CloseDrawer())
+                base.OnBackPressed();
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            SetContentView(Resource.Layout.activity_main);
+
+            ViewHolder = new MainActivityViewHolder(this);
+
+            SetSupportActionBar(ViewHolder.Toolbar);
+
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+
+            SupportActionBar.SetHomeButtonEnabled(true);
+
+            SetupDrawer(ViewHolder.Drawer, ViewHolder.Toolbar);
+
+            DrawerUserNameText = FindViewById<TextView>(Resource.Id.drawer_user_name_text);
+
+            _drawerAdapter = new RecyclerPlainAdapter<MainDrawerCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_drawer);
+
+            ViewHolder.DrawerRecycler.SetAdapter(_drawerAdapter);
+            ViewHolder.DrawerRecycler.HasFixedSize = true;
+            ViewHolder.DrawerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+
+            _requestsAdapter = new RecyclerPlainAdapter<MainRequestCellViewHolder>(ViewHolder.DrawerRecycler, Resource.Layout.cell_main_request);
+
+            ViewHolder.RequestsRecycler.AddItemDecoration(new MainRequesttemDecoration());
+            ViewHolder.RequestsRecycler.SetAdapter(_requestsAdapter);
+            ViewHolder.RequestsRecycler.HasFixedSize = true;
+            ViewHolder.RequestsRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+        }
+
+        private void SetupDrawer(DrawerLayout drawer, Android.Support.V7.Widget.Toolbar toolbar)
+        {
+            _toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0);
+
+            drawer.AddDrawerListener(_toggle);
+
+            _toggle.SyncState();
+        }
+
         private void OnCloseMenuInteraction(object sender, EventArgs e)
         => CloseDrawer();
 
@@ -133,12 +139,6 @@ namespace XMP.Droid.Views.Main
             }
 
             return false;
-        }
-
-        public override void OnBackPressed()
-        {
-            if (!CloseDrawer())
-                base.OnBackPressed();
         }
     }
 }

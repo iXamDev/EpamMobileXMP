@@ -34,55 +34,6 @@ namespace XMP.API.Services.Implementation
 
         public HttpClient Client => _explicitHttpClient.Value;
 
-        private HttpClient CreateHttpClient(HttpMessageHandler messageHandler)
-        {
-            return new HttpClient(messageHandler)
-            {
-                Timeout = TimeSpan.FromSeconds(RequestTimeoutInSeconds)
-            };
-        }
-
-        private HttpClient CreateHttpClient()
-        => CreateHttpClient(HttpHandler = CreateHandlerFunc?.Invoke() ?? CreateHandler());
-
-        private HttpClientHandler CreateHandler()
-        {
-            var handler = new HttpClientHandler();
-
-            if (handler.SupportsAutomaticDecompression)
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            return handler;
-        }
-
-        private void SetupRequestHeaders(HttpRequestMessage message)
-        {
-            message.Headers?.Clear();
-
-            if (message.Headers.Accept.All(x => x.MediaType != AcceptHeader))
-                message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(AcceptHeader));
-
-            if (message.Headers.AcceptEncoding.All(x => x.Value != "gzip"))
-                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-
-            message.SetBearerToken(Bearer);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_isDisposed)
-                return;
-
-            if (disposing)
-            {
-                _explicitHttpClient.Value?.Dispose();
-            }
-
-            _explicitHttpClient = null;
-
-            _isDisposed = true;
-        }
-
         public void Dispose()
         {
             Dispose(true);
@@ -147,6 +98,55 @@ namespace XMP.API.Services.Implementation
             var jsonResult = new RequestResult<T>(requestResult);
             await jsonResult.ParseContent();
             return jsonResult;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
+            {
+                _explicitHttpClient.Value?.Dispose();
+            }
+
+            _explicitHttpClient = null;
+
+            _isDisposed = true;
+        }
+
+        private HttpClient CreateHttpClient(HttpMessageHandler messageHandler)
+        {
+            return new HttpClient(messageHandler)
+            {
+                Timeout = TimeSpan.FromSeconds(RequestTimeoutInSeconds)
+            };
+        }
+
+        private HttpClient CreateHttpClient()
+        => CreateHttpClient(HttpHandler = CreateHandlerFunc?.Invoke() ?? CreateHandler());
+
+        private HttpClientHandler CreateHandler()
+        {
+            var handler = new HttpClientHandler();
+
+            if (handler.SupportsAutomaticDecompression)
+                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            return handler;
+        }
+
+        private void SetupRequestHeaders(HttpRequestMessage message)
+        {
+            message.Headers?.Clear();
+
+            if (message.Headers.Accept.All(x => x.MediaType != AcceptHeader))
+                message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(AcceptHeader));
+
+            if (message.Headers.AcceptEncoding.All(x => x.Value != "gzip"))
+                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+
+            message.SetBearerToken(Bearer);
         }
     }
 }

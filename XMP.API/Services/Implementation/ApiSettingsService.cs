@@ -18,10 +18,6 @@ namespace XMP.API.Services.Implementation
             Host = DeviceInfo.Platform == DevicePlatform.iOS ? iOSHost : AndroidHost;
         }
 
-        protected string Host { get; }
-
-        protected IWebConnectionService WebConnectionService { get; }
-
         public IOAuthSettings OAuthSettings { get; } = new OAuthSettings();
 
         public string ServiceHostUrl => $"http://{Host}:5000/api/vts/";
@@ -29,6 +25,10 @@ namespace XMP.API.Services.Implementation
         public string AuthorizationHostUrl => $"http://{Host}:5001/";
 
         public IRefreshTokenUpdater RefreshTokenUpdater { get; set; }
+
+        protected string Host { get; }
+
+        protected IWebConnectionService WebConnectionService { get; }
 
         public void SetAuthorizationToken(string token)
         {

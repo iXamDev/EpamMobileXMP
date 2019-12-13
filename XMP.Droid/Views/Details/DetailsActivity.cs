@@ -21,22 +21,6 @@ namespace XMP.Droid.Views.Details
 
         private DetailsActivityViewHolder ViewHolder { get; set; }
 
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
-
-            RequestedOrientation = Android.Content.PM.ScreenOrientation.Sensor;
-            SetContentView(Resource.Layout.activity_details);
-
-            ViewHolder = new DetailsActivityViewHolder(this);
-
-            _itemsAdapter = new BindableViewPagerStateAdapter<DetailsItemVM, DetailsItemFragment>(SupportFragmentManager, (arg) => new DetailsItemFragment());
-
-            ViewHolder.Viewpager.Adapter = _itemsAdapter;
-
-            ViewHolder.PagingTabLayout.SetupWithViewPager(ViewHolder.Viewpager, true);
-        }
-
         public override void Bind(BindingSet<DetailsViewModel> bindingSet)
         {
             base.Bind(bindingSet);
@@ -105,6 +89,22 @@ namespace XMP.Droid.Views.Details
                 .WithConversion<FunctionalValueConverter<DetailsItemVM, int>>(new FunctionalValueParameter<DetailsItemVM, int>(
                     itemVM => ViewModel.VacationTypeItems.IndexOf(itemVM),
                     (index) => ViewModel.VacationTypeItems.ElementAt(index)));
+        }
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+
+            RequestedOrientation = Android.Content.PM.ScreenOrientation.Sensor;
+            SetContentView(Resource.Layout.activity_details);
+
+            ViewHolder = new DetailsActivityViewHolder(this);
+
+            _itemsAdapter = new BindableViewPagerStateAdapter<DetailsItemVM, DetailsItemFragment>(SupportFragmentManager, (arg) => new DetailsItemFragment());
+
+            ViewHolder.Viewpager.Adapter = _itemsAdapter;
+
+            ViewHolder.PagingTabLayout.SetupWithViewPager(ViewHolder.Viewpager, true);
         }
     }
 }

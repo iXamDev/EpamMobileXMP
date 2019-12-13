@@ -18,14 +18,6 @@ namespace XMP.iOS.Controls
 
         private DateTime _date;
 
-        private static int DayNumberSpacing { get; } = 6;
-
-        private static UIFont DayFont { get; } = UIFont.SystemFontOfSize(80);
-
-        private static UIFont MonthFont { get; } = UIFont.SystemFontOfSize(40);
-
-        private static UIFont YearFont { get; } = UIFont.SystemFontOfSize(26);
-
         public UIColor TextColor
         {
             get => _textColor;
@@ -50,41 +42,19 @@ namespace XMP.iOS.Controls
             }
         }
 
+        public override CGSize IntrinsicContentSize => new CGSize(IntrinsicWidth, IntrinsicHeight);
+
         protected nfloat IntrinsicHeight => Theme.Dimensions.DateControlHeight;
 
         protected nfloat IntrinsicWidth => _dayLabel.Bounds.Width + DayNumberSpacing + (nfloat)Math.Max(_monthLabel.Bounds.Width, _monthLabel.Bounds.Width);
 
-        public override CGSize IntrinsicContentSize => new CGSize(IntrinsicWidth, IntrinsicHeight);
+        private static int DayNumberSpacing { get; } = 6;
 
-        private void ApplyDate(DateTime newDate)
-        {
-            SetPartDateText(_dayLabel, newDate.Day);
-            SetPartDateText(_monthLabel, newDate.ToString("MMM").ToUpper());
-            SetPartDateText(_yearLabel, newDate.Year);
+        private static UIFont DayFont { get; } = UIFont.SystemFontOfSize(80);
 
-            InvalidateIntrinsicContentSize();
-        }
+        private static UIFont MonthFont { get; } = UIFont.SystemFontOfSize(40);
 
-        private void SetPartDateText(UILabel label, int dateInt)
-        => SetPartDateText(label, dateInt.ToString());
-
-        private void SetPartDateText(UILabel label, string dateText)
-        {
-            label.Text = dateText;
-
-            label.SizeToFit();
-        }
-
-        private UILabel SetupLabel(UIFont font)
-        {
-            var style = new Theme.UILabelStyle
-            {
-                Lines = 1,
-                Font = font
-            };
-
-            return new UILabel().WithStyle(style);
-        }
+        private static UIFont YearFont { get; } = UIFont.SystemFontOfSize(26);
 
         protected override void SetupSubviews()
         {
@@ -117,6 +87,36 @@ namespace XMP.iOS.Controls
                 _monthLabel.AtTrailingOf(this),
                 _yearLabel.AtBottomOf(this, 12),
                 _yearLabel.AtTrailingOf(this));
+        }
+
+        private void ApplyDate(DateTime newDate)
+        {
+            SetPartDateText(_dayLabel, newDate.Day);
+            SetPartDateText(_monthLabel, newDate.ToString("MMM").ToUpper());
+            SetPartDateText(_yearLabel, newDate.Year);
+
+            InvalidateIntrinsicContentSize();
+        }
+
+        private void SetPartDateText(UILabel label, int dateInt)
+        => SetPartDateText(label, dateInt.ToString());
+
+        private void SetPartDateText(UILabel label, string dateText)
+        {
+            label.Text = dateText;
+
+            label.SizeToFit();
+        }
+
+        private UILabel SetupLabel(UIFont font)
+        {
+            var style = new Theme.UILabelStyle
+            {
+                Lines = 1,
+                Font = font
+            };
+
+            return new UILabel().WithStyle(style);
         }
     }
 }

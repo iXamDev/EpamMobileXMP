@@ -37,17 +37,6 @@ namespace XMP.Droid
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en");
         }
 
-        private void InitFramework()
-        {
-            var config = new BootstrapperConfig();
-
-            config.SetSimpleIoc(new SimpleIoc());
-
-            var compositeBootstrapper = new CompositeBootstrapper(new AndroidBootstrapper(), new CoreBootstrapper());
-
-            compositeBootstrapper.Execute(config);
-        }
-
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
             CurrentActivity = activity;
@@ -79,6 +68,17 @@ namespace XMP.Droid
 
         public void OnActivityStopped(Activity activity)
         {
+        }
+
+        private void InitFramework()
+        {
+            var config = new BootstrapperConfig();
+
+            config.SetSimpleIoc(new SimpleIoc());
+
+            var compositeBootstrapper = new CompositeBootstrapper(new AndroidBootstrapper(), new CoreBootstrapper());
+
+            compositeBootstrapper.Execute(config);
         }
     }
 }

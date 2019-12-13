@@ -51,18 +51,6 @@ namespace XMP.Core.ViewModels.Main
             ResetItems();
         }
 
-        private VacantionRequestFilterType CurrentFilter { get; set; }
-
-        protected INavigationService NavigationService { get; }
-
-        protected IVacationRequestsManagerService VacationRequestsManagerService { get; }
-
-        protected IVacationRequestsFilterService VacationRequestsFilterService { get; }
-
-        protected IUserDialogs UserDialogs { get; }
-
-        protected ISessionService SessionService { get; }
-
         public ICommand ShowDetailsCmd => CommandProvider.Get<VacationRequestItemVM>(OnShowDetails);
 
         public ICommand AddCmd => CommandProvider.Get(OnAdd);
@@ -92,6 +80,18 @@ namespace XMP.Core.ViewModels.Main
         public string AddButtonTitle => "New";
 
         public string ScreenTitle => "All Requests";
+
+        protected INavigationService NavigationService { get; }
+
+        protected IVacationRequestsManagerService VacationRequestsManagerService { get; }
+
+        protected IVacationRequestsFilterService VacationRequestsFilterService { get; }
+
+        protected IUserDialogs UserDialogs { get; }
+
+        protected ISessionService SessionService { get; }
+
+        private VacantionRequestFilterType CurrentFilter { get; set; }
 
         public override async Task InitializeAsync(bool recreated)
         {

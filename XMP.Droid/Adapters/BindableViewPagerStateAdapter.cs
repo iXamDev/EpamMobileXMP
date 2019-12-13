@@ -24,7 +24,7 @@ namespace XMP.Droid.Adapters
             FragmentsCreator = fragmentsCreator;
         }
 
-        private Func<TViewModel, TFragment> FragmentsCreator { get; }
+        public override int Count => Items?.Count() ?? 0;
 
         public IEnumerable<TViewModel> Items
         {
@@ -41,24 +41,33 @@ namespace XMP.Droid.Adapters
             }
         }
 
+        private Func<TViewModel, TFragment> FragmentsCreator { get; }
+
         private DisposableCollection ItemsSubscriptions => _itemsSubscriptions ?? (_itemsSubscriptions = new DisposableCollection());
 
-        public override int Count => Items?.Count() ?? 0;
-
-        private void RefreshItemsSubscriptions()
+        public override Fragment GetItem(int position)
         {
-            _itemsSubscriptions?.Dispose();
-            _itemsSubscriptions = null;
+            var vm = GetItemDataContext(position) as TViewModel;
 
-            if (Items is INotifyCollectionChanged observableItems)
-            {
-                observableItems.CollectionChangedWeakSubscribe(Items_CollectionChanged).DisposeWith(ItemsSubscriptions);
-            }
+            var fragment = FragmentsCreator(vm);
+
+            fragment.ViewModel = vm;
+
+            return fragment;
         }
 
-        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public override Java.Lang.Object InstantiateItem(ViewGroup container, int position)
         {
-            Reload(e);
+            var baseFragment = base.InstantiateItem(container, position);
+
+            if (baseFragment is TFragment fragment && fragment.ViewModel == null)
+            {
+                fragment.ViewModel = GetItemDataContext(position) as TViewModel;
+
+                fragment.BindingSet.SetSourceItem(fragment.ViewModel);
+            }
+
+            return baseFragment;
         }
 
         protected virtual void Reload(NotifyCollectionChangedEventArgs args)
@@ -85,29 +94,20 @@ namespace XMP.Droid.Adapters
             return Items.ElementAtOrDefault(position);
         }
 
-        public override Fragment GetItem(int position)
+        private void RefreshItemsSubscriptions()
         {
-            var vm = GetItemDataContext(position) as TViewModel;
+            _itemsSubscriptions?.Dispose();
+            _itemsSubscriptions = null;
 
-            var fragment = FragmentsCreator(vm);
-
-            fragment.ViewModel = vm;
-
-            return fragment;
+            if (Items is INotifyCollectionChanged observableItems)
+            {
+                observableItems.CollectionChangedWeakSubscribe(Items_CollectionChanged).DisposeWith(ItemsSubscriptions);
+            }
         }
 
-        public override Java.Lang.Object InstantiateItem(ViewGroup container, int position)
+        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var baseFragment = base.InstantiateItem(container, position);
-
-            if (baseFragment is TFragment fragment && fragment.ViewModel == null)
-            {
-                fragment.ViewModel = GetItemDataContext(position) as TViewModel;
-
-                fragment.BindingSet.SetSourceItem(fragment.ViewModel);
-            }
-
-            return baseFragment;
+            Reload(e);
         }
     }
 }

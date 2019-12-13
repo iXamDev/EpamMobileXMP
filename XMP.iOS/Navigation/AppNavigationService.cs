@@ -15,20 +15,6 @@ namespace XMP.iOS.Navigation
     {
         protected UIWindow RootWindow => AppDelegate.Window;
 
-        protected void ReplaceRootViewController(UIViewController newRoot, bool wrapInNavigationController = false)
-        {
-            var oldRootVC = RootWindow.RootViewController;
-
-            if (wrapInNavigationController)
-                newRoot = new UINavigationController(newRoot);
-
-            RootWindow.RootViewController = newRoot;
-
-            oldRootVC.RemoveFromParentViewController();
-
-            oldRootVC.DidMoveToParentViewController(null);
-        }
-
         public void NavigateBack(DetailsViewModel fromViewModel)
         {
             var fromViewController = NavigationViewProvider.GetViewController<DetailsViewController, DetailsViewModel>(fromViewModel);
@@ -56,5 +42,19 @@ namespace XMP.iOS.Navigation
 
         public void NavigateToLogin()
         => ReplaceRootViewController(new LoginViewController());
+
+        protected void ReplaceRootViewController(UIViewController newRoot, bool wrapInNavigationController = false)
+        {
+            var oldRootVC = RootWindow.RootViewController;
+
+            if (wrapInNavigationController)
+                newRoot = new UINavigationController(newRoot);
+
+            RootWindow.RootViewController = newRoot;
+
+            oldRootVC.RemoveFromParentViewController();
+
+            oldRootVC.DidMoveToParentViewController(null);
+        }
     }
 }

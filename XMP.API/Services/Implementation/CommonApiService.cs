@@ -141,7 +141,7 @@ namespace XMP.API.Services.Implementation
                 throw new ApiException(apiResponce.Code, apiResponce.Message);
         }
 
-        public virtual async Task<T> Get<T>(string url, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
+        protected virtual async Task<T> Get<T>(string url, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
             where T : class
         {
             var result = await ExecuteRequestAsync<T>(url, HttpMethod.Get, null, cancellationToken, tryToRefreshAccessToken: tryToRefreshAccessToken);
@@ -149,10 +149,10 @@ namespace XMP.API.Services.Implementation
             return result.Data;
         }
 
-        public virtual Task Get(string url, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
+        protected virtual Task Get(string url, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
         => ExecuteRequestAsync(url, HttpMethod.Get, null, cancellationToken, tryToRefreshAccessToken);
 
-        public virtual async Task<T> Post<T>(string url, HttpContent postData, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
+        protected virtual async Task<T> Post<T>(string url, HttpContent postData, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
             where T : class
         {
             var result = await ExecuteRequestAsync<T>(url, HttpMethod.Post, postData, cancellationToken, tryToRefreshAccessToken: tryToRefreshAccessToken);
@@ -160,7 +160,7 @@ namespace XMP.API.Services.Implementation
             return result.Data;
         }
 
-        public virtual Task Post(string url, HttpContent postData, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
+        protected virtual Task Post(string url, HttpContent postData, CancellationToken? cancellationToken = null, bool tryToRefreshAccessToken = true)
         => ExecuteRequestAsync(url, HttpMethod.Post, postData, cancellationToken, tryToRefreshAccessToken);
     }
 }

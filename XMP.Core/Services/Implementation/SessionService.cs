@@ -28,17 +28,17 @@ namespace XMP.Core.Services.Implementation
 
         public event EventHandler OnCredentialsFails;
 
-        private UserCredentials Credentials { get; set; }
+        public string UserLogin { get; private set; }
+
+        public User User { get; } = new User { FullName = "Arkadiy Dobkin" };
+
+        public bool Active => !string.IsNullOrEmpty(_authorizationToken);
 
         protected IApiSettingsService ApiSettingsService { get; }
 
         protected IAuthenticationApiService AuthenticationApiService { get; }
 
-        public bool Active => !string.IsNullOrEmpty(_authorizationToken);
-
-        public string UserLogin { get; private set; }
-
-        public User User { get; } = new User { FullName = "Arkadiy Dobkin" };
+        private UserCredentials Credentials { get; set; }
 
         public Task<bool> RefreshToken()
         {
@@ -56,6 +56,46 @@ namespace XMP.Core.Services.Implementation
 
                 return _refreshTokenTCS.Task;
             }
+        }
+
+        public async Task<bool> Start(UserCredentials credentials)
+        {
+            var token = await GetAccessToken(credentials);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                Launch(credentials, token);
+
+                await SaveAuthorizationToken(token);
+
+                await SecureStorage.SetAsync(SecureStorageConstants.LoginKey, credentials.Login);
+
+                await SecureStorage.SetAsync(SecureStorageConstants.PasswordKey, credentials.Password);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> Reactivate()
+        {
+            var login = await SecureStorage.GetAsync(SecureStorageConstants.LoginKey);
+
+            var password = await SecureStorage.GetAsync(SecureStorageConstants.PasswordKey);
+
+            var accessToken = await SecureStorage.GetAsync(SecureStorageConstants.AccessTokenKey);
+
+            bool Valid(string s) => !string.IsNullOrWhiteSpace(s);
+
+            if (Valid(login) && Valid(password) && Valid(accessToken))
+            {
+                _authorizationToken = accessToken;
+
+                return Launch(new UserCredentials { Login = login, Password = password }, accessToken);
+            }
+
+            return false;
         }
 
         private async Task<bool> ExecuteTokenRefresh(UserCredentials credentials)
@@ -149,46 +189,6 @@ namespace XMP.Core.Services.Implementation
             SetAuthorizationToken(token);
 
             return true;
-        }
-
-        public async Task<bool> Start(UserCredentials credentials)
-        {
-            var token = await GetAccessToken(credentials);
-
-            if (!string.IsNullOrEmpty(token))
-            {
-                Launch(credentials, token);
-
-                await SaveAuthorizationToken(token);
-
-                await SecureStorage.SetAsync(SecureStorageConstants.LoginKey, credentials.Login);
-
-                await SecureStorage.SetAsync(SecureStorageConstants.PasswordKey, credentials.Password);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public async Task<bool> Reactivate()
-        {
-            var login = await SecureStorage.GetAsync(SecureStorageConstants.LoginKey);
-
-            var password = await SecureStorage.GetAsync(SecureStorageConstants.PasswordKey);
-
-            var accessToken = await SecureStorage.GetAsync(SecureStorageConstants.AccessTokenKey);
-
-            bool Valid(string s) => !string.IsNullOrWhiteSpace(s);
-
-            if (Valid(login) && Valid(password) && Valid(accessToken))
-            {
-                _authorizationToken = accessToken;
-
-                return Launch(new UserCredentials { Login = login, Password = password }, accessToken);
-            }
-
-            return false;
         }
     }
 }

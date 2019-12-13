@@ -25,12 +25,6 @@ namespace XMP.iOS.Views.Main.Source
             return cell;
         }
 
-        private static void UpdateCellDevider(UITableViewCell cell, NSIndexPath indexPath, nint totalCount)
-        {
-            if (cell is ContentVacationRequestItemTableViewCell contentVacationRequestItemTableViewCell)
-                contentVacationRequestItemTableViewCell.View.LastItemDeviderView.Hidden = indexPath.Row + 1 != totalCount;
-        }
-
         protected override void ReloadSection(nint section, NotifyCollectionChangedEventArgs args, UITableViewRowAnimation withRowAnimation = UITableViewRowAnimation.Automatic)
         {
             base.ReloadSection(section, args, withRowAnimation);
@@ -46,6 +40,12 @@ namespace XMP.iOS.Views.Main.Source
                     UpdateCellDevider(cell, indexPath, totalItemsCount);
                 }
             }
+        }
+
+        private static void UpdateCellDevider(UITableViewCell cell, NSIndexPath indexPath, nint totalCount)
+        {
+            if (cell is ContentVacationRequestItemTableViewCell contentVacationRequestItemTableViewCell)
+                contentVacationRequestItemTableViewCell.View.LastItemDeviderView.Hidden = indexPath.Row + 1 != totalCount;
         }
     }
 }

@@ -17,12 +17,6 @@ namespace XMP.Core.Database.Implementation.RealmDatabase.Common
             _itemKeyResolver = itemKeyResolver;
         }
 
-        protected TDto FindByKey(Realm realm, string key)
-        => realm.Find<TDto>(key);
-
-        protected override TDto FindDtoForItem(Realm realm, T item)
-        => FindByKey(realm, _itemKeyResolver(item));
-
         public T GetByKey(string key)
         {
             using (var realm = GetRealm())
@@ -42,5 +36,11 @@ namespace XMP.Core.Database.Implementation.RealmDatabase.Common
                 realm.Write(() => realm.Remove(item));
             }
         }
+
+        protected TDto FindByKey(Realm realm, string key)
+        => realm.Find<TDto>(key);
+
+        protected override TDto FindDtoForItem(Realm realm, T item)
+        => FindByKey(realm, _itemKeyResolver(item));
     }
 }

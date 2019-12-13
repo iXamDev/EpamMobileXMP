@@ -14,8 +14,6 @@ namespace XMP.iOS.Views.Details
 
         private UIView _bottomDevider;
 
-        private nfloat CollectionHeight => 188;
-
         public UICollectionView CollectionView { get; private set; }
 
         public DateControlView StartDateControlView { get; private set; }
@@ -25,6 +23,8 @@ namespace XMP.iOS.Views.Details
         public UISegmentedControl StateSegmentedControl { get; private set; }
 
         public UIPageControl PageControl { get; private set; }
+
+        private nfloat CollectionHeight => 188;
 
         protected override void SetupSubviews()
         {

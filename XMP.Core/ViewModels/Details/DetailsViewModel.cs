@@ -41,14 +41,6 @@ namespace XMP.Core.ViewModels.Details
             SessionService = sessionService;
         }
 
-        protected IUserDialogs UserDialogs { get; }
-
-        protected INavigationService NavigationService { get; }
-
-        protected ISessionService SessionService { get; }
-
-        protected IVacationRequestsManagerService VacationRequestsManagerService { get; }
-
         public ICommand SaveCmd => CommandProvider.Get(OnSave);
 
         public ICommand ShowStartDateDialogCmd => CommandProvider.GetForAsync(OnShowStartDateDialog);
@@ -83,6 +75,21 @@ namespace XMP.Core.ViewModels.Details
         {
             get => _vacationState;
             set => SetValue(ref _vacationState, value, nameof(VacationState));
+        }
+
+        protected IUserDialogs UserDialogs { get; }
+
+        protected INavigationService NavigationService { get; }
+
+        protected ISessionService SessionService { get; }
+
+        protected IVacationRequestsManagerService VacationRequestsManagerService { get; }
+
+        public override void Initialize(DetailsParameters parameters, bool recreated)
+        {
+            SetModel((parameters?.CreateNew ?? true) ? null : VacationRequestsManagerService.GetVacantion(parameters.LocalId));
+
+            base.Initialize(parameters, recreated);
         }
 
         private void OnSave()
@@ -160,13 +167,6 @@ namespace XMP.Core.ViewModels.Details
 
         private DetailsItemVM SetupItem(VacationType vacationType)
         => new DetailsItemVM(vacationType);
-
-        public override void Initialize(DetailsParameters parameters, bool recreated)
-        {
-            SetModel((parameters?.CreateNew ?? true) ? null : VacationRequestsManagerService.GetVacantion(parameters.LocalId));
-
-            base.Initialize(parameters, recreated);
-        }
 
         private void SetModel(VacantionRequest request)
         {

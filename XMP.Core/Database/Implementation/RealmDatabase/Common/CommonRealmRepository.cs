@@ -23,24 +23,6 @@ namespace XMP.Core.Database.Implementation.RealmDatabase.Common
 
         protected IRealmRepositoryEntriesMapper<T, TDto> RealmRepositoryEntriesMapper { get; }
 
-        protected abstract TDto FindDtoForItem(Realm realm, T item);
-
-        protected Realm GetRealm()
-        => RealmProvider.GetRealm();
-
-        protected virtual void Update(TDto dto, T item)
-        => RealmRepositoryEntriesMapper.Update(dto, item);
-
-        protected virtual void AddEntry(Realm realm, TDto dto)
-        => realm.Write(() => realm.Add(dto));
-
-        protected virtual void AddEntries(Realm realm, TDto[] dtos)
-        => realm.Write(() =>
-        {
-            foreach (var dto in dtos)
-                realm.Add(dto);
-        });
-
         public virtual void Add(T item)
         {
             using (var realm = GetRealm())
@@ -119,5 +101,23 @@ namespace XMP.Core.Database.Implementation.RealmDatabase.Common
                 realm.Write(() => realm.RemoveAll<TDto>());
             }
         }
+
+        protected abstract TDto FindDtoForItem(Realm realm, T item);
+
+        protected Realm GetRealm()
+        => RealmProvider.GetRealm();
+
+        protected virtual void Update(TDto dto, T item)
+        => RealmRepositoryEntriesMapper.Update(dto, item);
+
+        protected virtual void AddEntry(Realm realm, TDto dto)
+        => realm.Write(() => realm.Add(dto));
+
+        protected virtual void AddEntries(Realm realm, TDto[] dtos)
+        => realm.Write(() =>
+        {
+            foreach (var dto in dtos)
+                realm.Add(dto);
+        });
     }
 }

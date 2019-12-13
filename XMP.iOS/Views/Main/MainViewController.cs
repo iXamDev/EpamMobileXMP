@@ -26,26 +26,6 @@ namespace XMP.iOS.Views.Main
 
         protected MenuHolderVC MenuHolder { get; private set; }
 
-        private void OnCloseMenuInteraction(object sender, EventArgs e)
-        {
-            if (SidebarControllerVC?.IsOpen ?? false)
-                SidebarControllerVC.ToggleMenu();
-        }
-
-        private void OnMenuClick(object sender, EventArgs e)
-        => SidebarControllerVC.ToggleMenu();
-
-        private SidebarMenuViewController CreateSidebarMenu()
-        {
-            var sidebarController = new SidebarMenuViewController(this, ContentHolder, MenuHolder);
-
-            sidebarController.HasShadowing = false;
-            sidebarController.MenuWidth = Theme.Dimensions.SideMenuWidth;
-            sidebarController.MenuLocation = MenuLocations.Left;
-
-            return sidebarController;
-        }
-
         public override void Bind(BindingSet<MainViewModel> bindingSet)
         {
             base.Bind(bindingSet);
@@ -110,6 +90,26 @@ namespace XMP.iOS.Views.Main
             base.ViewWillAppear(animated);
 
             NavigationController?.SetNavigationBarHidden(false, animated);
+        }
+
+        private void OnCloseMenuInteraction(object sender, EventArgs e)
+        {
+            if (SidebarControllerVC?.IsOpen ?? false)
+                SidebarControllerVC.ToggleMenu();
+        }
+
+        private void OnMenuClick(object sender, EventArgs e)
+        => SidebarControllerVC.ToggleMenu();
+
+        private SidebarMenuViewController CreateSidebarMenu()
+        {
+            var sidebarController = new SidebarMenuViewController(this, ContentHolder, MenuHolder);
+
+            sidebarController.HasShadowing = false;
+            sidebarController.MenuWidth = Theme.Dimensions.SideMenuWidth;
+            sidebarController.MenuLocation = MenuLocations.Left;
+
+            return sidebarController;
         }
     }
 }
