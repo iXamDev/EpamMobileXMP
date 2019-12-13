@@ -5,10 +5,10 @@ using FlexiMvvm.Views;
 using SidebarNavigation;
 using UIKit;
 using XMP.Core.ViewModels.Main;
-using XMP.iOS.Extensions;
-using XMP.iOS.Views.SidebarMenu;
+using XMP.IOS.Extensions;
+using XMP.IOS.Views.SidebarMenu;
 
-namespace XMP.iOS.Views.Main
+namespace XMP.IOS.Views.Main
 {
     public class MainViewController : BindableViewController<MainViewModel>
     {

@@ -2,7 +2,7 @@
 using UIKit;
 using XMP.Core.ViewModels.Launcher;
 
-namespace XMP.iOS.Views.Splash
+namespace XMP.IOS.Views.Splash
 {
     public class SplashViewController : ViewController<LauncherViewModel>
     {

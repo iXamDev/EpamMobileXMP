@@ -2,10 +2,10 @@
 using FlexiMvvm.Collections;
 using UIKit;
 using XMP.Core.ViewModels.Main;
-using XMP.iOS.Views.Main.Cells;
-using XMP.iOS.Views.Main.Source;
+using XMP.IOS.Views.Main.Cells;
+using XMP.IOS.Views.Main.Source;
 
-namespace XMP.iOS.Views.Main
+namespace XMP.IOS.Views.Main
 {
     public class ContentHolderVC : UIViewController
     {

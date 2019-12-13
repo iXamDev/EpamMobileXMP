@@ -1,7 +1,7 @@
 ﻿using UIKit;
 
 #pragma warning disable SA1300
-namespace XMP.iOS
+namespace XMP.IOS
 #pragma warning restore SA1300
 {
 #pragma warning disable SA1649

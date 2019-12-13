@@ -2,9 +2,9 @@
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
 using XMP.Core.ViewModels.Details.Items;
-using XMP.iOS.Views.Details.Source;
+using XMP.IOS.Views.Details.Source;
 
-namespace XMP.iOS.Bindings
+namespace XMP.IOS.Bindings
 {
     public static class DetailsItemsSourceBinding
     {

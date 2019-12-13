@@ -1,9 +1,9 @@
 ﻿using System;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
-using XMP.iOS.Controls;
+using XMP.IOS.Controls;
 
-namespace XMP.iOS.Bindings
+namespace XMP.IOS.Bindings
 {
     public static class DateControlViewBindings
     {

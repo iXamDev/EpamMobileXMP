@@ -4,7 +4,7 @@ using CoreGraphics;
 using FlexiMvvm.Views;
 using UIKit;
 
-namespace XMP.iOS.Controls
+namespace XMP.IOS.Controls
 {
     public class DateControlView : LayoutView
     {

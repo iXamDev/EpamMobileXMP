@@ -2,9 +2,9 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
-using XMP.iOS.Views.Main.Cells;
+using XMP.IOS.Views.Main.Cells;
 
-namespace XMP.iOS.Views.Main
+namespace XMP.IOS.Views.Main
 {
     public class MenuView : LayoutView
     {

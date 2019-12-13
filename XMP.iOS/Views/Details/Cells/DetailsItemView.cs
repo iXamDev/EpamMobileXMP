@@ -3,7 +3,7 @@ using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
 
-namespace XMP.iOS.Views.Details.Cells
+namespace XMP.IOS.Views.Details.Cells
 {
     public class DetailsItemView : LayoutView
     {

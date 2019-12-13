@@ -2,7 +2,7 @@
 using UIKit;
 using Xamarin.Essentials;
 
-namespace XMP.iOS
+namespace XMP.IOS
 {
     public static partial class Theme
     {

@@ -5,9 +5,9 @@ using FlexiMvvm.Collections;
 using Foundation;
 using JetBrains.Annotations;
 using UIKit;
-using XMP.iOS.Views.Main.Cells;
+using XMP.IOS.Views.Main.Cells;
 
-namespace XMP.iOS.Views.Main.Source
+namespace XMP.IOS.Views.Main.Source
 {
     public class ContentVacationRequestItemsSource : TableViewObservablePlainSource
     {

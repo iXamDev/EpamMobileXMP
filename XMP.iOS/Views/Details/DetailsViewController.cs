@@ -7,11 +7,11 @@ using XMP.Core.Helpers;
 using XMP.Core.Models;
 using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Details;
-using XMP.iOS.Bindings;
-using XMP.iOS.Extensions;
-using XMP.iOS.Views.Details.Source;
+using XMP.IOS.Bindings;
+using XMP.IOS.Extensions;
+using XMP.IOS.Views.Details.Source;
 
-namespace XMP.iOS.Views.Details
+namespace XMP.IOS.Views.Details
 {
     public class DetailsViewController : BindableViewController<DetailsViewModel, DetailsParameters>
     {

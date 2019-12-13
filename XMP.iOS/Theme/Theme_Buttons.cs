@@ -1,8 +1,8 @@
 ﻿using System;
 using UIKit;
-using XMP.iOS.Extensions;
+using XMP.IOS.Extensions;
 
-namespace XMP.iOS
+namespace XMP.IOS
 {
     public static partial class Theme
     {

@@ -6,9 +6,9 @@ using FlexiMvvm.Collections;
 using Foundation;
 using UIKit;
 using XMP.Core.ViewModels.Details.Items;
-using XMP.iOS.Views.Details.Cells;
+using XMP.IOS.Views.Details.Cells;
 
-namespace XMP.iOS.Views.Details.Source
+namespace XMP.IOS.Views.Details.Source
 {
     public class DetailsItemsSource : CollectionViewObservablePlainSource
     {

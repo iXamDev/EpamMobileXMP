@@ -5,7 +5,7 @@ using FlexiMvvm.ValueConverters;
 using XMP.Core.Models;
 using XMP.Core.ValueConverters;
 
-namespace XMP.iOS.ValueConverters
+namespace XMP.IOS.ValueConverters
 {
     public class VacationTypeToBundleImageNameValueConverter : DictionaryValueConverter<VacationType, string>
     {

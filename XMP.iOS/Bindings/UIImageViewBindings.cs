@@ -5,7 +5,7 @@ using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
 using UIKit;
 
-namespace XMP.iOS.Bindings
+namespace XMP.IOS.Bindings
 {
     public static class UIImageViewBindings
     {

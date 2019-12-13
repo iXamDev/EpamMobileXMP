@@ -5,10 +5,10 @@ using FlexiMvvm.Collections;
 using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Details.Items;
-using XMP.iOS.Bindings;
-using XMP.iOS.ValueConverters;
+using XMP.IOS.Bindings;
+using XMP.IOS.ValueConverters;
 
-namespace XMP.iOS.Views.Details.Cells
+namespace XMP.IOS.Views.Details.Cells
 {
     public class DetailsItemCollectionViewCell : CollectionViewBindableItemCell<DetailsViewModel, DetailsItemVM>
     {

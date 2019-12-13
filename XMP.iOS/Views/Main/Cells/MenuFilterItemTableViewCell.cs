@@ -5,7 +5,7 @@ using FlexiMvvm.Collections;
 using XMP.Core.ViewModels.Main;
 using XMP.Core.ViewModels.Main.Items;
 
-namespace XMP.iOS.Views.Main.Cells
+namespace XMP.IOS.Views.Main.Cells
 {
     public class MenuFilterItemTableViewCell : TableViewBindableItemCell<MainViewModel, FilterItemVM>
     {

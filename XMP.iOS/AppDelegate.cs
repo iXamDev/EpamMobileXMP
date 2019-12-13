@@ -5,10 +5,10 @@ using Foundation;
 using UIKit;
 using XMP.API.Bootstrappers;
 using XMP.Core.Bootstrapper;
-using XMP.iOS.Bootstrapper;
-using XMP.iOS.Views.Splash;
+using XMP.IOS.Bootstrapper;
+using XMP.IOS.Views.Splash;
 
-namespace XMP.iOS
+namespace XMP.IOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.

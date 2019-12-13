@@ -5,11 +5,11 @@ using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
 using XMP.Core.ViewModels.Main;
-using XMP.iOS.Views.Details;
-using XMP.iOS.Views.Login;
-using XMP.iOS.Views.Main;
+using XMP.IOS.Views.Details;
+using XMP.IOS.Views.Login;
+using XMP.IOS.Views.Main;
 
-namespace XMP.iOS.Navigation
+namespace XMP.IOS.Navigation
 {
     public class AppNavigationService : NavigationService, INavigationService
     {

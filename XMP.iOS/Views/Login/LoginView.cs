@@ -2,9 +2,9 @@
 using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
-using XMP.iOS.Controls;
+using XMP.IOS.Controls;
 
-namespace XMP.iOS.Views.Login
+namespace XMP.IOS.Views.Login
 {
     public class LoginView : LayoutView
     {

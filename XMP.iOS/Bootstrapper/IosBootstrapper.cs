@@ -3,9 +3,9 @@ using FlexiMvvm.Bootstrappers;
 using XMP.API.Bootstrappers;
 using XMP.Core.Bootstrapper;
 using XMP.Core.Navigation;
-using XMP.iOS.Navigation;
+using XMP.IOS.Navigation;
 
-namespace XMP.iOS.Bootstrapper
+namespace XMP.IOS.Bootstrapper
 {
     internal sealed class IosBootstrapper : IBootstrapper
     {

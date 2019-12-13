@@ -2,7 +2,7 @@
 using FlexiMvvm.Views;
 using UIKit;
 
-namespace XMP.iOS.Views.Main.Cells
+namespace XMP.IOS.Views.Main.Cells
 {
     public class MenuFilterItemView : LayoutView
     {

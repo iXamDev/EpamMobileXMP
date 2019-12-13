@@ -3,10 +3,10 @@ using Cirrious.FluentLayouts.Touch;
 using CoreGraphics;
 using FlexiMvvm.Views;
 using UIKit;
-using XMP.iOS.Controls;
-using XMP.iOS.Views.Details.Cells;
+using XMP.IOS.Controls;
+using XMP.IOS.Views.Details.Cells;
 
-namespace XMP.iOS.Views.Details
+namespace XMP.IOS.Views.Details
 {
     public class DetailsView : LayoutView
     {

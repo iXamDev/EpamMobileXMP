@@ -3,7 +3,7 @@ using FlexiMvvm.ValueConverters;
 using FlexiMvvm.Views;
 using XMP.Core.ViewModels.Login;
 
-namespace XMP.iOS.Views.Login
+namespace XMP.IOS.Views.Login
 {
     public class LoginViewController : BindableViewController<LoginViewModel>
     {

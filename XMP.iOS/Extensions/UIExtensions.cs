@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UIKit;
 
-namespace XMP.iOS.Extensions
+namespace XMP.IOS.Extensions
 {
     public static class UIExtensions
     {

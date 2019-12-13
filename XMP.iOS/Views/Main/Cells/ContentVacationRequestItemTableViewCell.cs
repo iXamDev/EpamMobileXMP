@@ -5,10 +5,10 @@ using FlexiMvvm.Collections;
 using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Main;
 using XMP.Core.ViewModels.Main.Items;
-using XMP.iOS.Bindings;
-using XMP.iOS.ValueConverters;
+using XMP.IOS.Bindings;
+using XMP.IOS.ValueConverters;
 
-namespace XMP.iOS.Views.Main.Cells
+namespace XMP.IOS.Views.Main.Cells
 {
     public class ContentVacationRequestItemTableViewCell : TableViewBindableItemCell<MainViewModel, VacationRequestItemVM>
     {
