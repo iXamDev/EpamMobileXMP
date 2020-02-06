@@ -15,7 +15,6 @@
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\Launcher\" />
-    <Folder Include="Navigation\" />
     <Folder Include="Bootstrapper\" />
     <Folder Include="ViewModels\Login\" />
     <Folder Include="ViewModels\Main\" />
@@ -40,5 +39,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XMP.API\XMP.API.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="NN.Shared.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Shared.FlexiMvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.FlexiMvvm.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using FlexiMvvm.Collections;
-using FlexiMvvm.Commands;
 using FlexiMvvm.ViewModels;
 using FlexiMvvm.Weak.Subscriptions;
+using NN.Shared.FlexiMvvm.Navigation;
 using Xamarin.Essentials;
 using XMP.Core.Helpers;
 using XMP.Core.Models;
-using XMP.Core.Navigation;
 using XMP.Core.Services.Abstract;
+using XMP.Core.ViewModels.Details;
 using XMP.Core.ViewModels.Main.Items;
 
 namespace XMP.Core.ViewModels.Main
@@ -115,7 +115,7 @@ namespace XMP.Core.ViewModels.Main
         }
 
         private void VacationAddedEventHandler(object sender, EventArgs<VacantionRequest> e)
-        => AddVacationRequestIfNeeded(e.Value);
+            => AddVacationRequestIfNeeded(e.Value);
 
         private void AddVacationRequestIfNeeded(VacantionRequest e)
         {
@@ -159,13 +159,13 @@ namespace XMP.Core.ViewModels.Main
         }
 
         private void VacationsChangedEventHandler(object sender, EventArgs e)
-        => ResetItems();
+            => ResetItems();
 
         private void OnAdd()
         {
             CloseMenuInteraction.RaiseRequested();
 
-            NavigationService.NavigateToDetails(this, new Details.DetailsParameters());
+            NavigationService.Navigate<DetailsViewModel, DetailsParameters>(new Details.DetailsParameters());
         }
 
         private void OnFilter(FilterItemVM filterVM)
@@ -225,7 +225,7 @@ namespace XMP.Core.ViewModels.Main
         {
             CloseMenuInteraction.RaiseRequested();
 
-            NavigationService.NavigateToDetails(this, new Details.DetailsParameters(itemVM.Model.LocalId));
+            NavigationService.Navigate<DetailsViewModel, DetailsParameters>(new Details.DetailsParameters(itemVM.Model.LocalId));
         }
 
         private VacationRequestItemVM SetupRequestItemVM(VacantionRequest model)
@@ -238,13 +238,13 @@ namespace XMP.Core.ViewModels.Main
         }
 
         private FilterItemVM SetupFilterItemVM(VacantionRequestFilterType arg)
-        => new FilterItemVM(arg);
+            => new FilterItemVM(arg);
 
         private void SetFilterItems()
         {
             FilterItems = EnumHelper.GetEnumStates<VacantionRequestFilterType>()
-                .Select(SetupFilterItemVM)
-                .ToArray();
+                                    .Select(SetupFilterItemVM)
+                                    .ToArray();
 
             CurrentFilter = FilterItems.First().Type;
         }

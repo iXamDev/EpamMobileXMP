@@ -1,5 +1,4 @@
-﻿using System;
-using Cirrious.FluentLayouts.Touch;
+﻿using Cirrious.FluentLayouts.Touch;
 using FlexiMvvm.Views;
 using UIKit;
 

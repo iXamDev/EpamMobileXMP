@@ -1,9 +1,13 @@
 ﻿using Acr.UserDialogs;
 using ExpressMapper;
 using FlexiMvvm.Bootstrappers;
+using FlexiMvvm.Ioc;
 using FlexiMvvm.Operations;
 using FlexiMvvm.ViewModels;
-using Xamarin.Essentials;
+using NN.Shared.FlexiMvvm.Extensions;
+using NN.Shared.FlexiMvvm.Navigation;
+using NN.Shared.FlexiMvvm.Presenters;
+using NN.Shared.FlexiMvvm.Views;
 using XMP.API.Bootstrappers;
 using XMP.API.Services.Abstract;
 using XMP.Core.Database.Abstract;
@@ -11,14 +15,10 @@ using XMP.Core.Database.Implementation.RealmDatabase;
 using XMP.Core.Database.Implementation.RealmDatabase.VacationRequests;
 using XMP.Core.Mapping;
 using XMP.Core.Models;
-using XMP.Core.Navigation;
 using XMP.Core.Operations;
 using XMP.Core.Services.Abstract;
 using XMP.Core.Services.Implementation;
-using XMP.Core.ViewModels.Details;
-using XMP.Core.ViewModels.Launcher;
 using XMP.Core.ViewModels.Login;
-using XMP.Core.ViewModels.Main;
 
 namespace XMP.Core.Bootstrapper
 {
@@ -42,13 +42,11 @@ namespace XMP.Core.Bootstrapper
 
             simpleIoc.Register<IVacationRequestsFilterService>(() => new VacationRequestsFilterService());
 
-            simpleIoc.Register(() => new LauncherViewModel(simpleIoc.Get<INavigationService>(), simpleIoc.Get<ISessionService>()));
+            simpleIoc.Register<INavigationService>(
+                () => new NavigationService(simpleIoc.Get<IFlexiMvvmViewPresenter>(), simpleIoc.Get<IViewResolver>()),
+                Reuse.Singleton);
 
-            simpleIoc.Register(() => new LoginViewModel(simpleIoc.Get<INavigationService>(), simpleIoc.Get<IUserDialogs>(), simpleIoc.Get<ISessionService>(), simpleIoc.Get<IOperationFactory>()));
-
-            simpleIoc.Register(() => new MainViewModel(simpleIoc.Get<IVacationRequestsManagerService>(), simpleIoc.Get<IVacationRequestsFilterService>(), simpleIoc.Get<ISessionService>(), simpleIoc.Get<IUserDialogs>(), simpleIoc.Get<INavigationService>()));
-
-            simpleIoc.Register(() => new DetailsViewModel(simpleIoc.Get<ISessionService>(), simpleIoc.Get<IVacationRequestsManagerService>(), simpleIoc.Get<INavigationService>(), simpleIoc.Get<IUserDialogs>()));
+            IocHelper.RegisterViewModelsFromAssemblyByReflection(simpleIoc, GetType().Assembly);
 
             LifecycleViewModelProvider.SetFactory(new DefaultLifecycleViewModelFactory(simpleIoc));
 
@@ -60,7 +58,7 @@ namespace XMP.Core.Bootstrapper
 
             session.OnCredentialsFails += async (sender, e) =>
             {
-                MainThread.BeginInvokeOnMainThread(simpleIoc.Get<INavigationService>().NavigateToLogin);
+                await simpleIoc.Get<INavigationService>().Navigate<LoginViewModel>();
 
                 await simpleIoc.Get<IRealmProvider>().Drop().ConfigureAwait(false);
             };

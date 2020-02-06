@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
 using FlexiMvvm.Collections;
 using Foundation;
-using JetBrains.Annotations;
 using UIKit;
 using XMP.IOS.Views.Main.Cells;
 

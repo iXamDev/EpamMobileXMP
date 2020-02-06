@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Views;
+using NN.Ios.Core.Attributes;
 using UIKit;
 using XMP.Core.Helpers;
 using XMP.Core.Models;
@@ -13,6 +14,7 @@ using XMP.IOS.Views.Details.Source;
 
 namespace XMP.IOS.Views.Details
 {
+    [PushPresentation]
     public class DetailsViewController : BindableViewController<DetailsViewModel, DetailsParameters>
     {
         private UILabel _navbarTitleLabel;

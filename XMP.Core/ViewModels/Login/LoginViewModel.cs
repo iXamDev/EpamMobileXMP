@@ -6,10 +6,11 @@ using Acr.UserDialogs;
 using FlexiMvvm.Commands;
 using FlexiMvvm.Operations;
 using FlexiMvvm.ViewModels;
+using NN.Shared.FlexiMvvm.Navigation;
 using XMP.Core.Models;
-using XMP.Core.Navigation;
 using XMP.Core.Operations;
 using XMP.Core.Services.Abstract;
+using XMP.Core.ViewModels.Main;
 
 namespace XMP.Core.ViewModels.Login
 {
@@ -53,7 +54,7 @@ namespace XMP.Core.ViewModels.Login
                     .OnSuccess(success =>
                     {
                         if (success)
-                            NavigationService.NavigateToMain(this);
+                            NavigationService.Navigate<MainViewModel>();
                     })
                     .OnError<InvalidCredentialException>(ex => SetErrorMessage(LoginErrorCases.WrongCredentials))
                     .OnError<Exception>(ex => SetErrorMessage(LoginErrorCases.GeneralError));

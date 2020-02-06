@@ -1,5 +1,4 @@
-﻿using System;
-using FlexiMvvm.Bindings;
+﻿using FlexiMvvm.Bindings;
 using FlexiMvvm.Collections;
 using UIKit;
 using XMP.Core.ViewModels.Main;

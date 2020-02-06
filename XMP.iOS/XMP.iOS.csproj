@@ -1,246 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-        <ProjectGuid>{47215386-B462-43F4-A5D9-2C7371D0DB13}</ProjectGuid>
-        <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-        <TemplateGuid>{edc1b0fa-90cd-4038-8fad-98fe74adb368}</TemplateGuid>
-        <OutputType>Exe</OutputType>
-        <RootNamespace>XMP.IOS</RootNamespace>
-        <AssemblyName>XMP.iOS</AssemblyName>
-        <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-        <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
-        <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
-        <DefineConstants>DEBUG</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <MtouchArch>x86_64</MtouchArch>
-        <MtouchLink>None</MtouchLink>
-        <MtouchDebug>true</MtouchDebug>
-        <CodesignKey>iPhone Developer</CodesignKey>
-<CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
-        <DebugType>none</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <MtouchLink>None</MtouchLink>
-        <MtouchArch>x86_64</MtouchArch>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\iPhone\Debug</OutputPath>
-        <DefineConstants>DEBUG</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <MtouchArch>ARM64</MtouchArch>
-        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-        <CodesignKey>iPhone Developer</CodesignKey>
-        <MtouchDebug>true</MtouchDebug>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-        <DebugType>none</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\iPhone\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-        <MtouchArch>ARM64</MtouchArch>
-        <CodesignKey>iPhone Developer</CodesignKey>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Core" />
-        <Reference Include="Xamarin.iOS" />
-        <Reference Include="System.Numerics" />
-        <Reference Include="System.Numerics.Vectors" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="FlexiMvvm.FullStack.PreRelease">
-        <Version>0.10.8-prerelease</Version>
-      </PackageReference>
-      <PackageReference Include="Xamarin.Essentials">
-        <Version>1.3.1</Version>
-      </PackageReference>
-      <PackageReference Include="SidebarNavigation">
-        <Version>2.0.0</Version>
-      </PackageReference>
-      <PackageReference Include="Acr.UserDialogs">
-        <Version>7.0.35</Version>
-      </PackageReference>
-      <PackageReference Include="Realm.Database">
-        <Version>3.4.0</Version>
-      </PackageReference>
-    </ItemGroup>
-    <ItemGroup>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Resources\Images.xcassets\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Splash_bg.jpg" />
-        <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Login_bg.jpg" />
-        <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Triangle.pdf" />
-        <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Plus.pdf" />
-        <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Menu.pdf" />
-        <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Avatar_Ark.png" />
-        <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Arrow.pdf" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Contents.json" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Icon_Request_Green.png" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Icon_Request_Plum.png" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Icon_Request_Dark.png" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Icon_Request_Blue.png" />
-        <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Icon_Request_Gray.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Resources\" />
-        <Folder Include="Bootstrapper\" />
-        <Folder Include="Navigation\" />
-        <Folder Include="Views\" />
-        <Folder Include="Views\Splash\" />
-        <Folder Include="Views\Login\" />
-        <Folder Include="Views\Main\" />
-        <Folder Include="Views\Details\" />
-        <Folder Include="Theme\" />
-        <Folder Include="Resources\Images.xcassets\LoginBackground.imageset\" />
-        <Folder Include="Extensions\" />
-        <Folder Include="Controls\" />
-        <Folder Include="Resources\Images.xcassets\Triangle.imageset\" />
-        <Folder Include="Resources\Images.xcassets\Menu.imageset\" />
-        <Folder Include="Resources\Images.xcassets\Plus.imageset\" />
-        <Folder Include="Resources\Images.xcassets\UserAvatar.imageset\" />
-        <Folder Include="Views\Main\Cells\" />
-        <Folder Include="Resources\Images.xcassets\Arrow.imageset\" />
-        <Folder Include="Bindings\" />
-        <Folder Include="Resources\Images.xcassets\VacationRegular.imageset\" />
-        <Folder Include="Resources\Images.xcassets\VacationSickDays.imageset\" />
-        <Folder Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\" />
-        <Folder Include="Resources\Images.xcassets\VacationOvertime.imageset\" />
-        <Folder Include="Resources\Images.xcassets\VacationNotPayable.imageset\" />
-        <Folder Include="Views\Main\Source\" />
-        <Folder Include="Views\SidebarMenu\" />
-        <Folder Include="Views\Details\Cells\" />
-        <Folder Include="ValueConverters\" />
-        <Folder Include="Views\Details\Source\" />
-    </ItemGroup>
-    <ItemGroup>
-        <InterfaceDefinition Include="SplashScreen.xib" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Info.plist" />
-        <None Include="Entitlements.plist" />
-        <None Include="FodyWeavers.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Main.cs" />
-        <Compile Include="AppDelegate.cs" />
-        <Compile Include="Bootstrapper\IosBootstrapper.cs" />
-        <Compile Include="Navigation\AppNavigationService.cs" />
-        <Compile Include="Views\Splash\SplashViewController.cs" />
-        <Compile Include="Views\Login\LoginViewController.cs" />
-        <Compile Include="Views\Login\LoginView.cs" />
-        <Compile Include="Views\Main\MainViewController.cs" />
-        <Compile Include="Views\Main\MenuHolderVC.cs" />
-        <Compile Include="Views\Main\ContentHolderVC.cs" />
-        <Compile Include="Views\Main\MenuView.cs" />
-        <Compile Include="Views\Details\DetailsViewController.cs" />
-        <Compile Include="Theme\Theme_Colors.cs" />
-        <Compile Include="Theme\Theme.cs" />
-        <Compile Include="Theme\Theme_Dimensions.cs" />
-        <Compile Include="Theme\Theme_Buttons.cs" />
-        <Compile Include="Extensions\UIExtensions.cs" />
-        <Compile Include="Theme\Theme_Fields.cs" />
-        <Compile Include="Controls\PaddingTextField.cs" />
-        <Compile Include="Theme\Theme_Text.cs" />
-        <Compile Include="Extensions\XMPExtensions.cs" />
-        <Compile Include="Views\Main\ContentView.cs" />
-        <Compile Include="Views\Main\Cells\MenuFilterItemTableViewCell.cs" />
-        <Compile Include="Views\Main\Cells\MenuFilterItemView.cs" />
-        <Compile Include="Views\Main\Cells\ContentVacationRequestItemView.cs" />
-        <Compile Include="Views\Main\Cells\ContentVacationRequestItemTableViewCell.cs" />
-        <Compile Include="Bindings\UIImageViewBindings.cs" />
-        <Compile Include="Views\Main\Source\ContentVacationRequestItemsSource.cs" />
-        <Compile Include="Views\Details\DetailsView.cs" />
-        <Compile Include="Views\SidebarMenu\SidebarMenuViewController.cs" />
-        <Compile Include="Controls\DateControlView.cs" />
-        <Compile Include="Bindings\DateControlViewBindings.cs" />
-        <Compile Include="Views\Details\Cells\DetailsItemView.cs" />
-        <Compile Include="Views\Details\Cells\DetailsItemCollectionViewCell.cs" />
-        <Compile Include="ValueConverters\VacationTypeToBundleImageNameValueConverter.cs" />
-        <Compile Include="Views\Details\Source\DetailsItemsSource.cs" />
-        <Compile Include="Bindings\DetailsItemsSourceBinding.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">
-        <Project>{A0D57CF1-51BB-4C0D-8ECE-F1A9ADCF396C}</Project>
-        <Name>XMP.Core</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\XMP.API\XMP.API.csproj">
-        <Project>{0DEED80B-3448-4034-8555-997AC66915CA}</Project>
-        <Name>XMP.API</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectGuid>{47215386-B462-43F4-A5D9-2C7371D0DB13}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{edc1b0fa-90cd-4038-8fad-98fe74adb368}</TemplateGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>XMP.IOS</RootNamespace>
+    <AssemblyName>XMP.iOS</AssemblyName>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NN.Ios.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Ios.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Ios.FlexiMvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Ios.FlexiMvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Shared.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Shared.FlexiMvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.FlexiMvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FlexiMvvm.FullStack.PreRelease">
+      <Version>0.10.8-prerelease</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Essentials">
+      <Version>1.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="SidebarNavigation">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.0.35</Version>
+    </PackageReference>
+    <PackageReference Include="Realm.Database">
+      <Version>3.4.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\SplashBackground.imageset\Splash_bg.jpg" />
+    <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LoginBackground.imageset\Login_bg.jpg" />
+    <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\Triangle.imageset\Triangle.pdf" />
+    <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\Plus.imageset\Plus.pdf" />
+    <ImageAsset Include="Resources\Images.xcassets\Menu.imageset\Menu.pdf" />
+    <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\UserAvatar.imageset\Avatar_Ark.png" />
+    <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\Arrow.imageset\Arrow.pdf" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationRegular.imageset\Icon_Request_Green.png" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationSickDays.imageset\Icon_Request_Plum.png" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\Icon_Request_Dark.png" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationOvertime.imageset\Icon_Request_Blue.png" />
+    <ImageAsset Include="Resources\Images.xcassets\VacationNotPayable.imageset\Icon_Request_Gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Bootstrapper\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Splash\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Main\" />
+    <Folder Include="Views\Details\" />
+    <Folder Include="Theme\" />
+    <Folder Include="Resources\Images.xcassets\LoginBackground.imageset\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Resources\Images.xcassets\Triangle.imageset\" />
+    <Folder Include="Resources\Images.xcassets\Menu.imageset\" />
+    <Folder Include="Resources\Images.xcassets\Plus.imageset\" />
+    <Folder Include="Resources\Images.xcassets\UserAvatar.imageset\" />
+    <Folder Include="Views\Main\Cells\" />
+    <Folder Include="Resources\Images.xcassets\Arrow.imageset\" />
+    <Folder Include="Bindings\" />
+    <Folder Include="Resources\Images.xcassets\VacationRegular.imageset\" />
+    <Folder Include="Resources\Images.xcassets\VacationSickDays.imageset\" />
+    <Folder Include="Resources\Images.xcassets\VacationExceptionalLeave.imageset\" />
+    <Folder Include="Resources\Images.xcassets\VacationOvertime.imageset\" />
+    <Folder Include="Resources\Images.xcassets\VacationNotPayable.imageset\" />
+    <Folder Include="Views\Main\Source\" />
+    <Folder Include="Views\SidebarMenu\" />
+    <Folder Include="Views\Details\Cells\" />
+    <Folder Include="ValueConverters\" />
+    <Folder Include="Views\Details\Source\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="SplashScreen.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Bootstrapper\IosBootstrapper.cs" />
+    <Compile Include="Views\Splash\SplashViewController.cs" />
+    <Compile Include="Views\Login\LoginViewController.cs" />
+    <Compile Include="Views\Login\LoginView.cs" />
+    <Compile Include="Views\Main\MainViewController.cs" />
+    <Compile Include="Views\Main\MenuHolderVC.cs" />
+    <Compile Include="Views\Main\ContentHolderVC.cs" />
+    <Compile Include="Views\Main\MenuView.cs" />
+    <Compile Include="Views\Details\DetailsViewController.cs" />
+    <Compile Include="Theme\Theme_Colors.cs" />
+    <Compile Include="Theme\Theme.cs" />
+    <Compile Include="Theme\Theme_Dimensions.cs" />
+    <Compile Include="Theme\Theme_Buttons.cs" />
+    <Compile Include="Extensions\UIExtensions.cs" />
+    <Compile Include="Theme\Theme_Fields.cs" />
+    <Compile Include="Controls\PaddingTextField.cs" />
+    <Compile Include="Theme\Theme_Text.cs" />
+    <Compile Include="Extensions\XMPExtensions.cs" />
+    <Compile Include="Views\Main\ContentView.cs" />
+    <Compile Include="Views\Main\Cells\MenuFilterItemTableViewCell.cs" />
+    <Compile Include="Views\Main\Cells\MenuFilterItemView.cs" />
+    <Compile Include="Views\Main\Cells\ContentVacationRequestItemView.cs" />
+    <Compile Include="Views\Main\Cells\ContentVacationRequestItemTableViewCell.cs" />
+    <Compile Include="Bindings\UIImageViewBindings.cs" />
+    <Compile Include="Views\Main\Source\ContentVacationRequestItemsSource.cs" />
+    <Compile Include="Views\Details\DetailsView.cs" />
+    <Compile Include="Views\SidebarMenu\SidebarMenuViewController.cs" />
+    <Compile Include="Controls\DateControlView.cs" />
+    <Compile Include="Bindings\DateControlViewBindings.cs" />
+    <Compile Include="Views\Details\Cells\DetailsItemView.cs" />
+    <Compile Include="Views\Details\Cells\DetailsItemCollectionViewCell.cs" />
+    <Compile Include="ValueConverters\VacationTypeToBundleImageNameValueConverter.cs" />
+    <Compile Include="Views\Details\Source\DetailsItemsSource.cs" />
+    <Compile Include="Bindings\DetailsItemsSourceBinding.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XMP.Core\XMP.Core.csproj">
+      <Project>{A0D57CF1-51BB-4C0D-8ECE-F1A9ADCF396C}</Project>
+      <Name>XMP.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XMP.API\XMP.API.csproj">
+      <Project>{0DEED80B-3448-4034-8555-997AC66915CA}</Project>
+      <Name>XMP.API</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

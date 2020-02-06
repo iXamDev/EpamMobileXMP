@@ -2,7 +2,6 @@
 using FlexiMvvm.Collections;
 using UIKit;
 using XMP.Core.ViewModels.Main;
-using XMP.IOS.Views.Main.Cells;
 using XMP.IOS.Views.Main.Source;
 
 namespace XMP.IOS.Views.Main

@@ -2,6 +2,7 @@
 using FlexiMvvm.Bindings;
 using FlexiMvvm.ViewModels;
 using FlexiMvvm.Views;
+using NN.Ios.Core.Attributes;
 using SidebarNavigation;
 using UIKit;
 using XMP.Core.ViewModels.Main;
@@ -10,6 +11,7 @@ using XMP.IOS.Views.SidebarMenu;
 
 namespace XMP.IOS.Views.Main
 {
+    [RootPresentation(WrapInNavigationController = true)]
     public class MainViewController : BindableViewController<MainViewModel>
     {
         private UIButton _navbarAddButton;

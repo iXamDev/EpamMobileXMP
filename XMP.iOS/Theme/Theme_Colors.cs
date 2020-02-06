@@ -1,5 +1,4 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 using Xamarin.Essentials;
 
 namespace XMP.IOS

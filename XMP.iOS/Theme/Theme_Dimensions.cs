@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XMP.IOS
+﻿namespace XMP.IOS
 {
     public static partial class Theme
     {

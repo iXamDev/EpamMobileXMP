@@ -1,5 +1,4 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 using XMP.IOS.Extensions;
 
 namespace XMP.IOS

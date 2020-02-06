@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using XMP.Core.Models;
 
 namespace XMP.Core.Services.Abstract

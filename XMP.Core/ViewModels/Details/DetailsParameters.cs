@@ -1,5 +1,4 @@
-﻿using System;
-using FlexiMvvm.ViewModels;
+﻿using FlexiMvvm.ViewModels;
 
 namespace XMP.Core.ViewModels.Details
 {

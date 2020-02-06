@@ -4,6 +4,7 @@ using Android.App;
 using Android.OS;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Views;
+using NN.Droid.Core.Attributes;
 using XMP.Core.Models;
 using XMP.Core.ValueConverters;
 using XMP.Core.ViewModels.Details;
@@ -15,6 +16,7 @@ using XMP.Droid.Views.Details.Items;
 namespace XMP.Droid.Views.Details
 {
     [Activity]
+    [ActivityPresentation]
     public class DetailsActivity : BindableAppCompatActivity<DetailsViewModel, DetailsParameters>
     {
         private BindableViewPagerStateAdapter<DetailsItemVM, DetailsItemFragment> _itemsAdapter;

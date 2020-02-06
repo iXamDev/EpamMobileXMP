@@ -1,10 +1,12 @@
 ﻿using FlexiMvvm.Bindings;
 using FlexiMvvm.ValueConverters;
 using FlexiMvvm.Views;
+using NN.Ios.Core.Attributes;
 using XMP.Core.ViewModels.Login;
 
 namespace XMP.IOS.Views.Login
 {
+    [RootPresentation]
     public class LoginViewController : BindableViewController<LoginViewModel>
     {
         public new LoginView View

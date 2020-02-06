@@ -10,6 +10,7 @@ using Android.Widget;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.ViewModels;
 using FlexiMvvm.Views;
+using NN.Droid.Core.Attributes;
 using XMP.Core.ViewModels.Main;
 using XMP.Droid.Adapters;
 using XMP.Droid.Bindings;
@@ -17,6 +18,7 @@ using XMP.Droid.Views.Main.Items;
 
 namespace XMP.Droid.Views.Main
 {
+    [ActivityPresentation]
     [Activity(Label = "All Requests")]
     public class MainActivity : BindableAppCompatActivity<MainViewModel>
     {

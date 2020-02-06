@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using FlexiMvvm.ViewModels;
+using NN.Shared.FlexiMvvm.Navigation;
 using XMP.Core.Helpers;
 using XMP.Core.Mapping;
 using XMP.Core.Models;
-using XMP.Core.Navigation;
 using XMP.Core.Services.Abstract;
 using XMP.Core.ViewModels.Details.Items;
 
@@ -92,7 +92,7 @@ namespace XMP.Core.ViewModels.Details
             base.Initialize(parameters, recreated);
         }
 
-        private void OnSave()
+        private async void OnSave()
         {
             if (Validate())
             {
@@ -101,7 +101,7 @@ namespace XMP.Core.ViewModels.Details
                 else
                     UpdateRequestIfNeeded();
 
-                NavigationService.NavigateBack(this);
+                await NavigationService.Close(this);
             }
         }
 
@@ -153,10 +153,10 @@ namespace XMP.Core.ViewModels.Details
         }
 
         private async Task OnShowStartDateDialog()
-        => StartDate = await ChangeDate(StartDate);
+            => StartDate = await ChangeDate(StartDate);
 
         private async Task OnShowEndDateDialog()
-        => EndDate = await ChangeDate(EndDate);
+            => EndDate = await ChangeDate(EndDate);
 
         private void SetupVacationTypeItems()
         {
@@ -166,7 +166,7 @@ namespace XMP.Core.ViewModels.Details
         }
 
         private DetailsItemVM SetupItem(VacationType vacationType)
-        => new DetailsItemVM(vacationType);
+            => new DetailsItemVM(vacationType);
 
         private void SetModel(VacantionRequest request)
         {

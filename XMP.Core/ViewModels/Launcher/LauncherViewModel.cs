@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using FlexiMvvm.ViewModels;
-using Xamarin.Essentials;
-using XMP.Core.Navigation;
+using NN.Shared.FlexiMvvm.Navigation;
 using XMP.Core.Services.Abstract;
+using XMP.Core.ViewModels.Login;
+using XMP.Core.ViewModels.Main;
 
 namespace XMP.Core.ViewModels.Launcher
 {
@@ -32,13 +33,10 @@ namespace XMP.Core.ViewModels.Launcher
 
             var navigateToMain = await SessionService.Reactivate();
 
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                if (navigateToMain)
-                    NavigationService.NavigateToMain(this);
-                else
-                    NavigationService.NavigateToLogin(this);
-            });
+            if (navigateToMain)
+                await NavigationService.Navigate<MainViewModel>();
+            else
+                await NavigationService.Navigate<LoginViewModel>();
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using FlexiMvvm;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.Bindings.Custom;
 using UIKit;

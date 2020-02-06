@@ -1,6 +1,5 @@
 ﻿using System;
 using Realms;
-using XMP.Core.Models;
 
 namespace XMP.Core.Database.Implementation.RealmDatabase.VacationRequests
 {

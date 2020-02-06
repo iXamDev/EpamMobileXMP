@@ -1,7 +1,5 @@
-﻿using System;
-using Android.Support.V4.App;
+﻿using Android.Support.V4.App;
 using FlexiMvvm.Bindings;
-using FlexiMvvm.Views.Core;
 
 namespace XMP.Droid.Views.Common
 {

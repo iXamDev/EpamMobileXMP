@@ -3,10 +3,12 @@ using Android.OS;
 using FlexiMvvm.Bindings;
 using FlexiMvvm.ValueConverters;
 using FlexiMvvm.Views;
+using NN.Droid.Core.Attributes;
 using XMP.Core.ViewModels.Login;
 
 namespace XMP.Droid.Views.Login
 {
+    [ActivityPresentation]
     [Activity(NoHistory = true)]
     public class LoginActivity : BindableAppCompatActivity<LoginViewModel>
     {

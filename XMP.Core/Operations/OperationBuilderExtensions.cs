@@ -1,5 +1,4 @@
-﻿using System;
-using FlexiMvvm.Operations;
+﻿using FlexiMvvm.Operations;
 
 namespace XMP.Core.Operations
 {

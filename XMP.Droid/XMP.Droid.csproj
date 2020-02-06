@@ -49,10 +49,23 @@
     <AndroidSupportedAbis>arm64-v8a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NN.Droid.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Droid.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Droid.FlexiMvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Droid.FlexiMvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Shared.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NN.Shared.FlexiMvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\NN.Shared.FlexiMvvm.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
@@ -61,7 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Bootstrapper\AndroidBootstrapper.cs" />
-    <Compile Include="Navigation\AppNavigationService.cs" />
     <Compile Include="Views\Splash\SplashActivity.cs" />
     <Compile Include="Views\Login\LoginActivity.cs" />
     <Compile Include="Views\ViewHolderGenerator.cs">
@@ -149,7 +161,6 @@
     <Folder Include="Assets\" />
     <Folder Include="Resources\layout\" />
     <Folder Include="Bootstrapper\" />
-    <Folder Include="Navigation\" />
     <Folder Include="Views\" />
     <Folder Include="Views\Splash\" />
     <Folder Include="Views\Login\" />
